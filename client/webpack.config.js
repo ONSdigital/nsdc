@@ -55,7 +55,7 @@ var config = {
       },
       {
         test: /\.html$/,
-        loader: 'raw-loader', 
+        loader: 'raw-loader',
         exclude: root('src', 'index')
       }
     ]
@@ -88,6 +88,9 @@ var config = {
     contentBase: './src',
     historyApiFallback: true,
     stats: 'minimal'
+  },
+  performance : {
+    hints : false
   }
 };
 
