@@ -5,7 +5,14 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "sourceMap": true,
-    "noEmitHelpers": true
+    "noEmitHelpers": true,
+    "typeRoots": [
+      "./node_modules/@types"
+    ],
+    "types" : [
+      "core-js",
+      "node"
+    ]
   },
   "compileOnSave": false,
   "buildOnSave": false,

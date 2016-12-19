@@ -27,6 +27,8 @@
   "devDependencies": {
     "@angularclass/hmr": "^1.0.1",
     "@angularclass/hmr-loader": "^3.0.2",
+    "@types/core-js": "^0.9.35",
+    "@types/node": "^6.0.52",
     "angular2-template-loader": "^0.6.0",
     "autoprefixer": "^6.3.2",
     "awesome-typescript-loader": "^2.2.4",
