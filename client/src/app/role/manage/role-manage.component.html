@@ -1,0 +1,50 @@
+<div class="container">
+    <h2>Manage Roles</h2>
+    <div class="form-group">
+        <select class="form-control" (change)="onChange($event.target.value)">
+            <option style="display:block" value="">Choose a Role</option>
+            <option *ngFor="let role of roles" [value]="role.id">{{ role.role_name }} </option>
+        </select>       
+    </div>
+</div>
+
+<div class="container">
+<h4>Users</h4>
+
+<table class="table table-hover">
+    <thead>
+      <tr>
+        <th>UserName</th>
+        <th>Firstname</th>
+        <th>Lastname</th>
+        <th>Email</th>
+        <th>Status</th>                        
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td><a href="#" [routerLink]="['/users', user.id]" routerLinkActive="active">{{user.username}}</a></td>
+        <td>{{user.firstname}}</td>
+        <td>{{user.lastname}}</td>
+        <td>{{user.email}}</td> 
+        <td>{{user.status}}</td>               
+      </tr>
+    </tbody>
+  </table>
+
+  <h4>Permissions</h4>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Permission Name</th>
+        <th>Description</th>                     
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let permission of permissions">
+        <td><a href="#" [routerLink]="['/permissions', permission.id]" routerLinkActive="active">{{permission.permission_name}}</a></td>
+        <td>{{permission.permission_desc}}</td>            
+      </tr>
+    </tbody>
+  </table>
+  </div>
