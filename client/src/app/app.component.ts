@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { LoginService } from './login/login.service';
+import { UserPermissionsService } from './user-permissions.service';
 import { Router } from '@angular/router';
 import '../style/app.css';
 

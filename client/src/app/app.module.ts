@@ -9,6 +9,8 @@ import { RoleListComponent } from './role/role-list.component';
 import { RoleComponent } from './role/role.component';
 import { routing, routedComponents } from './app.routing';
 import { LoginService } from './login/login.service';
+import { UserPermissionsService } from './user-permissions.service';
+import { UserPermissionsGuard } from './user-permissions.guard';
 import { LoginGuard } from './login/login.guard';
 import { Configuration } from './app.constants';
 
@@ -21,6 +23,8 @@ import { Configuration } from './app.constants';
   ],
   declarations: [ AppComponent, RoleListComponent, RoleComponent, routedComponents ],
   providers: [
+    UserPermissionsService,
+    UserPermissionsGuard,
     LoginService,
     LoginGuard,
     Configuration

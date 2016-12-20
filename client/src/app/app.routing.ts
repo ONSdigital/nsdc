@@ -4,6 +4,7 @@ import { ManageModuleComponent } from './manage/manage-module.component';
 
 import { LoginComponent } from './login/login.component';
 import { LoginGuard } from './login/login.guard';
+import { UserPermissionsGuard } from './user-permissions.guard';
 
 // User
 import { UserListComponent } from './user/user-list.component';
@@ -19,55 +20,59 @@ import { PermissionComponent } from './permission/permission.component';
 
 
 const appRoutes: Routes = [
-    {
+  {
+    path: '',
+    canActivateChild: [LoginGuard],
+    children: [
+      {
         path: '',
-        canActivateChild: [LoginGuard],
-        children: [
-          {
-              path: '',
-              component: ManageModuleComponent
-          },
-          {
-              path: 'users',
-              component: UserListComponent
-          },
-          {
-              path: 'users/:id',
-              component: UserDetailComponent
-          },
-          {
-              path: 'adduser',
-              component: AddUserComponent
-          },
-          {
-              path: 'roles',
-              component: RoleListComponent
-          },
-          {
-              path: 'roles/manage',
-              component: RoleManageComponent
-          },
-          {
-              path: 'permissions',
-              component: PermissionComponent
-          }
-        ]
-    },
-    {
-        path: 'login',
-        component: LoginComponent
-    }
+        component: ManageModuleComponent
+      },
+      {
+        canActivate: [UserPermissionsGuard],
+        path: 'users',
+        component: UserListComponent,
+        data: {
+          permission: 'VIEW_USERS'
+        }
+      },
+      {
+        path: 'users/:id',
+        component: UserDetailComponent
+      },
+      {
+        path: 'adduser',
+        component: AddUserComponent
+      },
+      {
+        path: 'roles',
+        component: RoleListComponent
+      },
+      {
+        path: 'roles/manage',
+        component: RoleManageComponent
+      },
+      {
+        path: 'permissions',
+        component: PermissionComponent
+      }
+    ]
+  },
+  {
+    path: 'login',
+    component: LoginComponent
+  }
 ];
 
 export const routing = RouterModule.forRoot(appRoutes);
 
 export const routedComponents = [
-    ManageModuleComponent,
-    LoginComponent,
-    UserListComponent,
-    AddUserComponent,
-    UserDetailComponent,
-    RoleListComponent,
-    PermissionComponent,
-    RoleManageComponent
+  ManageModuleComponent,
+  LoginComponent,
+  UserListComponent,
+  AddUserComponent,
+  UserDetailComponent,
+  RoleListComponent,
+  PermissionComponent,
+  RoleManageComponent
 ];
