@@ -21,42 +21,41 @@ import { PermissionComponent } from './permission/permission.component';
 const appRoutes: Routes = [
     {
         path: '',
-        component: ManageModuleComponent,
-        canActivate: [LoginGuard]
+        canActivateChild: [LoginGuard],
+        children: [
+          {
+              path: '',
+              component: ManageModuleComponent
+          },
+          {
+              path: 'users',
+              component: UserListComponent
+          },
+          {
+              path: 'users/:id',
+              component: UserDetailComponent
+          },
+          {
+              path: 'adduser',
+              component: AddUserComponent
+          },
+          {
+              path: 'roles',
+              component: RoleListComponent
+          },
+          {
+              path: 'roles/manage',
+              component: RoleManageComponent
+          },
+          {
+              path: 'permissions',
+              component: PermissionComponent
+          }
+        ]
     },
     {
         path: 'login',
         component: LoginComponent
-    },
-    {
-        path: 'users',
-        component: UserListComponent,
-        canActivate: [LoginGuard]
-    },
-    {
-        path: 'users/:id',
-        component: UserDetailComponent,
-        canActivate: [LoginGuard]
-    },
-    {
-        path: 'adduser',
-        component: AddUserComponent,
-        canActivate: [LoginGuard]
-    },
-    {
-        path: 'roles',
-        component: RoleListComponent,
-        canActivate: [LoginGuard]
-    },
-    {
-        path: 'roles/manage',
-        component: RoleManageComponent,
-        canActivate: [LoginGuard]
-    },
-    {
-        path: 'permissions',
-        component: PermissionComponent,
-        canActivate: [LoginGuard]
     }
 ];
 

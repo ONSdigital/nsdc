@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import LoginService from './login/login.service';
 
 import '../style/app.css';
 
@@ -8,7 +9,10 @@ import '../style/app.css';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  constructor() {
-    // Do something with api
+
+  constructor(private loginService: LoginService) {}
+
+  showNavBar() {
+    return this.loginService.isLoggedIn();
   }
 }
