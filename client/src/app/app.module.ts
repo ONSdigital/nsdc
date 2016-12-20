@@ -8,8 +8,8 @@ import { AppComponent }   from './app.component';
 import { RoleListComponent } from './role/role-list.component';
 import { RoleComponent } from './role/role.component';
 import { routing, routedComponents } from './app.routing';
-import LoginService from './login/login.service';
-import LoginGuard from './login/login.guard';
+import { LoginService } from './login/login.service';
+import { LoginGuard } from './login/login.guard';
 import { Configuration } from './app.constants';
 
 @NgModule({

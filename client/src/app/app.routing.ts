@@ -2,8 +2,8 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { ManageModuleComponent } from './manage/manage-module.component';
 
-import LoginComponent from './login/login.component';
-import LoginGuard from './login/login.guard';
+import { LoginComponent } from './login/login.component';
+import { LoginGuard } from './login/login.guard';
 
 // User
 import { UserListComponent } from './user/user-list.component';

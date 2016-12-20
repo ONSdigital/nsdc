@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import LoginService from './login.service';
+import { LoginService } from './login.service';
 
 @Component({
   selector: 'login',
-  templateUrl: './login.component.html'
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css'],
 })
-class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit {
   loginForm: FormGroup;
 
   constructor(
@@ -34,5 +35,3 @@ class LoginComponent implements OnInit {
     });
   }
 }
-
-export default LoginComponent;

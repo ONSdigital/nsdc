@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
-import LoginService from '../login/login.service';
+import { LoginService } from '../login/login.service';
 import { Observable } from 'rxjs/Observable';
 import { Permission } from './permission';
 import { Configuration } from '../app.constants';
@@ -23,27 +23,27 @@ export class PermissionService {
     this.headers.append('X-TOKEN', this.loginService.getToken());
     let permissionListUrl = this.config.Server + 'nsdc/v1.0/permissions';
     return this.http.get(permissionListUrl, { headers: this.headers })
-      .toPromise()
-      .then(response => response.json() as Permission[])
-      .catch(this.handleError);
+    .toPromise()
+    .then(response => response.json() as Permission[])
+    .catch(this.handleError);
   }
 
   getPermissionById(id: number) {
     this.headers.append('X-TOKEN', this.loginService.getToken());
     let permissionUrl = this.config.Server + 'nsdc/v1.0/permissions/' + id;
     return this.http.get(permissionUrl, { headers: this.headers })
-      .toPromise()
-      .then(response => response.json() as Permission)
-      .catch(this.handleError);
+    .toPromise()
+    .then(response => response.json() as Permission)
+    .catch(this.handleError);
   }
 
   getPermissionByRole(roleId: number) {
     this.headers.append('X-TOKEN', this.loginService.getToken());
     let permissionUrl = this.config.Server + 'nsdc/v1.0/permissions/role/' + roleId;
     return this.http.get(permissionUrl, { headers: this.headers })
-      .toPromise()
-      .then(response => response.json() as Permission)
-      .catch(this.handleError);
+    .toPromise()
+    .then(response => response.json() as Permission)
+    .catch(this.handleError);
   }
 
   private handleError(error: any): Promise<any> {

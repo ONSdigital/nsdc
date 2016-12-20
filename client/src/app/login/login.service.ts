@@ -3,7 +3,7 @@ import { Http, Headers } from '@angular/http';
 import { Configuration } from '../app.constants';
 
 @Injectable()
-class LoginService {
+export class LoginService {
   private loggedIn = false;
 
   constructor(private http: Http, private config: Configuration) {
@@ -21,7 +21,7 @@ class LoginService {
         { headers }
       )
       .map(res => res.json())
-      .map((res) => {
+      .map(res => {
         if (res.token) {
           localStorage.setItem('auth_token', res.token);
           this.loggedIn = true;
@@ -43,5 +43,3 @@ class LoginService {
     return this.loggedIn;
   }
 }
-
-export default LoginService;

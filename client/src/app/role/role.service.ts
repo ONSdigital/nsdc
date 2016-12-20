@@ -4,7 +4,7 @@ import 'rxjs/add/operator/toPromise';
 import { Observable } from 'rxjs/Observable';
 import { Role } from './role';
 import { Configuration } from '../app.constants';
-import LoginService from '../login/login.service';
+import { LoginService } from '../login/login.service';
 
 
 @Injectable()
@@ -29,17 +29,18 @@ export class RoleService {
     this.headers.append('X-TOKEN', this.loginService.getToken());
     let roleListUrl = this.config.Server + 'nsdc/v1.0/roles';
     return this.http.get(roleListUrl, {headers: this.headers})
-      .toPromise()
-      .then(response => response.json() as Role[])
-      .catch(this.handleError);
+    .toPromise()
+    .then(response => response.json() as Role[])
+    .catch(this.handleError);
   }
 
   getRoleById(id: number) {
     this.headers.append('X-TOKEN', this.loginService.getToken());
     let roleUrl = this.config.Server + 'nsdc/v1.0/roles/' + id;
     return this.http.get(roleUrl, {headers: this.headers})
-      .toPromise().then(response => response.json() as Role)
-      .catch(this.handleError);
+    .toPromise()
+    .then(response => response.json() as Role)
+    .catch(this.handleError);
   }
 
   updateUser(id: number, role: Role) {
