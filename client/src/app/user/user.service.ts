@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, Response, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
-
+import LoginService from '../login/login.service';
 import { Observable } from 'rxjs/Observable';
 import { User } from './user';
 import { Configuration } from '../app.constants';
@@ -12,7 +12,7 @@ export class UserService {
   private actionUrl: string;
   public headers: Headers;
 
-  constructor(private http: Http, private config: Configuration) {
+  constructor(private http: Http, private config: Configuration, private loginService: LoginService) {
     this.actionUrl = config.Server + 'nsdc/v1.0/users';
 
     this.headers = new Headers();
@@ -25,8 +25,12 @@ export class UserService {
   }
 
   getUsers() {
+    this.headers.append('X-TOKEN', this.loginService.getToken());
     let userListUrl = this.config.Server + 'nsdc/v1.0/users';
-    return this.http.get(userListUrl).toPromise().then(response => response.json() as User[]).catch(this.handleError);
+    return this.http.get(userListUrl, { headers: this.headers})
+      .toPromise()
+      .then(response => response.json() as User[])
+      .catch(this.handleError);
   }
 
   getUserById(id: number) {
@@ -63,7 +67,7 @@ export class UserService {
   //     return this.http.post(userAddUrl, JSON.stringify(user), options) // ...using post request
   //                      .map((res:Response) => res.json()) // ...and calling .json() on the response to return data
   //                      .catch((error:any) => Observable.throw(error.json().error || 'Server error')); //...errors if any
-  // }   
+  // }
 // getUsers(): Observable<User []> {
 //     let userListUrl = this.config.Server + 'nsdc/v1.0/users';
 //     return this.http.get(userListUrl)

@@ -2,12 +2,15 @@ import { NgModule, ApplicationRef } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 import { removeNgStyles, createNewHosts } from '@angularclass/hmr';
-import { RouterModule }      from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppComponent }   from './app.component';
 import { RoleListComponent } from './role/role-list.component';
 import { RoleComponent } from './role/role.component';
 import { routing, routedComponents } from './app.routing';
+import LoginService from './login/login.service';
+import LoginGuard from './login/login.guard';
+import { Configuration } from './app.constants';
 
 @NgModule({
   imports: [
@@ -17,6 +20,11 @@ import { routing, routedComponents } from './app.routing';
     ReactiveFormsModule
   ],
   declarations: [ AppComponent, RoleListComponent, RoleComponent, routedComponents ],
+  providers: [
+    LoginService,
+    LoginGuard,
+    Configuration
+  ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule {

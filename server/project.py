@@ -1,11 +1,15 @@
-from flask import Flask, render_template, json, request, redirect, flash, jsonify, abort, url_for
+from flask import Flask, json, request, abort
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.inspection import inspect
-from flask_cors import CORS, cross_origin
+from flask_cors import CORS
+from functools import wraps
+from itsdangerous import (TimedJSONWebSignatureSerializer
+                          as TokenSerializer, BadSignature, SignatureExpired)
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = "<<postgres url>>"
+app.config['SQLALCHEMY_DATABASE_URI'] = '<<postgres url here>>'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+app.config['SECRET_KEY'] = '<<secret key here>>'
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
@@ -26,6 +30,7 @@ class Serializer(object):
     def serialize_list(l):
         return [m.serialize() for m in l]
 
+
 role_permission = db.Table('role_permission',
     db.Column('role_id', db.Integer, db.ForeignKey('role.role_id'), nullable=False),
     db.Column('permission_id', db.Integer, db.ForeignKey('permission.permission_id'), nullable=False),
@@ -39,12 +44,10 @@ class RolePermissions():
     role_id = db.Column(db.Integer, db.ForeignKey('role.id'))
     permission_id = db.Column(db.Integer, db.ForeignKey('permission.permission_id'))
 
+    def __init__(self, role_id, permission_id):
+        self.role_id=role_id
+        self.permission_id = permission_id
 
-    def __init__(self,role_id,permission_id):
-      self.role_id=role_id
-      self.permission_id=permission_id
-
-# db.mapper(RolePermissions, role_permission)
 
 class Role(db.Model, Serializer):
     __tablename__ = "role"
@@ -52,11 +55,9 @@ class Role(db.Model, Serializer):
     role_name = db.Column('role_name', db.Unicode(255))
     role_desc = db.Column('role_desc', db.Unicode(255))
     created_at = db.Column('role_creationDate', db.TIMESTAMP,
-                           server_default=db.func.current_timestamp(),nullable=False)
+                           server_default=db.func.current_timestamp(), nullable=False)
     users = db.relationship('User', backref='role', lazy='dynamic')
-    permissions = db.relationship('Permission',
-                                      secondary=role_permission,
-                                  backref=db.backref('roles', lazy='dynamic'))
+    permissions = db.relationship('Permission', secondary=role_permission, backref=db.backref('roles', lazy='dynamic'))
 
     def __init__(self, role_name, role_desc):
         self.role_name = role_name
@@ -68,6 +69,7 @@ class Role(db.Model, Serializer):
             'role_name': self.role_name,
             'role_description': self.role_desc
         }
+
 
 class User(db.Model, Serializer):
     __tablename__ = "user"
@@ -90,6 +92,22 @@ class User(db.Model, Serializer):
         self.password = password
         self.status = status
 
+    def generate_auth_token(self, expiration=1440):
+        s = TokenSerializer(app.config['SECRET_KEY'], expires_in=expiration)
+        return s.dumps({'id': self.id})
+
+    @staticmethod
+    def verify_auth_token(token):
+        s = TokenSerializer(app.config['SECRET_KEY'])
+        try:
+            data = s.loads(token)
+        except SignatureExpired:
+            return None    # valid token, but expired
+        except BadSignature:
+            return None    # invalid token
+        user = User.query.get(data['id'])
+        return user
+
     def serialize(self):
         return {
             'id': self.id,
@@ -101,6 +119,7 @@ class User(db.Model, Serializer):
             'password': self.password,
             'status': self.status
         }
+
 
 class Permission(db.Model, Serializer):
     __tablename__ = "permission"
@@ -125,9 +144,23 @@ class Permission(db.Model, Serializer):
             'permission_desc': self.permission_desc
         }
 
+# Authentication decorator checks for token in header
+def authenticated(func):
+    @wraps(func)
+    def check_token(*args, **kwargs):
+        token = request.headers.get("X-Token")
+        if token is None or not User.verify_auth_token(token):
+            return abort(400)
+
+        return func(*args, **kwargs)
+
+    return check_token
+
+
 # INITIALIZE VIEW SECTION#
 #ROLE MANAGE
 @app.route('/nsdc/v1.0/add_role', methods=['POST'])
+@authenticated
 def add_role():
     role_name = request.get_json()["role_name"]
     role = Role(role_name=role_name)
@@ -135,24 +168,32 @@ def add_role():
     db.session.commit()
     return json.dumps(role.serialize())
 
+
 @app.route('/nsdc/v1.0/roles', methods=['GET'])
+@authenticated
 def get_roles():
     roles = Role.query.all()
     return json.dumps(Role.serialize_list(roles))
 
+
 @app.route('/nsdc/v1.0/roles/<int:role_id>', methods=['GET'])
+@authenticated
 def get_role(role_id):
     role = Role.query.get(role_id)
-    return json.dumps(role.serialize()) # To return single object
+    return json.dumps(role.serialize())
+
 
 @app.route('/nsdc/v1.0/roles/<int:role_id>', methods = ['DELETE'])
+@authenticated
 def delete_role(role_id):
     role = Role.query.get(role_id)
     db.session.delete(role)
     db.session.commit()
     return json.dumps(role.serialize())
 
+
 @app.route('/nsdc/v1.0/roles/<int:role_id>', methods=['PUT'])
+@authenticated
 def update_role(role_id):
     role = Role.query.get(role_id)
     if "role_name" in request.json:
@@ -161,8 +202,10 @@ def update_role(role_id):
     db.session.commit()
     return json.dumps(role.serialize())
 
-#PERMISSION MANAGE
+
+# PERMISSION MANAGE
 @app.route('/nsdc/v1.0/add_permission', methods=['POST'])
+@authenticated
 def add_permission():
     role_id = request.get_json()["role_id"]
     permission_name = request.get_json()["permission_name"]
@@ -172,24 +215,32 @@ def add_permission():
     db.session.commit()
     return json.dumps(permission.serialize())
 
+
 @app.route('/nsdc/v1.0/permissions', methods=['GET'])
+@authenticated
 def get_permissions():
     permissions = Permission.query.all()
     return json.dumps(Permission.serialize_list(permissions))
 
+
 @app.route('/nsdc/v1.0/permissions/<int:permission_id>', methods = ['DELETE'])
+@authenticated
 def delete_permission(permission_id):
     permission = Permission.query.get(permission_id)
     db.session.delete(permission)
     db.session.commit()
     return json.dumps(permission.serialize())
 
+
 @app.route('/nsdc/v1.0/permissions/role/<int:role_id>', methods=['GET'])
+@authenticated
 def get_permission_by_role(role_id):
     permissions = Permission.query.filter(Permission.role_id == role_id)
     return json.dumps(Permission.serialize_list(permissions))
 
+
 @app.route('/nsdc/v1.0/permissions/<int:permission_id>', methods=['PUT'])
+@authenticated
 def update_permission(permission_id):
     permission = Permission.query.get(permission_id)
     if "role_id" in request.json:
@@ -204,8 +255,10 @@ def update_permission(permission_id):
     db.session.commit()
     return json.dumps(permission.serialize())
 
+
 #USER MANAGE
 @app.route('/nsdc/v1.0/users/add', methods=['POST'])
+@authenticated
 def add_user():
     role_id = request.get_json()["role_id"]
     firstname = request.get_json()["firstname"]
@@ -221,7 +274,9 @@ def add_user():
     db.session.commit()
     return json.dumps(User.serialize(user))
 
+
 @app.route('/nsdc/v1.0/users/<int:id>', methods=['PUT'])
+@authenticated
 def update_user(id):
     user = User.query.get(id)
     if "role_id" in request.json:
@@ -248,27 +303,47 @@ def update_user(id):
     db.session.commit()
     return json.dumps(user.serialize())
 
+
 @app.route('/nsdc/v1.0/users', methods=['GET'])
+@authenticated
 def get_users():
     users = User.query.all()
     return json.dumps(User.serialize_list(users))
 
+
 @app.route('/nsdc/v1.0/users/<int:id>', methods=['GET'])
+@authenticated
 def get_user(id):
     user = User.query.get(id)
     return json.dumps(user.serialize()) # To return single object
 
+
 @app.route('/nsdc/v1.0/users/role/<int:role_id>', methods=['GET'])
+@authenticated
 def get_user_by_role(role_id):
     users = User.query.filter(User.role_id == role_id)
     return json.dumps(User.serialize_list(users))
 
-@app.route('/nsdc/v1.0/users/<int:id>', methods = ['DELETE'])
+
+@app.route('/nsdc/v1.0/users/<int:id>', methods=['DELETE'])
+@authenticated
 def delete_user(id):
     user = User.query.get(id)
     db.session.delete(user)
     db.session.commit()
     return json.dumps(user.serialize())
+
+
+@app.route('/nsdc/v1.0/login', methods=['POST'])
+def login():
+    request_json = request.get_json()
+    username = request_json['username']
+    password = request_json['password']
+    user = User.query.filter(User.username == username and User.password == password).first()
+    if not user:
+        return False
+    token = user.generate_auth_token()
+    return json.dumps({'token': token})
 
 if __name__ == '__main__':
     app.run(debug=True)

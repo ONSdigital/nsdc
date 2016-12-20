@@ -2,6 +2,9 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { ManageModuleComponent } from './manage/manage-module.component';
 
+import LoginComponent from './login/login.component';
+import LoginGuard from './login/login.guard';
+
 // User
 import { UserListComponent } from './user/user-list.component';
 import { AddUserComponent } from './user/add-user.component';
@@ -11,38 +14,49 @@ import { UserDetailComponent } from './user/user-detail.component';
 import { RoleListComponent } from './role/role-list.component';
 import { RoleManageComponent } from './role/manage/role-manage.component';
 
-// Permission 
+// Permission
 import { PermissionComponent } from './permission/permission.component';
 
 
 const appRoutes: Routes = [
     {
         path: '',
-        component: ManageModuleComponent
+        component: ManageModuleComponent,
+        canActivate: [LoginGuard]
+    },
+    {
+        path: 'login',
+        component: LoginComponent
     },
     {
         path: 'users',
-        component: UserListComponent
+        component: UserListComponent,
+        canActivate: [LoginGuard]
     },
     {
         path: 'users/:id',
-        component: UserDetailComponent
+        component: UserDetailComponent,
+        canActivate: [LoginGuard]
     },
     {
         path: 'adduser',
-        component: AddUserComponent
+        component: AddUserComponent,
+        canActivate: [LoginGuard]
     },
     {
         path: 'roles',
-        component: RoleListComponent
+        component: RoleListComponent,
+        canActivate: [LoginGuard]
     },
     {
         path: 'roles/manage',
-        component: RoleManageComponent
-    }
+        component: RoleManageComponent,
+        canActivate: [LoginGuard]
+    },
     {
         path: 'permissions',
-        component: PermissionComponent
+        component: PermissionComponent,
+        canActivate: [LoginGuard]
     }
 ];
 
@@ -50,6 +64,7 @@ export const routing = RouterModule.forRoot(appRoutes);
 
 export const routedComponents = [
     ManageModuleComponent,
+    LoginComponent,
     UserListComponent,
     AddUserComponent,
     UserDetailComponent,
