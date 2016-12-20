@@ -21,6 +21,16 @@
           <a [routerLink]="['/permissions']">Permissions</a>
         </li>
       </ul>
+      <div class="nav navbar-nav navbar-right">
+        <li>
+          <a
+            class="nav-logout"
+            (click)="onLogout()"
+          >
+            Logout
+          </a>
+        </li>
+      </div>
     </div>
   </div>
 </div>

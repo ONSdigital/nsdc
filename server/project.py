@@ -7,9 +7,9 @@ from itsdangerous import (TimedJSONWebSignatureSerializer
                           as TokenSerializer, BadSignature, SignatureExpired)
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = '<<postgres url here>>'
+app.config['SQLALCHEMY_DATABASE_URI'] = '<<DB URI HERE>>'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
-app.config['SECRET_KEY'] = '<<secret key here>>'
+app.config['SECRET_KEY'] = 'this is where you put the secret key'
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
@@ -116,7 +116,6 @@ class User(db.Model, Serializer):
             'lastname': self.lastname,
             'email': self.email,
             'username': self.username,
-            'password': self.password,
             'status': self.status
         }
 
@@ -126,22 +125,20 @@ class Permission(db.Model, Serializer):
     id = db.Column('permission_id', db.Integer, primary_key=True)
     role_id = db.Column('role_id', db.Integer, db.ForeignKey(Role.id))
     permission_name = db.Column('permission_name', db.Unicode(255), )
-    permission_desc = db.Column('permission_desc', db.Unicode(255), )
+    permission_short_name = db.Column('permission_short_name', db.Unicode(255), )
     created_at = db.Column('perm_creationDate', db.TIMESTAMP, server_default=db.func.current_timestamp(),nullable=False)
-    role_id = db.Column(db.Integer, db.ForeignKey('role.role_id'))
 
-    def __init__(self, role_id, permission_name, permission_desc):
+    def __init__(self, role_id, permission_name, permission_short_name):
         self.role_id = role_id
         self.permission_name = permission_name
-        self.permission_desc = permission_desc
+        self.permission_short_name = permission_short_name
 
     def serialize(self):
-        # perm_data = Serializer.serialize(self)
         return {
             'id': self.id,
             'role_id': self.role_id,
             'permission_name': self.permission_name,
-            'permission_desc': self.permission_desc
+            'permission_short_name': self.permission_short_name
         }
 
 # Authentication decorator checks for token in header
@@ -235,6 +232,13 @@ def delete_permission(permission_id):
 @app.route('/nsdc/v1.0/permissions/role/<int:role_id>', methods=['GET'])
 @authenticated
 def get_permission_by_role(role_id):
+    permissions = Permission.query.filter(Permission.role_id == role_id)
+    return json.dumps(Permission.serialize_list(permissions))
+
+@app.route('/nsdc/v1.0/permissions/user/<int:user_id>', methods=['GET'])
+@authenticated
+def get_permission_by_user(user_id):
+    role_id = User.query.get(user_id).role_id;
     permissions = Permission.query.filter(Permission.role_id == role_id)
     return json.dumps(Permission.serialize_list(permissions))
 
@@ -343,7 +347,10 @@ def login():
     if not user:
         return False
     token = user.generate_auth_token()
-    return json.dumps({'token': token})
+    return json.dumps({
+        'token': token,
+        'user_id': user.id
+    })
 
 if __name__ == '__main__':
     app.run(debug=True)
