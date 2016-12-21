@@ -8,7 +8,9 @@ export class UserPermissionsGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot) {
     let allowedPermission = route.data['permission'] as string;
-    return this.userPermissionsService.doesUserHavePermission(allowedPermission);
+    const activate = this.userPermissionsService.doesUserHavePermission(allowedPermission);
+    this.router.navigate(['no-permission']);
+    return activate;
   }
 
   canActivateChild(route: ActivatedRouteSnapshot) {

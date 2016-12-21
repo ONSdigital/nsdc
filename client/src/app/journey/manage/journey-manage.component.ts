@@ -7,7 +7,7 @@ import { Configuration } from '../../app.constants';
 import { Supplier } from '../../supplier/supplier';
 import { SupplierService } from '../../supplier/supplier.service';
 
-import { Journey } from '../journey';
+import { Journey, JourneyVersions } from '../journey';
 import { JourneyService } from '../journey.service';
 
 @Component({

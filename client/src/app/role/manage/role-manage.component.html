@@ -37,13 +37,15 @@
     <thead>
       <tr>
         <th>Permission Name</th>
-        <th>Description</th>                     
+        <th>Short Name</th>
+        <th>Description</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let permission of permissions">
         <td><a href="#" [routerLink]="['/permissions', permission.id]" routerLinkActive="active">{{permission.permission_name}}</a></td>
-        <td>{{permission.permission_desc}}</td>            
+        <td>{{permission.permission_short_name}}</td>
+        <td>{{permission.permission_description}}</td>            
       </tr>
     </tbody>
   </table>

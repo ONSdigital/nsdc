@@ -1,5 +1,5 @@
 export class Journey {
-    id: number;
+    a: number;
     supplier_id: number;
     journey_name: string;
 }

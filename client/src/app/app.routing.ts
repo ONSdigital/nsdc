@@ -17,6 +17,7 @@ import { RoleManageComponent } from './role/manage/role-manage.component';
 
 // Permission
 import { PermissionComponent } from './permission/permission.component';
+import { NoPermissionComponent } from './permission/no-permission.component';
 
 // Supplier
 import { SupplierComponent } from './supplier/supplier.component';
@@ -24,6 +25,7 @@ import { SupplierComponent } from './supplier/supplier.component';
 // Journey
 import { JourneyComponent } from './journey/journey.component';
 import { JourneyManageComponent } from './journey/manage/journey-manage.component';
+import { JourneyDetailsManageComponent } from './journey/manage/journey-details-manage.component';
 
 const appRoutes: Routes = [
   {
@@ -35,12 +37,8 @@ const appRoutes: Routes = [
         component: ManageModuleComponent
       },
       {
-        canActivate: [UserPermissionsGuard],
         path: 'users',
-        component: UserListComponent,
-        data: {
-          permission: 'VIEW_USERS'
-        }
+        component: UserListComponent
       },
       {
         path: 'users/:id',
@@ -59,6 +57,14 @@ const appRoutes: Routes = [
         component: RoleManageComponent
       },
       {
+        canActivate: [UserPermissionsGuard],
+        path: 'journeys/details/manage',
+        component: JourneyDetailsManageComponent,
+        data: {
+          permission: 'VIEW_JOURNEY_DETAILS'
+        }
+      },
+      {
         path: 'permissions',
         component: PermissionComponent
       },
@@ -71,8 +77,12 @@ const appRoutes: Routes = [
           component: JourneyComponent
       },
       {
-          path: 'journeys/manage',
-          component: JourneyManageComponent
+        path: 'journeys/manage',
+        component: JourneyManageComponent
+      },
+      {
+          path: 'no-permission',
+          component: NoPermissionComponent
       }
     ]
   },
@@ -95,5 +105,7 @@ export const routedComponents = [
     RoleManageComponent,
     SupplierComponent,
     JourneyComponent,
-    JourneyManageComponent
+    JourneyManageComponent,
+    NoPermissionComponent,
+    JourneyDetailsManageComponent
 ];
