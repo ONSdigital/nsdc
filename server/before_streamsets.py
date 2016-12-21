@@ -3,6 +3,7 @@ import time
 import sys
 import subprocess
 import psycopg2
+import argparse
 
 #Start time for processing file
 def start_time():
@@ -73,19 +74,27 @@ def db_entry(starttime, endtime, filename):
     end_timestamp VARCHAR(1000) NOT NULL,
     file  VARCHAR(1000)
     )''')
-    print "Table created successfully"
     connection.commit()
     insert_db = connection.cursor()
     insert_db.execute('''INSERT INTO SSETS_PRECHECK (start_timestamp, end_timestamp, file) \
         VALUES (%s, %s, %s )''', (starttime, endtime, filename))
     connection.commit()
-    print "Records created successfully";
+    print "Records entered successfully : (StartTime: %s, EndTime: %s, FileName: %s ) " % (starttime, endtime, filename)
     connection.close()
 
 if __name__ == "__main__":
-    filename = sys.argv[-1]
-    starttime = start_time()
-    firstline = first_line(filename)
-    lastline = last_line(filename)
-    endtime = end_time()
-    db_entry(starttime, endtime, filename)
+    if len(sys.argv[1:]) > 0:
+        filename = sys.argv[-1]
+        starttime = start_time()
+        firstline = first_line(filename)
+        lastline = last_line(filename)
+        endtime = end_time()
+        db_entry(starttime, endtime, filename)
+    else:
+        print '''
+==> Usage : python before_streamsets.py <filename>
+
+filename - where filename is the file which need to be processed
+                   before its passed for further processing to Streamsets. 
+        '''
+        sys.exit(2)
