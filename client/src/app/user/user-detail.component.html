@@ -2,10 +2,6 @@
     <h2>Update User Detail</h2>
     <br>
     <form [formGroup]="userForm" (ngSubmit)="onSubmit()" >
-         <div class="form-group">
-            <label>Id:</label>
-            <input type="text" #refName class="form-control" formControlName="firstname">                       
-        </div>
         <div class="form-group">
             <label>First Name:</label>
             <input type="text" #refName class="form-control" formControlName="firstname">                       
@@ -61,6 +57,16 @@
             <input type="text" class="form-control" formControlName="email">
             <div *ngIf="userForm.controls['email'].hasError('required')" class="alert alert-danger">
                 Invalid email format.
+            </div>            
+        </div>
+        <div class="form-group">
+            <label>Supplier:</label>
+            <select class="form-control" formControlName="supplier_id">
+                <option style="display:block" value="">Choose an option</option>
+                <option *ngFor="let supplier of suppliers" [value]="supplier.id">{{ supplier.supplier_name }} </option>
+            </select>
+            <div *ngIf="userForm.controls['supplier_id'].hasError('required')" class="alert alert-danger">
+                Please enter supplier.
             </div>            
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>    

@@ -18,6 +18,12 @@ import { RoleManageComponent } from './role/manage/role-manage.component';
 // Permission
 import { PermissionComponent } from './permission/permission.component';
 
+// Supplier
+import { SupplierComponent } from './supplier/supplier.component';
+
+// Journey
+import { JourneyComponent } from './journey/journey.component';
+import { JourneyManageComponent } from './journey/manage/journey-manage.component';
 
 const appRoutes: Routes = [
   {
@@ -55,6 +61,18 @@ const appRoutes: Routes = [
       {
         path: 'permissions',
         component: PermissionComponent
+      },
+      {
+          path: 'suppliers',
+          component: SupplierComponent
+      },
+      {
+          path: 'journeys',
+          component: JourneyComponent
+      },
+      {
+          path: 'journeys/manage',
+          component: JourneyManageComponent
       }
     ]
   },
@@ -67,12 +85,15 @@ const appRoutes: Routes = [
 export const routing = RouterModule.forRoot(appRoutes);
 
 export const routedComponents = [
-  ManageModuleComponent,
-  LoginComponent,
-  UserListComponent,
-  AddUserComponent,
-  UserDetailComponent,
-  RoleListComponent,
-  PermissionComponent,
-  RoleManageComponent
+    ManageModuleComponent,
+    LoginComponent,
+    UserListComponent,
+    AddUserComponent,
+    UserDetailComponent,
+    RoleListComponent,
+    PermissionComponent,
+    RoleManageComponent,
+    SupplierComponent,
+    JourneyComponent,
+    JourneyManageComponent
 ];

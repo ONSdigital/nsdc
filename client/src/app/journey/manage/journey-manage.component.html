@@ -1,0 +1,42 @@
+<div class="container">
+    <h2>Manage Journeys</h2>
+    <div class="form-group form-group-margin">
+        <label>Choose a Supplier:</label>
+        <select class="form-control" (change)="onChange($event.target.value)">
+            <option style="display:block" value="">Choose a Supplier</option>
+            <option *ngFor="let supplier of suppliers" [value]="supplier.id">{{ supplier.supplier_name }} </option>
+        </select>       
+    </div>
+    <div class="form-group form-group-margin">
+      <label>Select a Journey:</label>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Journey Name</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let journey of journeys">         
+            <td>{{ journey.journey_name }}</td>
+            <td><div class="link" (click)="onSelect(journey.id)">Select</div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="form-group form-group-margin">
+      <h4>Journey Versions</h4>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Versions</th>           
+          </tr>
+        </thead>
+        <tbody>
+         <tr *ngFor="let journeyVersion of journeyVersions">         
+            <td>{{ journeyVersion.version_number }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+</div>

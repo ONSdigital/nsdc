@@ -4,7 +4,8 @@ export class User {
     lastname: string;
     username: string;
     password: string;
-    status: boolean;
+    status: string;
     email: string;
     role_id: number;
+    supplier_id: number;
 }

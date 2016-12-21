@@ -7,9 +7,10 @@ from itsdangerous import (TimedJSONWebSignatureSerializer
                           as TokenSerializer, BadSignature, SignatureExpired)
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = '<<DB URI HERE>>'
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:password@localhost:5432/nsdc"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
-app.config['SECRET_KEY'] = 'this is where you put the secret key'
+app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
+
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
@@ -82,8 +83,9 @@ class User(db.Model, Serializer):
     created_at = db.Column('user_creationDate', db.TIMESTAMP, server_default=db.func.current_timestamp(),nullable=False)
     status = db.Column('status', db.String(10), nullable=False, server_default='active')
     role_id = db.Column(db.Integer, db.ForeignKey('role.role_id'))
+    supplier_id = db.Column(db.Integer, db.ForeignKey('supplier.supplier_id'))
 
-    def __init__(self, role_id, firstname, lastname, email, username, password, status):
+    def __init__(self, role_id, firstname, lastname, email, username, password, status, supplier_id):
         self.role_id = role_id
         self.firstname = firstname
         self.lastname = lastname
@@ -91,6 +93,7 @@ class User(db.Model, Serializer):
         self.username = username
         self.password = password
         self.status = status
+        self.supplier = supplier_id
 
     def generate_auth_token(self, expiration=1440):
         s = TokenSerializer(app.config['SECRET_KEY'], expires_in=expiration)
@@ -116,7 +119,93 @@ class User(db.Model, Serializer):
             'lastname': self.lastname,
             'email': self.email,
             'username': self.username,
-            'status': self.status
+            'password': self.password,
+            'status': self.status,
+            'supplier_id': self.supplier_id
+        }
+
+class Supplier(db.Model, Serializer):
+    __tablename__ = "supplier"
+    id = db.Column('supplier_id', db.Integer, primary_key=True)
+    supplier_name = db.Column('supplier_name', db.String(50), nullable=False, server_default=u'')
+    users = db.relationship('User', backref='supplier', lazy='dynamic')
+    journeys = db.relationship('Journey', backref='journey', lazy='dynamic')
+
+    def __init__(self, supplier_name):
+        self.supplier_name = supplier_name
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'supplier_name': self.supplier_name
+        }
+
+
+class Journey(db.Model, Serializer):
+    __tablename__ = "journey"
+    id = db.Column('journey_id', db.Integer, primary_key=True)
+    journey_name = db.Column('journey_name', db.String(50), nullable=False, server_default=u'')
+    supplier_id = db.Column(db.Integer, db.ForeignKey('supplier.supplier_id'))
+
+    def __init__(self, supplier_name):
+        self.supplier_name = supplier_name
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'journey_name': self.journey_name,
+            'supplier_id': self.supplier_id
+        }
+
+class JourneyVersion(db.Model, Serializer):
+    __tablename__ = 'journey_version'
+    supplier_id = db.Column(db.Integer, db.ForeignKey('supplier.supplier_id'), primary_key=True)
+    journey_id = db.Column(db.Integer, db.ForeignKey('journey.journey_id'), primary_key=True)
+    version_number = db.Column('version_number', db.Integer, primary_key=True)
+
+    def __init__(self, supplier_id, journey_id, version_number):
+        self.supplier_id=supplier_id
+        self.journey_id = journey_id
+        self.version_number = version_number
+
+    def serialize(self):
+        return {
+            'supplier_id': self.supplier_id,
+            'journey_id': self.journey_id,
+            'version_number': self.version_number
+        }
+
+class Supplier(db.Model, Serializer):
+    __tablename__ = "supplier"
+    id = db.Column('supplier_id', db.Integer, primary_key=True)
+    supplier_name = db.Column('supplier_name', db.String(50), nullable=False, server_default=u'')
+    users = db.relationship('User', backref='supplier', lazy='dynamic')
+    journeys = db.relationship('Journey', backref='journey', lazy='dynamic')
+
+    def __init__(self, supplier_name):
+        self.supplier_name = supplier_name
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'supplier_name': self.supplier_name
+        }
+
+
+class Journey(db.Model, Serializer):
+    __tablename__ = "journey"
+    id = db.Column('journey_id', db.Integer, primary_key=True)
+    journey_name = db.Column('journey_name', db.String(50), nullable=False, server_default=u'')
+    supplier_id = db.Column(db.Integer, db.ForeignKey('supplier.supplier_id'))
+
+    def __init__(self, supplier_name):
+        self.supplier_name = supplier_name
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'journey_name': self.journey_name,
+            'supplier_id': self.supplier_id
         }
 
 
@@ -155,6 +244,29 @@ def authenticated(func):
 
 
 # INITIALIZE VIEW SECTION#
+
+# Suppliers #
+@app.route('/nsdc/v1.0/suppliers', methods=['GET'])
+def get_suppliers():
+    suppliers = Supplier.query.all()
+    return json.dumps(Supplier.serialize_list(suppliers))
+
+@app.route('/nsdc/v1.0/journeys/supplier/<int:supplier_id>', methods=['GET'])
+def get_journey_by_supplier(supplier_id):
+    journeys = Journey.query.filter(Journey.supplier_id == supplier_id)
+    return json.dumps(Journey.serialize_list(journeys))
+
+@app.route('/nsdc/v1.0/journeys/versions/<int:supplier_id>/<int:journey_id>', methods=['GET'])
+def get_versions_by_supplier_and_journey(supplier_id, journey_id):
+    versions = JourneyVersion.query.filter(JourneyVersion.journey_id == journey_id and JourneyVersion.supplier_id == supplier_id)
+    return json.dumps(JourneyVersion.serialize_list(versions))
+
+# Journeys #
+@app.route('/nsdc/v1.0/journeys', methods=['GET'])
+def get_journeys():
+    journeys = Journey.query.all()
+    return json.dumps(Journey.serialize_list(journeys))
+
 #ROLE MANAGE
 @app.route('/nsdc/v1.0/add_role', methods=['POST'])
 @authenticated

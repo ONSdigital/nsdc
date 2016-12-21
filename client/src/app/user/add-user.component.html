@@ -66,6 +66,17 @@
             </div>            
         </div>
 
+        <div class="form-group">
+            <label>Supplier:</label>
+            <select class="form-control" formControlName="supplier_id">
+                <option style="display:block" value="">Choose an option</option>
+                <option *ngFor="let supplier of suppliers" [value]="supplier.id">{{ supplier.supplier_name }} </option>
+            </select>
+            <div *ngIf="userForm.controls['supplier_id'].hasError('required')" class="alert alert-danger">
+                Please enter supplier.
+            </div>            
+        </div>
+
         <button type="submit" (click)="onSubmit()" class="btn btn-primary">Submit</button>    
     </form>
 </div>

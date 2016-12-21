@@ -1,0 +1,17 @@
+<div class="container">
+  <h2>Journeys</h2>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Journey Name</th>
+        <th>Supplier</th>                  
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let journey of journeys">
+        <td><a href="#" [routerLink]="['/journeys', journeys.id]" routerLinkActive="active">{{journey.journey_name}}</a></td>           
+        <td>{{ journey.supplier_id }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
