@@ -32,7 +32,7 @@ def last_line(filename):
         print "Record Count : ", lastline[-11:]
         return lastline[-11:]
 
-#Remaining Data
+#Process remaining lines of file
 def remainder_lines():
     with open(filename) as lines:
         next(lines)
