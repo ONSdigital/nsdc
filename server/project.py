@@ -124,38 +124,6 @@ class User(db.Model, Serializer):
             'supplier_id': self.supplier_id
         }
 
-class Supplier(db.Model, Serializer):
-    __tablename__ = "supplier"
-    id = db.Column('supplier_id', db.Integer, primary_key=True)
-    supplier_name = db.Column('supplier_name', db.String(50), nullable=False, server_default=u'')
-    users = db.relationship('User', backref='supplier', lazy='dynamic')
-    journeys = db.relationship('Journey', backref='journey', lazy='dynamic')
-
-    def __init__(self, supplier_name):
-        self.supplier_name = supplier_name
-
-    def serialize(self):
-        return {
-            'id': self.id,
-            'supplier_name': self.supplier_name
-        }
-
-
-class Journey(db.Model, Serializer):
-    __tablename__ = "journey"
-    id = db.Column('journey_id', db.Integer, primary_key=True)
-    journey_name = db.Column('journey_name', db.String(50), nullable=False, server_default=u'')
-    supplier_id = db.Column(db.Integer, db.ForeignKey('supplier.supplier_id'))
-
-    def __init__(self, supplier_name):
-        self.supplier_name = supplier_name
-
-    def serialize(self):
-        return {
-            'id': self.id,
-            'journey_name': self.journey_name,
-            'supplier_id': self.supplier_id
-        }
 
 class JourneyVersion(db.Model, Serializer):
     __tablename__ = 'journey_version'
@@ -213,21 +181,24 @@ class Permission(db.Model, Serializer):
     __tablename__ = "permission"
     id = db.Column('permission_id', db.Integer, primary_key=True)
     role_id = db.Column('role_id', db.Integer, db.ForeignKey(Role.id))
-    permission_name = db.Column('permission_name', db.Unicode(255), )
-    permission_short_name = db.Column('permission_short_name', db.Unicode(255), )
-    created_at = db.Column('perm_creationDate', db.TIMESTAMP, server_default=db.func.current_timestamp(),nullable=False)
+    permission_name = db.Column('permission_name', db.Unicode(255))
+    permission_description = db.Column('permission_description', db.Unicode(255))
+    permission_short_name = db.Column('permission_short_name', db.Unicode(255))
+    created_at = db.Column('perm_creationDate', db.TIMESTAMP, server_default=db.func.current_timestamp(), nullable=False)
 
-    def __init__(self, role_id, permission_name, permission_short_name):
+    def __init__(self, role_id, permission_name, permission_short_name, permission_description):
         self.role_id = role_id
         self.permission_name = permission_name
         self.permission_short_name = permission_short_name
+        self.permission_description = permission_description
 
     def serialize(self):
         return {
             'id': self.id,
             'role_id': self.role_id,
             'permission_name': self.permission_name,
-            'permission_short_name': self.permission_short_name
+            'permission_short_name': self.permission_short_name,
+            'permission_description': self.permission_description
         }
 
 # Authentication decorator checks for token in header
@@ -318,8 +289,8 @@ def update_role(role_id):
 def add_permission():
     role_id = request.get_json()["role_id"]
     permission_name = request.get_json()["permission_name"]
-    permission_desc = request.get_json()["permission_desc"]
-    permission = Permission(role_id=role_id, permission_name=permission_name, permission_desc=permission_desc)
+    permission_description = request.get_json()["permission_description"]
+    permission = Permission(role_id=role_id, permission_name=permission_name, permission_description=permission_description)
     db.session.add(permission)
     db.session.commit()
     return json.dumps(permission.serialize())
@@ -348,7 +319,6 @@ def get_permission_by_role(role_id):
     return json.dumps(Permission.serialize_list(permissions))
 
 @app.route('/nsdc/v1.0/permissions/user/<int:user_id>', methods=['GET'])
-@authenticated
 def get_permission_by_user(user_id):
     role_id = User.query.get(user_id).role_id;
     permissions = Permission.query.filter(Permission.role_id == role_id)
@@ -365,9 +335,9 @@ def update_permission(permission_id):
     if "permission_name" in request.json:
         perm_name = request.get_json()["permission_name"]
         permission.permission_name = perm_name
-    if "permission_desc" in request.json:
-        perm_desc = request.get_json()["permission_desc"]
-        permission.permission_desc = perm_desc
+    if "permission_description" in request.json:
+        perm_desc = request.get_json()["permission_description"]
+        permission.permission_description = perm_desc
     db.session.commit()
     return json.dumps(permission.serialize())
 
