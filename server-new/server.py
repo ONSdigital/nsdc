@@ -2,7 +2,7 @@ from flask_restful import Api
 
 from config import app
 
-from api.user import User
+from api.user import User, UserList, AddUser
 from api.login import Login
 from api.role import Role
 from api.supplier import Supplier
@@ -14,9 +14,20 @@ base_endpoint = '/nsdc/v1.0/'
 api = Api(app)
 
 api.add_resource(
-    User,
+    UserList,
     base_endpoint + 'users'
 )
+
+api.add_resource(
+    AddUser,
+    base_endpoint + 'users/add'
+)
+
+api.add_resource(
+    User,
+    base_endpoint + 'users/<int:user_id>'
+)
+
 
 api.add_resource(
     Role,

@@ -15,6 +15,16 @@ class UserData(db.Model, Serializer, Auth):
     role_id = db.Column(db.Integer, db.ForeignKey('role.role_id'))
     supplier_id = db.Column(db.Integer, db.ForeignKey('supplier.supplier_id'))
 
+    def __init__(self, role_id, firstname, lastname, email, username, password, status, supplier_id=None):
+        self.role_id = role_id
+        self.firstname = firstname
+        self.lastname = lastname
+        self.email = email
+        self.username = username
+        self.password = password
+        self.status = status
+        self.supplier_id = supplier_id
+
     def serialize(self):
         return {
             'id': self.id,
