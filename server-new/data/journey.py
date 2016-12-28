@@ -8,7 +8,6 @@ class JourneyData(db.Model, Serializer):
     name = db.Column('name', db.String(50), nullable=False, server_default=u'')
     supplier_id = db.Column(db.Integer, db.ForeignKey('supplier.supplier_id'))
 
-    @property
     def serialize(self):
         return {
             'id': self.id,

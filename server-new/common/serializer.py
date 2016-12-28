@@ -6,4 +6,4 @@ class Serializer(object):
 
     @staticmethod
     def serialize_list(l):
-        return [m.serialize for m in l]
+        return [m.serialize() for m in l]

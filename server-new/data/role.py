@@ -9,7 +9,6 @@ class RoleData(db.Model, Serializer):
     description = db.Column('description', db.Unicode(255))
     timestamp = db.Column('timestamp', db.TIMESTAMP, server_default=db.func.current_timestamp(), nullable=False)
 
-    @property
     def serialize(self):
         return {
             'id': self.id,

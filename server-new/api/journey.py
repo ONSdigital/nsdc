@@ -1,11 +1,11 @@
 from flask import jsonify
-from flask_restful import Resource
+from authenticated_resource import AuthenticatedResource
 
 from common.serializer import Serializer
 from data.journey import JourneyData
 
 
-class Journey(Resource, Serializer):
+class Journey(AuthenticatedResource, Serializer):
     def get(self, supplier_id=None):
         if supplier_id is not None:
             journeys = JourneyData.query.filter(JourneyData.supplier_id == supplier_id)
@@ -13,3 +13,4 @@ class Journey(Resource, Serializer):
             journeys = JourneyData.query.all()
 
         return jsonify(JourneyData.serialize_list(journeys))
+        
