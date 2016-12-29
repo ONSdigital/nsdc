@@ -6,6 +6,7 @@ parser = reqparse.RequestParser()
 parser.add_argument('username')
 parser.add_argument('password')
 
+
 class Login(Resource):
     def post(self):
         request_json = parser.parse_args()

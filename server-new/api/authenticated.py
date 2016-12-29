@@ -1,14 +1,21 @@
 from flask import request, abort
 from functools import wraps
 from data.user import UserData
+from itsdangerous import (BadSignature, SignatureExpired)
 
-# Authentication decorator checks for token in header
+
 def authenticated(func):
     @wraps(func)
     def check_token(*args, **kwargs):
         token = request.headers.get("X-Token")
-        if token is None or not UserData.verify_auth_token(token):
-            return abort(400)
+        if token is None:
+            return abort(403) # handle no token
+        try:
+            UserData.verify_auth_token(token)
+        except SignatureExpired:
+            return abort(403) # handle SignatureExpired
+        except BadSignature:
+            return abort(403) # handle BadSignature
 
         return func(*args, **kwargs)
 

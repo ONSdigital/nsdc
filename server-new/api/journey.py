@@ -13,4 +13,3 @@ class Journey(AuthenticatedResource, Serializer):
             journeys = JourneyData.query.all()
 
         return jsonify(JourneyData.serialize_list(journeys))
-        
