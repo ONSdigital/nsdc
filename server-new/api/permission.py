@@ -2,8 +2,8 @@ from config import db
 from flask import jsonify
 from flask_restful import reqparse
 from authenticated_resource import AuthenticatedResource
-
 from data.permission import PermissionData
+from data.user import UserData
 
 parser = reqparse.RequestParser()
 parser.add_argument('name')
@@ -12,10 +12,14 @@ parser.add_argument('short_name')
 
 class Permission(AuthenticatedResource):
 
-    def get(self, role_id=None):
+    def get(self, role_id=None, user_id=None):
         if role_id is not None:
             permissions = PermissionData.query.filter(PermissionData.role_id == role_id)
-        return jsonify(permissions)
+        elif user_id is not None:
+            permissions = PermissionData.query.filter(PermissionData.role_id == UserData.query.get(user_id).role_id)
+        else:
+            permissions = PermissionData.query.all()
+        return jsonify(PermissionData.serialize_list(permissions))
 
     def post(self):
         request_json = parser.parse_args()
@@ -32,8 +36,3 @@ class Permission(AuthenticatedResource):
         PermissionData.query.get(permission_id).delete()
         db.session.commit()
         return ('', 204)
-
-class PermissionList(AuthenticatedResource):
-    def get(self):
-        permissions = PermissionData.query.all()
-        return jsonify(PermissionData.serialize_list(permissions))

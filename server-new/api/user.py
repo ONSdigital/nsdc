@@ -1,12 +1,9 @@
 from config import db
-from flask import jsonify, abort
+from flask import jsonify
 from authenticated_resource import AuthenticatedResource
 from flask_restful import reqparse
-
-from common.serializer import Serializer
 from data.user import UserData
 
-# put in init?
 parser = reqparse.RequestParser()
 parser.add_argument('firstname')
 parser.add_argument('lastname')
@@ -17,14 +14,34 @@ parser.add_argument("email")
 parser.add_argument("username")
 parser.add_argument("password")
 parser.add_argument("status")
+parser.add_argument("supplier_id")
 
-# i dont like this but feels wierd having these classes in seperate files
+class User(AuthenticatedResource):
 
-class User(AuthenticatedResource, Serializer):
+    def get(self, user_id=None):
+        if user_id is not None:
+            user = UserData.query.get(user_id)
+            return jsonify(user.serialize())
+        else:
+            users = UserData.query.all()
+            return jsonify(UserData.serialize_list(users))
 
-    def get(self, user_id):
-        user = UserData.query.get(user_id)
-        return jsonify(user.serialize()) 
+    def post(self):
+        request = parser.parse_args()
+        user = UserData(
+            role_id=request["role_id"],
+            firstname=request["firstname"],
+            lastname=request["lastname"],
+            email=request["email"],
+            username=request["username"],
+            password=request["password"],
+            status=request["status"],
+            supplier_id=request["supplier_id"]
+        )
+
+        db.session.add(user)
+        db.session.commit()
+        return jsonify(UserData.serialize(user))
 
     def put(self, user_id):
         user = UserData.query.get(user_id)
@@ -46,6 +63,8 @@ class User(AuthenticatedResource, Serializer):
             user.password = password
         if request_json["status"] is not None:
             user.status = request_json["status"]
+        if request_json["supplier_id"] is not None:
+            user.supplier_id = request_json["supplier_id"]
         db.session.commit()
         return jsonify(user.serialize())
 
@@ -53,26 +72,3 @@ class User(AuthenticatedResource, Serializer):
         UserData.query.get(user_id).delete()
         db.session.commit()
         return ('', 204)
-
-
-class UserList(AuthenticatedResource, Serializer):
-    def get(self):
-        Users = UserData.query.all()
-        return jsonify(UserData.serialize_list(Users))
-
-class AddUser(AuthenticatedResource, Serializer):
-    def post(self):
-        request_json = parser.parse_args()
-        role_id = request_json["role_id"]
-        firstname = request_json["firstname"]
-        lastname = request_json["lastname"]
-        email = request_json["email"]
-        username = request_json["username"]
-        password = request_json["password"]
-        status = request_json["status"]
-        # supplier_id
-        user = UserData(role_id=role_id, firstname=firstname, lastname=lastname, \
-                email=email, username=username, password=password, status=status)
-        db.session.add(user)
-        db.session.commit()
-        return jsonify(UserData.serialize(user))

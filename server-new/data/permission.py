@@ -1,6 +1,7 @@
 from config import db
 from common.serializer import Serializer
 
+
 class PermissionData(db.Model, Serializer):
     __tablename__ = "permission"
     id = db.Column('permission_id', db.Integer, primary_key=True)

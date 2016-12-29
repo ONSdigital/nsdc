@@ -1,34 +1,31 @@
 from flask_restful import Api
 
 from config import app
-
-from api.user import User, UserList, AddUser
-from api.permission import Permission, PermissionList
+from api.journey import Journey
+from api.journey_version import JourneyVersion
 from api.login import Login
 from api.role import Role
 from api.supplier import Supplier
-from api.journey import Journey
-from api.journey_version import JourneyVersion
+from api.permission import Permission
+from api.user import User
 
 base_endpoint = '/nsdc/v1.0/'
 
 api = Api(app)
 
 api.add_resource(
-    UserList,
-    base_endpoint + 'users'
-)
-
-api.add_resource(
-    AddUser,
+    User,
+    base_endpoint + 'users',
+    base_endpoint + 'users/<int:user_id>',
     base_endpoint + 'users/add'
 )
 
 api.add_resource(
-    User,
-    base_endpoint + 'users/<int:user_id>'
+    Permission,
+    base_endpoint + 'permissions',
+    base_endpoint + 'permissions/role/<role_id>',
+    base_endpoint + 'permissions/user/<user_id>'
 )
-
 
 api.add_resource(
     Role,
@@ -36,16 +33,6 @@ api.add_resource(
     base_endpoint + 'roles/<role_id>'
 )
 
-api.add_resource(
-    Permission,
-    base_endpoint + 'permissions/<int:permission_id>',
-    base_endpoint + 'permissions/role/<int:role_id>',
-)
-
-api.add_resource(
-    PermissionList,
-    base_endpoint + 'permissions',
-)
 
 api.add_resource(
     Supplier,
