@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Configuration } from '../../app.constants';
 import { Http } from '@angular/http';
 import { Role } from '../role';
+import { User } from '../../user/user';
+import { Permission } from '../../permission/permission';
 import { RoleService } from '../role.service';
 import { UserService } from '../../user/user.service';
 import { PermissionService } from '../../permission/permission.service';
@@ -14,6 +16,8 @@ import { PermissionService } from '../../permission/permission.service';
 })
 export class RoleManageComponent implements OnInit {
   roles: Role[];
+  users: User[];
+  permissions: Permission[];
 
   constructor(
     private http: Http,

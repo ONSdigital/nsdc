@@ -37,13 +37,18 @@ export class UserService {
   getUserById(id: number) {
     this.headers.append('X-TOKEN', this.loginService.getToken());
     let userUrl = this.config.Server + 'nsdc/v1.0/users/' + id;
-    return this.http.get(userUrl, { headers: this.headers }).toPromise().then(response => response.json() as User).catch(this.handleError);
+    return this.http.get(userUrl, { headers: this.headers })
+    .toPromise().then(response => response.json() as User)
+    .catch(this.handleError);
   }
 
   getUsersByRole(roleId: number) {
     this.headers.append('X-TOKEN', this.loginService.getToken());
     let userUrl = this.config.Server + 'nsdc/v1.0/users/role/' + roleId;
-    return this.http.get(userUrl, { headers: this.headers }).toPromise().then(response => response.json() as User).catch(this.handleError);
+    return this.http.get(userUrl, { headers: this.headers })
+    .toPromise()
+    .then(response => response.json() as User[])
+    .catch(this.handleError);
   }
 
   updateUser( user: User) {

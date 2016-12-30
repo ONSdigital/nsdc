@@ -9,8 +9,8 @@
     </thead>
     <tbody>
       <tr *ngFor="let role of roles">
-        <td><a href="#" [routerLink]="['/roles', role.id]" routerLinkActive="active">{{role.role_name}}</a></td>
-        <td>{{role.role_description}}</td>            
+        <td><a href="#" [routerLink]="['/roles', role.id]" routerLinkActive="active">{{role.name}}</a></td>
+        <td>{{role.description}}</td>            
       </tr>
     </tbody>
   </table>

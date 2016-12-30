@@ -42,7 +42,7 @@ export class PermissionService {
     let permissionUrl = this.config.Server + 'nsdc/v1.0/permissions/role/' + roleId;
     return this.http.get(permissionUrl, { headers: this.headers })
     .toPromise()
-    .then(response => response.json() as Permission)
+    .then(response => response.json() as Permission[])
     .catch(this.handleError);
   }
 
