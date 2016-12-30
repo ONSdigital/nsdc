@@ -5,5 +5,5 @@ import { Component } from '@angular/core';
   templateUrl : './no-permission.component.html'
 })
 export class NoPermissionComponent {
-    public nopermission;
+  public nopermission;
 }
