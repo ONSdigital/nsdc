@@ -21,7 +21,7 @@ export class UserService {
 
   addUser(user: User) {
     this.headers.append('X-TOKEN', this.loginService.getToken());
-    let userAddUrl = this.config.Server + 'nsdc/v1.0/users/add';
+    let userAddUrl = this.config.Server + 'nsdc/v1.0/users';
     return this.http.post(userAddUrl, JSON.stringify(user), { headers: this.headers } )
       .toPromise().then(() => user).catch(this.handleError);
   }

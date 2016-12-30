@@ -16,8 +16,7 @@ api = Api(app)
 api.add_resource(
     User,
     base_endpoint + 'users',
-    base_endpoint + 'users/<user_id>',
-    base_endpoint + 'users/add'
+    base_endpoint + 'users/<user_id>'
 )
 
 api.add_resource(
