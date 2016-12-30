@@ -11,6 +11,10 @@ class RoleData(db.Model, Serializer):
     timestamp = db.Column('timestamp', db.TIMESTAMP, server_default=db.func.current_timestamp(), nullable=False)
     permissions = db.relationship('PermissionData', secondary=role_permission, lazy='dynamic', backref=db.backref('roles', lazy='dynamic'))
 
+    def __init__(self, name, description):
+        self.name = name
+        self.description = description
+
     def serialize(self):
         return {
             'id': self.id,

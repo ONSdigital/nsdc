@@ -21,8 +21,9 @@ export class RoleService {
 
   addRole(role: Role) {
     this.headers.append('X-TOKEN', this.loginService.getToken());
-    let userAddUrl = this.config.Server + 'nsdc/v1.0/post_role';
-    this.http.post(userAddUrl, JSON.stringify(role), {headers: this.headers} );
+    const roleAddUrl = this.config.Server + 'nsdc/v1.0/roles';
+    return this.http.post(roleAddUrl, JSON.stringify(role), {headers: this.headers} )
+    .toPromise().then(() => role).catch(this.handleError);
   }
 
   getRoles() {

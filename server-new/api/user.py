@@ -16,6 +16,7 @@ parser.add_argument("password")
 parser.add_argument("status")
 parser.add_argument("supplier_id")
 
+
 class User(AuthenticatedResource):
 
     def get(self, user_id=None):

@@ -16,7 +16,7 @@ api = Api(app)
 api.add_resource(
     User,
     base_endpoint + 'users',
-    base_endpoint + 'users/<int:user_id>',
+    base_endpoint + 'users/<user_id>',
     base_endpoint + 'users/add'
 )
 
@@ -32,7 +32,6 @@ api.add_resource(
     base_endpoint + 'roles',
     base_endpoint + 'roles/<role_id>'
 )
-
 
 api.add_resource(
     Supplier,

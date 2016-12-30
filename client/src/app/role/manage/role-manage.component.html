@@ -3,7 +3,7 @@
     <div class="form-group">
         <select class="form-control" (change)="onChange($event.target.value)">
             <option style="display:block" value="">Choose a Role</option>
-            <option *ngFor="let role of roles" [value]="role.id">{{ role.role_name }} </option>
+            <option *ngFor="let role of roles" [value]="role.id">{{ role.name }} </option>
         </select>       
     </div>
 </div>
