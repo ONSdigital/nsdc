@@ -1,7 +1,7 @@
 export class Journey {
     a: number;
+    name: string;
     supplier_id: number;
-    journey_name: string;
 }
 
 export class JourneyVersion {

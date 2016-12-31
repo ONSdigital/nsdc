@@ -4,7 +4,7 @@
         <label>Choose a Supplier:</label>
         <select class="form-control" (change)="onChange($event.target.value)">
             <option style="display:block" value="">Choose a Supplier</option>
-            <option *ngFor="let supplier of suppliers" [value]="supplier.id">{{ supplier.supplier_name }} </option>
+            <option *ngFor="let supplier of suppliers" [value]="supplier.id">{{ supplier.name }} </option>
         </select>       
     </div>
     <div class="form-group form-group-margin">
@@ -18,7 +18,7 @@
         </thead>
         <tbody>
           <tr *ngFor="let journey of journeys">         
-            <td>{{ journey.journey_name }}</td>
+            <td>{{ journey.name }}</td>
             <td><div class="link" (click)="onSelect(journey.id)">Select</div></td>
           </tr>
         </tbody>
