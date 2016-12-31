@@ -16,18 +16,18 @@ export class UserService {
     this.actionUrl = config.Server + 'nsdc/v1.0/users';
 
     this.headers = new Headers();
-    this.headers.append('Content-Type', 'application/json');
+    this.headers.set('Content-Type', 'application/json');
   }
 
   addUser(user: User) {
-    this.headers.append('X-TOKEN', this.loginService.getToken());
+    this.headers.set('X-TOKEN', this.loginService.getToken());
     let userAddUrl = this.config.Server + 'nsdc/v1.0/users';
     return this.http.post(userAddUrl, JSON.stringify(user), { headers: this.headers } )
       .toPromise().then(() => user).catch(this.handleError);
   }
 
   getUsers() {
-    this.headers.append('X-TOKEN', this.loginService.getToken());
+    this.headers.set('X-TOKEN', this.loginService.getToken());
     let userListUrl = this.config.Server + 'nsdc/v1.0/users';
     return this.http.get(userListUrl, { headers: this.headers})
     .toPromise()
@@ -36,7 +36,7 @@ export class UserService {
   }
 
   getUserById(id: number) {
-    this.headers.append('X-TOKEN', this.loginService.getToken());
+    this.headers.set('X-TOKEN', this.loginService.getToken());
     let userUrl = this.config.Server + 'nsdc/v1.0/users/' + id;
     return this.http.get(userUrl, { headers: this.headers })
     .toPromise().then(response => response.json() as User)
@@ -44,7 +44,7 @@ export class UserService {
   }
 
   getUsersByRole(roleId: number) {
-    this.headers.append('X-TOKEN', this.loginService.getToken());
+    this.headers.set('X-TOKEN', this.loginService.getToken());
     let userUrl = this.config.Server + 'nsdc/v1.0/users/role/' + roleId;
     return this.http.get(userUrl, { headers: this.headers })
     .toPromise()
@@ -53,14 +53,14 @@ export class UserService {
   }
 
   updateUser( user: User) {
-    this.headers.append('X-TOKEN', this.loginService.getToken());
+    this.headers.set('X-TOKEN', this.loginService.getToken());
     let userEditUrl = this.config.Server + 'nsdc/v1.0/users/' + user.id;
     return this.http.put(userEditUrl, JSON.stringify(user),
     { headers: this.headers }).toPromise().then(() => user).catch(this.handleError);
   }
 
   deleteUser(id: number) {
-    this.headers.append('X-TOKEN', this.loginService.getToken());
+    this.headers.set('X-TOKEN', this.loginService.getToken());
     let deleteUrl = this.config.Server + 'nsdc/v1.0/users/' + id;
     this.http.delete(deleteUrl, { headers: this.headers });
   }
