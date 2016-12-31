@@ -7,7 +7,7 @@ import { Configuration } from '../../app.constants';
 import { Supplier } from '../../supplier/supplier';
 import { SupplierService } from '../../supplier/supplier.service';
 
-import { Journey, JourneyVersions } from '../journey';
+import { Journey, JourneyVersion } from '../journey';
 import { JourneyService } from '../journey.service';
 
 @Component({
@@ -19,7 +19,7 @@ export class JourneyManageComponent implements OnInit {
 
     public suppliers: Supplier[];
     public journeys: Journey[];
-    public journeyVersions: JourneyVersions[];
+    public journeyVersions: JourneyVersion[];
     public errorMsg: string;
 
     private supplierId: number;
