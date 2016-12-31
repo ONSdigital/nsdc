@@ -1,7 +1,7 @@
 from flask import request, abort
 from functools import wraps
 from data.user import UserData
-from itsdangerous import (BadSignature, SignatureExpired)
+from itsdangerous import BadSignature, SignatureExpired
 
 
 def authenticated(func):

@@ -19,10 +19,13 @@ parser.add_argument("supplier_id")
 
 class User(AuthenticatedResource):
 
-    def get(self, user_id=None):
+    def get(self, user_id=None, role_id=None):
         if user_id is not None:
             user = UserData.query.get(user_id)
             return jsonify(user.serialize())
+        if role_id is not None:
+            users = UserData.query.filter(UserData.role_id == role_id)
+            return jsonify(UserData.serialize_list(users))
         else:
             users = UserData.query.all()
             return jsonify(UserData.serialize_list(users))

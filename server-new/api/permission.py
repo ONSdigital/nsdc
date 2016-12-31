@@ -3,6 +3,7 @@ from flask import jsonify
 from flask_restful import reqparse
 from authenticated_resource import AuthenticatedResource
 from data.permission import PermissionData
+from data.role import RoleData
 from data.user import UserData
 
 parser = reqparse.RequestParser()
@@ -14,9 +15,9 @@ class Permission(AuthenticatedResource):
 
     def get(self, role_id=None, user_id=None):
         if role_id is not None:
-            permissions = PermissionData.query.filter(PermissionData.role_id == role_id)
+            permissions = RoleData.query.get(role_id).permissions.all()
         elif user_id is not None:
-            permissions = PermissionData.query.filter(PermissionData.role_id == UserData.query.get(user_id).role_id)
+            permissions = RoleData.query.get(UserData.query.get(user_id).role_id).permissions.all()
         else:
             permissions = PermissionData.query.all()
         return jsonify(PermissionData.serialize_list(permissions))
