@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { UserService } from './user.service';
 import { User } from './user';
 import { Role } from '../role/role';
@@ -18,15 +19,16 @@ export class AddUserComponent implements OnInit {
   user: User;
   roles: Role[];
   suppliers: Supplier[];
-  errorMsg: string;
-
-  public submitAttempt: boolean = false;
+  submitPending = false;
+  submitFailed = false;
+  errorMessages: any;
 
   constructor(
     private _formBuilder: FormBuilder,
     private roleService: RoleService,
     private userService: UserService,
-    private supplierService: SupplierService
+    private supplierService: SupplierService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -37,8 +39,8 @@ export class AddUserComponent implements OnInit {
       username: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
       password: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
       status: [],
-      role_id: [null, [Validators.required, Validators.minLength(1), Validators.maxLength(30)]],
-      supplier_id: [null, [Validators.required, Validators.minLength(1), Validators.maxLength(30)]]
+      role_id: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(30)]],
+      supplier_id: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(30)]]
     });
     this.user = new User();
     this.roleService.getRoles().then(roles => this.roles = roles);
@@ -47,6 +49,8 @@ export class AddUserComponent implements OnInit {
 
 
   onSubmit() {
+    this.submitFailed = false;
+    this.submitPending = true;
     this.user.username = this.userForm.controls['username'].value;
     this.user.firstname = this.userForm.controls['firstname'].value;
     this.user.lastname = this.userForm.controls['lastname'].value;
@@ -55,6 +59,18 @@ export class AddUserComponent implements OnInit {
     this.user.status = 'active';
     this.user.role_id = this.userForm.controls['role_id'].value;
     this.user.supplier_id = this.userForm.controls['supplier_id'].value;
-    this.userService.addUser(this.user);
+    this.userService.addUser(this.user).subscribe(
+      () => {
+        // success
+        this.submitPending = false;
+        this.router.navigate(['/users']);
+      },
+      error => {
+        console.log(error);
+        this.errorMessages = error.message;
+        this.submitPending = false;
+        this.submitFailed = true;
+      }
+    );
   }
 }

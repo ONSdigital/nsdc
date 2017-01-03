@@ -5,16 +5,14 @@ from flask_restful import reqparse
 from data.user import UserData
 
 parser = reqparse.RequestParser()
-parser.add_argument('firstname')
-parser.add_argument('lastname')
-parser.add_argument("role_id")
 parser.add_argument("firstname")
 parser.add_argument("lastname")
 parser.add_argument("email")
 parser.add_argument("username")
 parser.add_argument("password")
 parser.add_argument("status")
-parser.add_argument("supplier_id")
+parser.add_argument("role_id", required=True, type=int, help='Role is required')
+parser.add_argument("supplier_id", required=True, type=int, help='Supplier is required')
 
 
 class User(AuthenticatedResource):

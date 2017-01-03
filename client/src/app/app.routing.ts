@@ -42,12 +42,12 @@ const appRoutes: Routes = [
         component: UserListComponent
       },
       {
-        path: 'users/:id',
-        component: UserDetailComponent
-      },
-      {
         path: 'users/add',
         component: AddUserComponent
+      },
+      {
+        path: 'users/:id',
+        component: UserDetailComponent
       },
       {
         path: 'roles',

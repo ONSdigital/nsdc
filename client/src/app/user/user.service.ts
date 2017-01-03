@@ -23,7 +23,10 @@ export class UserService {
     this.headers.set('X-TOKEN', this.loginService.getToken());
     let userAddUrl = this.config.Server + 'nsdc/v1.0/users';
     return this.http.post(userAddUrl, JSON.stringify(user), { headers: this.headers } )
-      .toPromise().then(() => user).catch(this.handleError);
+    .map(res => res.json())
+    .catch(res => {
+      return Observable.throw(res.json());
+    });
   }
 
   getUsers() {

@@ -8,7 +8,7 @@ class UserData(db.Model, Serializer, Auth):
     firstname = db.Column('firstname', db.String(50), nullable=False, server_default=u'')
     lastname = db.Column('lastname', db.String(50), server_default=u'')
     email = db.Column('email', db.Unicode(255), server_default=u'', nullable=False, unique=True)
-    username = db.Column('username', db.Unicode(255), nullable=False, server_default=u'')
+    username = db.Column('username', db.Unicode(255), nullable=False, server_default=u'', unique=True)
     password = db.Column('password', db.Unicode(255), nullable=False, server_default='')
     created_at = db.Column('user_creationDate', db.TIMESTAMP, server_default=db.func.current_timestamp(), nullable=False)
     status = db.Column('status', db.String(10), nullable=False, server_default='active')

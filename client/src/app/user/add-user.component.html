@@ -1,8 +1,7 @@
 <div class="container">
     <h2>User Data</h2>
     <br>
-    
-    <form [formGroup]="userForm">
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
             <label>Firstame:</label>
             <input type="text" #refName class="form-control" formControlName="firstname" placeholder="Your firstname">                       
@@ -16,7 +15,6 @@
                 Name cannot exceed 30 characters.
             </div>
         </div>
-
         <div class="form-group">
             <label>Lastame:</label>
             <input type="text" #refName class="form-control" formControlName="lastname" placeholder="Your lastname">                       
@@ -35,9 +33,12 @@
             <label>Role:</label>
             <select class="form-control" formControlName="role_id">
                 <option style="display:block" value="">Choose an option</option>
-                <option *ngFor="let lrole of roles" [value]="lrole.id">{{ lrole.name }} </option>
+                <option *ngFor="let role of roles" [value]="role.id">{{ role.name }} </option>
             </select>
-            <div *ngIf="userForm.controls['role_id'].hasError('required')" class="alert alert-danger">
+            <div
+                *ngIf="userForm.controls['role_id'].hasError('required') && userForm.controls['role_id'].touched"
+                class="alert alert-danger"
+            >
                 Please enter role.
             </div>            
         </div>
@@ -57,7 +58,6 @@
                 Please enter a password.
             </div>
         </div>
-
         <div class="form-group">
             <label>Email:</label>
             <input type="text" class="form-control" formControlName="email" placeholder="Your email">
@@ -65,18 +65,31 @@
                 Please enter email address.
             </div>            
         </div>
-
         <div class="form-group">
             <label>Supplier:</label>
             <select class="form-control" formControlName="supplier_id">
                 <option style="display:block" value="">Choose an option</option>
                 <option *ngFor="let supplier of suppliers" [value]="supplier.id">{{ supplier.name }} </option>
             </select>
-            <div *ngIf="userForm.controls['supplier_id'].hasError('required')" class="alert alert-danger">
+            <div
+                *ngIf="userForm.controls['supplier_id'].hasError('required') && userForm.controls['supplier_id'].touched"
+                class="alert alert-danger"
+            >
                 Please enter supplier.
-            </div>            
+            </div>           
         </div>
-
-        <button type="submit" class="btn btn-primary" (click)="onSubmit()">Submit</button>    
+        <div
+            *ngIf="submitFailed"
+            class="alert alert-danger"
+        >
+            Add user failed
+        </div>  
+        <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="submitPending || userForm.pending"
+        >
+            Submit
+        </button> 
     </form>
 </div>
