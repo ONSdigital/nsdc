@@ -55,17 +55,18 @@
                 >
                   Password cannot exceed 30 characters.
                 </div>
-                <div
-                  *ngIf="loginFailed"
-                  class="alert alert-danger"
-                >
-                  Login Failed
-                </div>
+              </div>
+              <div
+                *ngIf="submitFailed"
+                class="alert alert-danger"
+              >
+                Login Failed
               </div>
               <div class="form-group">
                 <div class="row">
                   <div class="col-sm-6 col-sm-offset-3">
                     <button
+                      [disabled]="submitPending || loginForm.pending"
                       type="submit"
                       name="login-submit"
                       class="form-control btn btn-primary"

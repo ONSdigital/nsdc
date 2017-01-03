@@ -66,7 +66,6 @@ export class AddUserComponent implements OnInit {
         this.router.navigate(['/users']);
       },
       error => {
-        console.log(error);
         this.errorMessages = error.message;
         this.submitPending = false;
         this.submitFailed = true;
