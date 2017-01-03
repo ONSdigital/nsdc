@@ -7,9 +7,9 @@ app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:password@localhos
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 app.config['SECRET_KEY'] = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 app.config['BUNDLE_ERRORS'] = True
+app.config['CORS_HEADERS'] = 'Content-Type'
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 
 cors = CORS(app)
-app.config['CORS_HEADERS'] = 'Content-Type'
 
 db = SQLAlchemy(app)
