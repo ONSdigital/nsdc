@@ -48,7 +48,6 @@ class User(AuthenticatedResource):
     def put(self, user_id):
         user = UserData.query.get(user_id)
         request_json = parser.parse_args()
-        # TODO Must be a nicer way to do this
         if request_json["role_id"] is not None:
             user.role_id = request_json["role_id"]
         if request_json["firstname"] is not None:

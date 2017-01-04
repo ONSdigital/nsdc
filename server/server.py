@@ -24,6 +24,7 @@ api.add_resource(
 api.add_resource(
     Permission,
     base_endpoint + 'permissions',
+    base_endpoint + 'permissions/<permission_id>',
     base_endpoint + 'permissions/role/<role_id>',
     base_endpoint + 'permissions/user/<user_id>'
 )

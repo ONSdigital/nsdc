@@ -30,6 +30,28 @@ export class PermissionService {
   }
 
 
+  updatePermission(permission: Permission) {
+    this.headers.set('X-TOKEN', this.loginService.getSessionId());
+    let permissionEditUrl = this.config.Server + 'nsdc/v1.0/permissions/' + permission.id;
+    return this.http.put(permissionEditUrl, JSON.stringify(permission), { headers: this.headers } )
+    .map(res => res.json())
+    .catch(res => {
+      return Observable.throw(res.json());
+    });
+  }
+
+
+  deletePermission(id: number) {
+    this.headers.set('X-TOKEN', this.loginService.getSessionId());
+    let permissionDeleteUrl = this.config.Server + 'nsdc/v1.0/permissions/' + id;
+    return this.http.delete(permissionDeleteUrl, { headers: this.headers } )
+    .map(res => res.json())
+    .catch(res => {
+      return Observable.throw(res.json());
+    });
+  }
+
+
   getPermissions() {
     this.headers.set('X-TOKEN', this.loginService.getSessionId());
     let permissionListUrl = this.config.Server + 'nsdc/v1.0/permissions';

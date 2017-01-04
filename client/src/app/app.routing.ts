@@ -22,6 +22,7 @@ import { RolePermissionsComponent } from './role/permissions/role-permissions.co
 // Permission
 import { PermissionComponent } from './permission/permission.component';
 import { AddPermissionComponent } from './permission/add/add-permission.component';
+import { EditPermissionComponent } from './permission/edit/edit-permission.component';
 import { NoPermissionComponent } from './permission/no-permission.component';
 
 // Supplier
@@ -87,6 +88,10 @@ const appRoutes: Routes = [
         component: AddPermissionComponent
       },
       {
+        path: 'permissions/:id',
+        component: EditPermissionComponent
+      },
+      {
         path: 'permissions',
         component: PermissionComponent
       },
@@ -103,8 +108,8 @@ const appRoutes: Routes = [
         component: JourneyManageComponent
       },
       {
-          path: 'no-permission',
-          component: NoPermissionComponent
+        path: 'no-permission',
+        component: NoPermissionComponent
       }
     ]
   }
@@ -122,6 +127,7 @@ export const routedComponents = [
   RoleListComponent,
   PermissionComponent,
   AddPermissionComponent,
+  EditPermissionComponent,
   RoleManageComponent,
   AddRoleComponent,
   SupplierComponent,

@@ -15,6 +15,8 @@ import { UserPermissionsGuard } from './user-permissions.guard';
 import { LoginGuard } from './login/login.guard';
 import { IsLoggedInGuard } from './login/is-logged-in.guard';
 import { Configuration } from './app.constants';
+import { ModalModule } from 'angular2-modal';
+import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
 
 
 @NgModule({
@@ -23,7 +25,9 @@ import { Configuration } from './app.constants';
     HttpModule,
     routing,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    ModalModule.forRoot(),
+    BootstrapModalModule
   ],
   declarations: [
     AppComponent,

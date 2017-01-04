@@ -14,7 +14,12 @@ parser.add_argument('short_name')
 
 class Permission(AuthenticatedResource):
 
-    def get(self, role_id=None, user_id=None):
+    def get(self, role_id=None, user_id=None, permission_id=None):
+
+        if permission_id is not None:
+            permission = PermissionData.query.get(permission_id)
+            return jsonify(permission.serialize())
+
         if role_id is not None:
             permissions = RoleData.query.get(role_id).permissions.all()
         elif user_id is not None:
@@ -37,11 +42,17 @@ class Permission(AuthenticatedResource):
 
     def put(self, permission_id):
         permission = PermissionData.query.get(permission_id)
-        # TODO
+        request_json = parser.parse_args()
+        if request_json['name'] is not None:
+            permission.name = request_json['name']
+        if request_json['short_name'] is not None:
+            permission.short_name = request_json['short_name']
+        if request_json['description'] is not None:
+            permission.description = request_json['description']
         db.session.commit()
         return jsonify(permission.serialize())
 
     def delete(self, permission_id):
-        PermissionData.query.get(permission_id).delete()
+        PermissionData.query.filter_by(id=permission_id).delete()
         db.session.commit()
-        return ('', 204)
+        return '', 204
