@@ -43,7 +43,7 @@ class User(AuthenticatedResource):
 
         db.session.add(user)
         db.session.commit()
-        return jsonify(UserData.serialize(user))
+        return jsonify(user.serialize())
 
     def put(self, user_id):
         user = UserData.query.get(user_id)

@@ -19,6 +19,17 @@ export class PermissionService {
     this.headers.set('Content-Type', 'application/json');
   }
 
+  addPermission(permission: Permission) {
+    this.headers.set('X-TOKEN', this.loginService.getSessionId());
+    let permissionAddUrl = this.config.Server + 'nsdc/v1.0/permissions';
+    return this.http.post(permissionAddUrl, JSON.stringify(permission), { headers: this.headers } )
+    .map(res => res.json())
+    .catch(res => {
+      return Observable.throw(res.json());
+    });
+  }
+
+
   getPermissions() {
     this.headers.set('X-TOKEN', this.loginService.getSessionId());
     let permissionListUrl = this.config.Server + 'nsdc/v1.0/permissions';

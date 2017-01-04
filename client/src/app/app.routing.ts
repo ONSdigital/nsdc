@@ -21,6 +21,7 @@ import { RolePermissionsComponent } from './role/permissions/role-permissions.co
 
 // Permission
 import { PermissionComponent } from './permission/permission.component';
+import { AddPermissionComponent } from './permission/add/add-permission.component';
 import { NoPermissionComponent } from './permission/no-permission.component';
 
 // Supplier
@@ -82,6 +83,10 @@ const appRoutes: Routes = [
         }
       },
       {
+        path: 'permissions/add',
+        component: AddPermissionComponent
+      },
+      {
         path: 'permissions',
         component: PermissionComponent
       },
@@ -116,6 +121,7 @@ export const routedComponents = [
   UserDetailComponent,
   RoleListComponent,
   PermissionComponent,
+  AddPermissionComponent,
   RoleManageComponent,
   AddRoleComponent,
   SupplierComponent,

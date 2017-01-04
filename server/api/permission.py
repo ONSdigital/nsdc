@@ -11,6 +11,7 @@ parser.add_argument('name')
 parser.add_argument('description')
 parser.add_argument('short_name')
 
+
 class Permission(AuthenticatedResource):
 
     def get(self, role_id=None, user_id=None):
@@ -24,8 +25,15 @@ class Permission(AuthenticatedResource):
 
     def post(self):
         request_json = parser.parse_args()
-        # TODO
-        return jsonify(request_json)
+        permission = PermissionData(
+            request_json['name'],
+            request_json['short_name'],
+            request_json['description']
+        )
+
+        db.session.add(permission)
+        db.session.commit()
+        return jsonify(permission.serialize())
 
     def put(self, permission_id):
         permission = PermissionData.query.get(permission_id)
