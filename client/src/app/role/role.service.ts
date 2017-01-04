@@ -20,14 +20,14 @@ export class RoleService {
   }
 
   addRole(role: Role) {
-    this.headers.set('X-TOKEN', this.loginService.getToken());
+    this.headers.set('X-TOKEN', this.loginService.getSessionId());
     const roleAddUrl = this.config.Server + 'nsdc/v1.0/roles';
     return this.http.post(roleAddUrl, JSON.stringify(role), {headers: this.headers} )
     .toPromise().then(() => role).catch(this.handleError);
   }
 
   getRoles() {
-    this.headers.set('X-TOKEN', this.loginService.getToken());
+    this.headers.set('X-TOKEN', this.loginService.getSessionId());
     let roleListUrl = this.config.Server + 'nsdc/v1.0/roles';
     return this.http.get(roleListUrl, {headers: this.headers})
     .toPromise()
@@ -36,7 +36,7 @@ export class RoleService {
   }
 
   getRoleById(id: number) {
-    this.headers.set('X-TOKEN', this.loginService.getToken());
+    this.headers.set('X-TOKEN', this.loginService.getSessionId());
     let roleUrl = this.config.Server + 'nsdc/v1.0/roles/' + id;
     return this.http.get(roleUrl, {headers: this.headers})
     .toPromise()
@@ -45,13 +45,13 @@ export class RoleService {
   }
 
   updateUser(id: number, role: Role) {
-    this.headers.set('X-TOKEN', this.loginService.getToken());
+    this.headers.set('X-TOKEN', this.loginService.getSessionId());
     let roleEditUrl = this.config.Server + 'nsdc/v1.0/roles/' + id;
     this.http.put(roleEditUrl, JSON.stringify(role), {headers: this.headers});
   }
 
   deleteRole(id: number) {
-    this.headers.set('X-TOKEN', this.loginService.getToken());
+    this.headers.set('X-TOKEN', this.loginService.getSessionId());
     let deleteUrl = this.config.Server + 'nsdc/v1.0/roles/' + id;
     this.http.delete(deleteUrl, {headers: this.headers});
   }

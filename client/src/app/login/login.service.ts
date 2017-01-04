@@ -6,14 +6,14 @@ import { User } from '../user/user';
 @Injectable()
 export class LoginService {
   private loggedIn = false;
-  private token: string;
+  private sessionId: string;
   private currentUserId: number;
 
   constructor(private http: Http, private config: Configuration) {
-    const token = localStorage.getItem('auth_token');
-    this.currentUserId = Number(localStorage.getItem('user_id'));
-    this.loggedIn = !!token;
-    this.token = token;
+    const sessionId = sessionStorage.getItem('session_id');
+    this.currentUserId = Number(sessionStorage.getItem('user_id'));
+    this.loggedIn = !!sessionId;
+    this.sessionId = sessionId;
   }
 
   login(username, password) {
@@ -28,19 +28,19 @@ export class LoginService {
       )
       .map(res => res.json())
       .map(res => {
-        if (res.token) {
-          localStorage.setItem('auth_token', res.token);
-          localStorage.setItem('user_id', res.user_id);
+        if (res.id) {
+          sessionStorage.setItem('session_id', res.id);
+          sessionStorage.setItem('user_id', res.user_id);
           this.loggedIn = true;
           this.currentUserId = res.user_id;
-          this.token = res.token;
+          this.sessionId = res.id;
         }
-        return res.token;
+        return res.id;
       });
   }
 
-  getToken() {
-    return this.token;
+  getSessionId() {
+    return this.sessionId;
   }
 
   getCurrentUserId() {
@@ -48,8 +48,9 @@ export class LoginService {
   }
 
   logout() {
-    localStorage.removeItem('auth_token');
-    this.token = null;
+    localStorage.removeItem('session_id');
+    localStorage.removeItem('user_id');
+    this.sessionId = null;
     this.loggedIn = false;
     this.currentUserId = null;
   }

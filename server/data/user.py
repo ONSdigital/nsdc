@@ -1,10 +1,9 @@
 from config import db
 from common.serializer import Serializer
-from common.auth import Auth
 
-class UserData(db.Model, Serializer, Auth):
+class UserData(db.Model, Serializer):
     __tablename__ = "user"
-    id = db.Column('id', db.Integer, primary_key=True)
+    id = db.Column('user_id', db.Integer, primary_key=True)
     firstname = db.Column('firstname', db.String(50), nullable=False, server_default=u'')
     lastname = db.Column('lastname', db.String(50), server_default=u'')
     email = db.Column('email', db.Unicode(255), server_default=u'', nullable=False, unique=True)

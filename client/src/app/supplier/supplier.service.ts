@@ -21,7 +21,7 @@ export class SupplierService {
   }
 
   getSuppliers() {
-    this.headers.set('X-TOKEN', this.loginService.getToken());
+    this.headers.set('X-TOKEN', this.loginService.getSessionId());
     return this.http.get(this.actionUrl, { headers: this.headers})
     .toPromise().then(response => response.json() as Supplier[]).catch(this.handleError);
   }

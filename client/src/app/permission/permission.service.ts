@@ -20,7 +20,7 @@ export class PermissionService {
   }
 
   getPermissions() {
-    this.headers.set('X-TOKEN', this.loginService.getToken());
+    this.headers.set('X-TOKEN', this.loginService.getSessionId());
     let permissionListUrl = this.config.Server + 'nsdc/v1.0/permissions';
     return this.http.get(permissionListUrl, { headers: this.headers })
     .toPromise()
@@ -29,7 +29,7 @@ export class PermissionService {
   }
 
   getPermissionById(id: number) {
-    this.headers.set('X-TOKEN', this.loginService.getToken());
+    this.headers.set('X-TOKEN', this.loginService.getSessionId());
     let permissionUrl = this.config.Server + 'nsdc/v1.0/permissions/' + id;
     return this.http.get(permissionUrl, { headers: this.headers })
     .toPromise()
@@ -38,7 +38,7 @@ export class PermissionService {
   }
 
   getPermissionByRole(roleId: number) {
-    this.headers.set('X-TOKEN', this.loginService.getToken());
+    this.headers.set('X-TOKEN', this.loginService.getSessionId());
     let permissionUrl = this.config.Server + 'nsdc/v1.0/permissions/role/' + roleId;
     return this.http.get(permissionUrl, { headers: this.headers })
     .toPromise()
