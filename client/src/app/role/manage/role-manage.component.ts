@@ -18,6 +18,7 @@ export class RoleManageComponent implements OnInit {
   roles: Role[];
   users: User[];
   permissions: Permission[];
+  selectedRoleId: number;
 
   constructor(
     private http: Http,
@@ -31,6 +32,7 @@ export class RoleManageComponent implements OnInit {
   }
 
   onChange(roleId) {
+    this.selectedRoleId = roleId;
     this.userService.getUsersByRole(roleId).then(users => this.users = users);
     this.permissionService.getPermissionByRole(roleId).then(permissions => this.permissions = permissions);
   }

@@ -8,10 +8,9 @@
     </div>
 </div>
 
-<div class="container">
-<h4>Users</h4>
-
-<table class="table table-hover">
+<div *ngIf="selectedRoleId" class="container">
+  <h4>Users</h4>
+  <table class="table table-hover">
     <thead>
       <tr>
         <th>UserName</th>
@@ -31,7 +30,6 @@
       </tr>
     </tbody>
   </table>
-
   <h4>Permissions</h4>
   <table class="table table-hover">
     <thead>
@@ -49,4 +47,12 @@
       </tr>
     </tbody>
   </table>
-  </div>
+  <div class="col-sm-12">
+    <a
+      class="btn btn-primary right"
+      [routerLink]="['/roles', selectedRoleId, 'permissions']"
+    >
+      Add/Remove Permissions
+    </a>
+  </div>  
+</div>
