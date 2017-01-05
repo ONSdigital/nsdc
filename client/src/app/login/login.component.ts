@@ -11,6 +11,8 @@ import { LoginService } from './login.service';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
+  submitFailed = false;
+  submitPending = false;
 
   constructor(
     private loginService: LoginService,
@@ -20,18 +22,27 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
-      email: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
-      password: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(30)]]
+      username: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
+      password: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]]
     });
   }
 
   login() {
+    this.submitFailed = false;
+    this.submitPending = true;
     this.loginService.login(
-      this.loginForm.controls['email'].value,
+      this.loginForm.controls['username'].value,
       this.loginForm.controls['password'].value
     )
-    .subscribe(() => {
-      this.router.navigate(['']);
-    });
+    .subscribe(
+      () => {
+        this.submitPending = false;
+        this.router.navigate(['']);
+      },
+      error => {
+        this.submitPending = false;
+        this.submitFailed = true;
+      }
+    );
   }
 }

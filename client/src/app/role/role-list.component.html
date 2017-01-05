@@ -1,5 +1,9 @@
 <div class="container">
-  <h2>Roles</h2>                    
+  <h2>Roles</h2>
+  <div class="manage">
+    <a class="btn btn-primary right" [routerLink]="['/roles/add']">Add Role</a>
+    <div class="clear"></div>
+  </div>                 
   <table class="table table-hover">
     <thead>
       <tr>
@@ -9,8 +13,8 @@
     </thead>
     <tbody>
       <tr *ngFor="let role of roles">
-        <td><a href="#" [routerLink]="['/roles', role.id]" routerLinkActive="active">{{role.role_name}}</a></td>
-        <td>{{role.role_description}}</td>            
+        <td><a href="#" [routerLink]="['/roles', role.id]" routerLinkActive="active">{{role.name}}</a></td>
+        <td>{{role.description}}</td>            
       </tr>
     </tbody>
   </table>

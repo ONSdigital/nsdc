@@ -1,13 +1,19 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { Configuration } from '../app.constants';
+import { User } from '../user/user';
 
 @Injectable()
 export class LoginService {
   private loggedIn = false;
+  private token: string;
+  private currentUserId: number;
 
   constructor(private http: Http, private config: Configuration) {
-    this.loggedIn = !!localStorage.getItem('auth_token');
+    const token = localStorage.getItem('auth_token');
+    this.currentUserId = Number(localStorage.getItem('user_id'));
+    this.loggedIn = !!token;
+    this.token = token;
   }
 
   login(username, password) {
@@ -24,19 +30,28 @@ export class LoginService {
       .map(res => {
         if (res.token) {
           localStorage.setItem('auth_token', res.token);
+          localStorage.setItem('user_id', res.user_id);
           this.loggedIn = true;
+          this.currentUserId = res.user_id;
+          this.token = res.token;
         }
         return res.token;
       });
   }
 
   getToken() {
-    return localStorage.getItem('auth_token');
+    return this.token;
+  }
+
+  getCurrentUserId() {
+    return this.currentUserId;
   }
 
   logout() {
     localStorage.removeItem('auth_token');
+    this.token = null;
     this.loggedIn = false;
+    this.currentUserId = null;
   }
 
   isLoggedIn() {

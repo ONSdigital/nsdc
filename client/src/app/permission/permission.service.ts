@@ -16,11 +16,11 @@ export class PermissionService {
   constructor(private http: Http, private config: Configuration, private loginService: LoginService) {
     this.actionUrl = config.ServerWithApiUrl;
     this.headers = new Headers();
-    this.headers.append('Content-Type', 'application/json');
+    this.headers.set('Content-Type', 'application/json');
   }
 
   getPermissions() {
-    this.headers.append('X-TOKEN', this.loginService.getToken());
+    this.headers.set('X-TOKEN', this.loginService.getToken());
     let permissionListUrl = this.config.Server + 'nsdc/v1.0/permissions';
     return this.http.get(permissionListUrl, { headers: this.headers })
     .toPromise()
@@ -29,7 +29,7 @@ export class PermissionService {
   }
 
   getPermissionById(id: number) {
-    this.headers.append('X-TOKEN', this.loginService.getToken());
+    this.headers.set('X-TOKEN', this.loginService.getToken());
     let permissionUrl = this.config.Server + 'nsdc/v1.0/permissions/' + id;
     return this.http.get(permissionUrl, { headers: this.headers })
     .toPromise()
@@ -38,11 +38,11 @@ export class PermissionService {
   }
 
   getPermissionByRole(roleId: number) {
-    this.headers.append('X-TOKEN', this.loginService.getToken());
+    this.headers.set('X-TOKEN', this.loginService.getToken());
     let permissionUrl = this.config.Server + 'nsdc/v1.0/permissions/role/' + roleId;
     return this.http.get(permissionUrl, { headers: this.headers })
     .toPromise()
-    .then(response => response.json() as Permission)
+    .then(response => response.json() as Permission[])
     .catch(this.handleError);
   }
 

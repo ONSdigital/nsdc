@@ -1,0 +1,15 @@
+<div class="container">
+  <h2>Suppliers</h2>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Supplier Name</th>                   
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let supplier of suppliers">
+        <td><a href="#" [routerLink]="['/suppliers', supplier.id]" routerLinkActive="active">{{supplier.name}}</a></td>           
+      </tr>
+    </tbody>
+  </table>
+</div>
