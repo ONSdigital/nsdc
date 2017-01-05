@@ -15,7 +15,8 @@ import { UserDetailComponent } from './user/user-detail.component';
 // Role
 import { RoleListComponent } from './role/role-list.component';
 import { RoleManageComponent } from './role/manage/role-manage.component';
-import { AddRoleComponent } from './role/add-role.component';
+import { AddRoleComponent } from './role/add/add-role.component';
+import { EditRoleComponent } from './role/edit/edit-role.component';
 
 import { RolePermissionsComponent } from './role/permissions/role-permissions.component';
 
@@ -70,6 +71,10 @@ const appRoutes: Routes = [
       {
         path: 'roles/add',
         component: AddRoleComponent
+      },
+      {
+        path: 'roles/:id',
+        component: EditRoleComponent
       },
       {
         path: 'roles/:id/permissions',
@@ -130,6 +135,7 @@ export const routedComponents = [
   EditPermissionComponent,
   RoleManageComponent,
   AddRoleComponent,
+  EditRoleComponent,
   SupplierComponent,
   JourneyComponent,
   JourneyManageComponent,

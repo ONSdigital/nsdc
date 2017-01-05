@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Role } from '../role/role';
-import { Configuration } from '../app.constants';
-import { RoleService } from '../role/role.service';
+import { Role } from '../role';
+import { RoleService } from '../role.service';
 
 @Component({
-  selector: 'add-role',
-  templateUrl : './add-role.component.html',
-  providers: [RoleService, Configuration]
+  selector: 'edit-role',
+  templateUrl: 'edit-role.component.html',
+  providers: [RoleService]
 })
-export class AddRoleComponent implements OnInit {
+export class EditRoleComponent implements OnInit {
   roleForm: FormGroup;
   role: Role;
   errorMsg: string;
