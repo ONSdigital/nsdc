@@ -8,7 +8,6 @@ from api.role import Role
 from api.supplier import Supplier
 from api.permission import Permission
 from api.user import User
-from data.user_session import UserSessionData
 
 base_endpoint = '/nsdc/v1.0/'
 
