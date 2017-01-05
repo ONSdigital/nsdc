@@ -44,9 +44,9 @@ export class RoleService {
     .catch(this.handleError);
   }
 
-  updateRole(id: number, role: Role) {
+  updateRole(role: Role) {
     this.headers.set('X-TOKEN', this.loginService.getSessionId());
-    let roleEditUrl = this.config.Server + 'nsdc/v1.0/roles/' + id;
+    let roleEditUrl = this.config.Server + 'nsdc/v1.0/roles/' + role.id;
     return this.http.put(roleEditUrl, JSON.stringify(role), {headers: this.headers})
     .map(res => res.json())
     .catch(res => {
