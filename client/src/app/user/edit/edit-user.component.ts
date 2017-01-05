@@ -1,20 +1,20 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { UserService } from './user.service';
-import { User } from './user';
 import { ActivatedRoute } from '@angular/router';
-import { Configuration } from '../app.constants';
-import { Role } from '../role/role';
-import { RoleService } from '../role/role.service';
-import { Supplier } from '../supplier/supplier';
-import { SupplierService } from '../supplier/supplier.service';
+import { UserService } from '../user.service';
+import { User } from '../user';
+import { Configuration } from '../../app.constants';
+import { Role } from '../../role/role';
+import { RoleService } from '../../role/role.service';
+import { Supplier } from '../../supplier/supplier';
+import { SupplierService } from '../../supplier/supplier.service';
 
 @Component({
   selector: 'update-user',
-  templateUrl : './user-detail.component.html',
+  templateUrl : './edit-user.component.html',
   providers: [UserService, RoleService, SupplierService, Configuration]
 })
-export class UserDetailComponent implements OnInit, OnDestroy {
+export class EditUserComponent implements OnInit, OnDestroy {
 
   userForm: FormGroup;
   user: User;

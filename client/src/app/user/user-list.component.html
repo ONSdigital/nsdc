@@ -11,7 +11,9 @@
         <th>Firstname</th>
         <th>Lastname</th>
         <th>Email</th>
-        <th>Status</th>                      
+        <th>Status</th>                   
+        <th></th>                   
+        <th></th>                   
       </tr>
     </thead>
     <tbody>
@@ -21,6 +23,19 @@
         <td>{{user.lastname}}</td>
         <td>{{user.email}}</td> 
         <td>{{user.status}}</td>
+        <td>
+          <button
+            class="btn btn-primary"
+            [routerLink]="['/users', user.id]"
+          >
+            Edit
+          </button>
+        <td>
+        <td>
+          <button class="btn btn-danger" (click)="onDeleteClicked(user.id)">
+            Delete
+          </button>
+        <td>
       </tr>
     </tbody>
   </table>

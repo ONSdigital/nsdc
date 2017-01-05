@@ -65,7 +65,11 @@ export class UserService {
   deleteUser(id: number) {
     this.headers.set('X-TOKEN', this.loginService.getSessionId());
     let deleteUrl = this.config.Server + 'nsdc/v1.0/users/' + id;
-    this.http.delete(deleteUrl, { headers: this.headers });
+    return this.http.delete(deleteUrl, { headers: this.headers })
+    .map(res => res.json())
+    .catch(res => {
+      return Observable.throw(res.json());
+    });
   }
 
   private handleError(error: any): Promise<any> {

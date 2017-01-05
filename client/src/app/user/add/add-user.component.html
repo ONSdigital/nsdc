@@ -53,7 +53,7 @@
 
         <div class="form-group">
             <label>Password:</label>
-            <input type="text" #refName class="form-control" formControlName="password" placeholder="Your password">                       
+            <input type="password" #refName class="form-control" formControlName="password" placeholder="Your password">                       
             <div *ngIf="userForm.controls['password'].hasError('required') && submitAttempt" class="alert alert-danger">
                 Please enter a password.
             </div>
