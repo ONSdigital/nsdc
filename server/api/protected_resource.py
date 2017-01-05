@@ -1,12 +1,11 @@
 from flask import request, abort
-from flask_restful import Resource
 from functools import wraps
 from data.user import UserData
 from data.role import RoleData
 from common.session import verify_session_id, SessionExpired, BadSession
 
 
-def protected_decorator_factory(permission_string):
+def protected_resource(permission_string):
     def decorator(func):
         @wraps(func)
         def check_has_permission(*args, **kwargs):
@@ -34,9 +33,3 @@ def protected_decorator_factory(permission_string):
 
         return check_has_permission
     return decorator
-
-def ProtectedResource(permission_string):
-
-    class Protected(Resource):
-        method_decorators = [protected_decorator_factory(permission_string)]
-    return Protected

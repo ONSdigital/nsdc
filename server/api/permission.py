@@ -2,6 +2,7 @@ from config import db
 from flask import jsonify
 from flask_restful import reqparse
 from authenticated_resource import AuthenticatedResource
+from protected_resource import protected_resource
 from data.permission import PermissionData
 from data.role import RoleData
 from data.user import UserData
@@ -14,6 +15,7 @@ parser.add_argument('short_name')
 
 class Permission(AuthenticatedResource):
 
+    @protected_resource('VIEW_PERMISSIONS')
     def get(self, role_id=None, user_id=None, permission_id=None):
 
         if permission_id is not None:
@@ -28,6 +30,7 @@ class Permission(AuthenticatedResource):
             permissions = PermissionData.query.all()
         return jsonify(PermissionData.serialize_list(permissions))
 
+    @protected_resource('ADD_PERMISSIONS')
     def post(self):
         request_json = parser.parse_args()
         permission = PermissionData(
@@ -40,6 +43,7 @@ class Permission(AuthenticatedResource):
         db.session.commit()
         return jsonify(permission.serialize())
 
+    @protected_resource('EDIT_PERMISSIONS')
     def put(self, permission_id):
         permission = PermissionData.query.get(permission_id)
         request_json = parser.parse_args()
@@ -52,6 +56,7 @@ class Permission(AuthenticatedResource):
         db.session.commit()
         return jsonify(permission.serialize())
 
+    @protected_resource('DELETE_PERMISSIONS')
     def delete(self, permission_id):
         PermissionData.query.filter_by(id=permission_id).delete()
         db.session.commit()
