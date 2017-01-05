@@ -61,7 +61,6 @@ export class AddUserComponent implements OnInit {
     this.user.supplier_id = this.userForm.controls['supplier_id'].value;
     this.userService.addUser(this.user).subscribe(
       () => {
-        // success
         this.submitPending = false;
         this.router.navigate(['/users']);
       },

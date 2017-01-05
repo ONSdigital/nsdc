@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../user.service';
 import { User } from '../user';
 import { Configuration } from '../../app.constants';
@@ -30,6 +30,7 @@ export class EditUserComponent implements OnInit, OnDestroy {
     private userService: UserService,
     private roleService: RoleService,
     private supplierService: SupplierService,
+    private router: Router,
     private route: ActivatedRoute
   ) {}
 
@@ -78,7 +79,14 @@ export class EditUserComponent implements OnInit, OnDestroy {
     this.user.email = this.userForm.controls['email'].value;
     this.user.role_id = this.userForm.controls['role_id'].value;
     this.user.supplier_id = this.userForm.controls['supplier_id'].value;
-    this.userService.updateUser(this.user);
+    this.userService.updateUser(this.user).then(
+      () => {
+        this.router.navigate(['/users']);
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 
   ngOnDestroy() {
