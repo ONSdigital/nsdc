@@ -5,6 +5,7 @@ import { ManageModuleComponent } from './manage/manage-module.component';
 import { LoginComponent } from './login/login.component';
 import { LoginGuard } from './login/login.guard';
 import { UserPermissionsGuard } from './user-permissions.guard';
+import { IsLoggedInGuard } from './login/is-logged-in.guard';
 
 // User
 import { UserListComponent } from './user/user-list.component';
@@ -29,6 +30,11 @@ import { JourneyManageComponent } from './journey/manage/journey-manage.componen
 import { JourneyDetailsManageComponent } from './journey/manage/journey-details-manage.component';
 
 const appRoutes: Routes = [
+  {
+    canActivate: [IsLoggedInGuard],
+    path: 'login',
+    component: LoginComponent
+  },
   {
     path: '',
     canActivateChild: [LoginGuard],
@@ -90,14 +96,11 @@ const appRoutes: Routes = [
           component: NoPermissionComponent
       }
     ]
-  },
-  {
-    path: 'login',
-    component: LoginComponent
   }
 ];
 
-export const routing = RouterModule.forRoot(appRoutes);
+// Use hash based routing due to https://github.com/angular/angular/issues/13530
+export const routing = RouterModule.forRoot(appRoutes, {useHash: true});
 
 export const routedComponents = [
     ManageModuleComponent,

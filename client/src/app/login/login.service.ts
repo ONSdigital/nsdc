@@ -48,8 +48,8 @@ export class LoginService {
   }
 
   logout() {
-    localStorage.removeItem('session_id');
-    localStorage.removeItem('user_id');
+    sessionStorage.removeItem('session_id');
+    sessionStorage.removeItem('user_id');
     this.sessionId = null;
     this.loggedIn = false;
     this.currentUserId = null;
