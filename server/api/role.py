@@ -1,6 +1,6 @@
 from config import db
 from flask import jsonify
-from protected_resource import ProtectedResource
+from authenticated_resource import AuthenticatedResource
 from flask_restful import reqparse
 from data.role import RoleData
 
@@ -9,9 +9,10 @@ parser = reqparse.RequestParser()
 parser.add_argument('name')
 parser.add_argument('description')
 
+
 # all role endpoints are protected by the permission short name 'TEST_PERM'
 # will modify later e.g. to apply to only get endpoints
-class Role(ProtectedResource('TEST_PERM')):
+class Role(AuthenticatedResource):
     def get(self, role_id=None):
         if role_id is not None:
             role = RoleData.query.get(role_id).serialize()

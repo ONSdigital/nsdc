@@ -31,7 +31,7 @@
         <div class="form-group">
             <label>Role:</label>
             <select class="form-control" formControlName="role_id">
-                <option style="display:block" value="">Choose an option</option>
+                <option style="display:block" value="null">Choose an option</option>
                 <option *ngFor="let lrole of roles" [value]="lrole.id">{{ lrole.name }} </option>
             </select>
             <div *ngIf="userForm.controls['role_id'].hasError('required')" class="alert alert-danger">
@@ -62,7 +62,7 @@
         <div class="form-group">
             <label>Supplier:</label>
             <select class="form-control" formControlName="supplier_id">
-                <option style="display:block" value="">Choose an option</option>
+                <option style="display:block" value="null">Choose an option</option>
                 <option *ngFor="let supplier of suppliers" [value]="supplier.id">{{ supplier.name }} </option>
             </select>
             <div *ngIf="userForm.controls['supplier_id'].hasError('required')" class="alert alert-danger">

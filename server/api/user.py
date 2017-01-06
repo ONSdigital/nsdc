@@ -12,7 +12,7 @@ parser.add_argument("username")
 parser.add_argument("password")
 parser.add_argument("status")
 parser.add_argument("role_id", required=True, type=int, help='Role is required')
-parser.add_argument("supplier_id", required=True, type=int, help='Supplier is required')
+parser.add_argument("supplier_id", required=False, type=int)
 
 
 class User(AuthenticatedResource):
