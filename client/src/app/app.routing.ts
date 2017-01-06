@@ -9,8 +9,8 @@ import { IsLoggedInGuard } from './login/is-logged-in.guard';
 
 // User
 import { UserListComponent } from './user/user-list.component';
-import { AddUserComponent } from './user/add-user.component';
-import { UserDetailComponent } from './user/user-detail.component';
+import { AddUserComponent } from './user/add/add-user.component';
+import { EditUserComponent } from './user/edit/edit-user.component';
 
 // Role
 import { RoleListComponent } from './role/role-list.component';
@@ -57,7 +57,7 @@ const appRoutes: Routes = [
       },
       {
         path: 'users/:id',
-        component: UserDetailComponent
+        component: EditUserComponent
       },
       {
         path: 'roles',
@@ -123,7 +123,7 @@ export const routedComponents = [
   LoginComponent,
   UserListComponent,
   AddUserComponent,
-  UserDetailComponent,
+  EditUserComponent,
   RoleListComponent,
   PermissionComponent,
   AddPermissionComponent,

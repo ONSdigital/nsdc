@@ -1,20 +1,20 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { UserService } from './user.service';
-import { User } from './user';
-import { ActivatedRoute } from '@angular/router';
-import { Configuration } from '../app.constants';
-import { Role } from '../role/role';
-import { RoleService } from '../role/role.service';
-import { Supplier } from '../supplier/supplier';
-import { SupplierService } from '../supplier/supplier.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { UserService } from '../user.service';
+import { User } from '../user';
+import { Configuration } from '../../app.constants';
+import { Role } from '../../role/role';
+import { RoleService } from '../../role/role.service';
+import { Supplier } from '../../supplier/supplier';
+import { SupplierService } from '../../supplier/supplier.service';
 
 @Component({
   selector: 'update-user',
-  templateUrl : './user-detail.component.html',
+  templateUrl : './edit-user.component.html',
   providers: [UserService, RoleService, SupplierService, Configuration]
 })
-export class UserDetailComponent implements OnInit, OnDestroy {
+export class EditUserComponent implements OnInit, OnDestroy {
 
   userForm: FormGroup;
   user: User;
@@ -30,6 +30,7 @@ export class UserDetailComponent implements OnInit, OnDestroy {
     private userService: UserService,
     private roleService: RoleService,
     private supplierService: SupplierService,
+    private router: Router,
     private route: ActivatedRoute
   ) {}
 
@@ -78,7 +79,14 @@ export class UserDetailComponent implements OnInit, OnDestroy {
     this.user.email = this.userForm.controls['email'].value;
     this.user.role_id = this.userForm.controls['role_id'].value;
     this.user.supplier_id = this.userForm.controls['supplier_id'].value;
-    this.userService.updateUser(this.user);
+    this.userService.updateUser(this.user).then(
+      () => {
+        this.router.navigate(['/users']);
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 
   ngOnDestroy() {

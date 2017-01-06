@@ -70,6 +70,6 @@ class User(AuthenticatedResource):
         return jsonify(user.serialize())
 
     def delete(self, user_id):
-        UserData.query.get(user_id).delete()
+        UserData.query.filter_by(id=user_id).delete()
         db.session.commit()
-        return ('', 204)
+        return '', 204

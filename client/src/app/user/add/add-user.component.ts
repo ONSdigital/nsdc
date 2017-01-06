@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UserService } from './user.service';
-import { User } from './user';
-import { Role } from '../role/role';
-import { Configuration } from '../app.constants';
-import { RoleService } from '../role/role.service';
-import { Supplier } from '../supplier/supplier';
-import { SupplierService } from '../supplier/supplier.service';
+import { UserService } from '../user.service';
+import { User } from '../user';
+import { Role } from '../../role/role';
+import { Configuration } from '../../app.constants';
+import { RoleService } from '../../role/role.service';
+import { Supplier } from '../../supplier/supplier';
+import { SupplierService } from '../../supplier/supplier.service';
 
 @Component({
   selector: 'add-user',
@@ -61,7 +61,6 @@ export class AddUserComponent implements OnInit {
     this.user.supplier_id = this.userForm.controls['supplier_id'].value;
     this.userService.addUser(this.user).subscribe(
       () => {
-        // success
         this.submitPending = false;
         this.router.navigate(['/users']);
       },
