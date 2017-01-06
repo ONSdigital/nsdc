@@ -11,8 +11,7 @@ import { PermissionService } from '../../permission/permission.service';
 
 @Component({
   selector: 'role-manage',
-  templateUrl : './role-manage.component.html',
-  providers: [PermissionService, RoleService, UserService, Configuration]
+  templateUrl : './role-manage.component.html'
 })
 export class RoleManageComponent implements OnInit {
   roles: Role[];

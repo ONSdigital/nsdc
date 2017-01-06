@@ -5,7 +5,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ModalModule } from 'angular2-modal';
 import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
 import { UserService } from './user.service';
-import { Configuration } from '../app.constants';
 import { RoleService } from '../role/role.service';
 import { SupplierService } from '../supplier/supplier.service';
 
@@ -21,8 +20,7 @@ import { SupplierService } from '../supplier/supplier.service';
   providers: [
     UserService,
     RoleService,
-    SupplierService,
-    Configuration
+    SupplierService
   ]
 })
 export class UserModule { }

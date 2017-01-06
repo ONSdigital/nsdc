@@ -5,9 +5,6 @@ import { removeNgStyles, createNewHosts } from '@angularclass/hmr';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AppComponent }   from './app.component';
-import { RoleListComponent } from './role/role-list.component';
-import { DualListComponent } from './dual-list/dual-list.component';
-import { RoleComponent } from './role/role.component';
 import { routing, routedComponents } from './app.routing';
 import { LoginService } from './login/login.service';
 import { UserPermissionsService } from './user-permissions.service';
@@ -18,6 +15,7 @@ import { Configuration } from './app.constants';
 import { ModalModule } from 'angular2-modal';
 import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
 
+// import { DualListComponent } from './dual-list/dual-list.component';
 
 @NgModule({
   imports: [
@@ -25,15 +23,11 @@ import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
     HttpModule,
     routing,
     ReactiveFormsModule,
-    FormsModule,
     ModalModule.forRoot(),
     BootstrapModalModule
   ],
   declarations: [
     AppComponent,
-    RoleListComponent,
-    RoleComponent,
-    DualListComponent,
     routedComponents
   ],
   providers: [
