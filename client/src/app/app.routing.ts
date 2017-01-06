@@ -8,10 +8,7 @@ import { LoginGuard } from './login/login.guard';
 import { UserPermissionsGuard } from './user-permissions.guard';
 import { IsLoggedInGuard } from './login/is-logged-in.guard';
 
-// User
-import { UserListComponent } from './user/user-list.component';
-import { AddUserComponent } from './user/add/add-user.component';
-import { EditUserComponent } from './user/edit/edit-user.component';
+import { UserModule } from './user/user.module';
 
 // Role
 import { RoleListComponent } from './role/role-list.component';
@@ -59,15 +56,7 @@ const appRoutes: Routes = [
       },
       {
         path: 'users',
-        component: UserListComponent
-      },
-      {
-        path: 'users/add',
-        component: AddUserComponent
-      },
-      {
-        path: 'users/:id',
-        component: EditUserComponent
+        loadChildren: () => UserModule
       },
       {
         path: 'roles',
@@ -135,9 +124,6 @@ export const routing = RouterModule.forRoot(appRoutes, {useHash: true});
 export const routedComponents = [
   ManageModuleComponent,
   LoginComponent,
-  UserListComponent,
-  AddUserComponent,
-  EditUserComponent,
   RoleListComponent,
   PermissionComponent,
   AddPermissionComponent,

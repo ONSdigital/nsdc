@@ -5,14 +5,13 @@ import { UserService } from '../user.service';
 import { User } from '../user';
 import { Configuration } from '../../app.constants';
 import { Role } from '../../role/role';
-import { RoleService } from '../../role/role.service';
 import { Supplier } from '../../supplier/supplier';
+import { RoleService } from '../../role/role.service';
 import { SupplierService } from '../../supplier/supplier.service';
 
 @Component({
   selector: 'update-user',
-  templateUrl : './edit-user.component.html',
-  providers: [UserService, RoleService, SupplierService, Configuration]
+  templateUrl : './edit-user.component.html'
 })
 export class EditUserComponent implements OnInit, OnDestroy {
 

@@ -11,8 +11,7 @@ import { SupplierService } from '../../supplier/supplier.service';
 
 @Component({
   selector: 'add-user',
-  templateUrl : './add-user.component.html',
-  providers: [UserService, SupplierService, RoleService, Configuration]
+  templateUrl : './add-user.component.html'
 })
 export class AddUserComponent implements OnInit {
   userForm: FormGroup;
