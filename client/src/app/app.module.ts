@@ -12,6 +12,7 @@ import { LoginService } from './login/login.service';
 import { UserPermissionsService } from './user-permissions.service';
 import { UserPermissionsGuard } from './user-permissions.guard';
 import { LoginGuard } from './login/login.guard';
+import { IsLoggedInGuard } from './login/is-logged-in.guard';
 import { Configuration } from './app.constants';
 
 @NgModule({
@@ -27,6 +28,7 @@ import { Configuration } from './app.constants';
     UserPermissionsGuard,
     LoginService,
     LoginGuard,
+    IsLoggedInGuard,
     Configuration
   ],
   bootstrap: [ AppComponent ]

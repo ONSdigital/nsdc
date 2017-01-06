@@ -20,7 +20,7 @@ export class JourneyService {
   }
 
   getJourneys() {
-    this.headers.set('X-TOKEN', this.loginService.getToken());
+    this.headers.set('X-TOKEN', this.loginService.getSessionId());
     return this.http.get(this.actionUrl, { headers: this.headers })
     .toPromise()
     .then(response => response.json() as Journey[])
@@ -28,7 +28,7 @@ export class JourneyService {
   }
 
   getJourneysBySupplier(supplierId) {
-    this.headers.set('X-TOKEN', this.loginService.getToken());
+    this.headers.set('X-TOKEN', this.loginService.getSessionId());
     return this.http.get(this.actionUrl + '/supplier/' + supplierId, { headers: this.headers })
     .toPromise()
     .then(response => response.json() as Journey[])
@@ -36,7 +36,7 @@ export class JourneyService {
   }
 
   getVersionsBySupplierAndJourney(supplierId, journeyId) {
-    this.headers.set('X-TOKEN', this.loginService.getToken());
+    this.headers.set('X-TOKEN', this.loginService.getSessionId());
     return this.http.get(this.actionUrl + '/versions/' + supplierId + '/' + journeyId, { headers: this.headers })
     .toPromise()
     .then(response => response.json() as JourneyVersion[])

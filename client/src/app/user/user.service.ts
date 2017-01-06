@@ -20,7 +20,7 @@ export class UserService {
   }
 
   addUser(user: User) {
-    this.headers.set('X-TOKEN', this.loginService.getToken());
+    this.headers.set('X-TOKEN', this.loginService.getSessionId());
     let userAddUrl = this.config.Server + 'nsdc/v1.0/users';
     return this.http.post(userAddUrl, JSON.stringify(user), { headers: this.headers } )
     .map(res => res.json())
@@ -30,7 +30,7 @@ export class UserService {
   }
 
   getUsers() {
-    this.headers.set('X-TOKEN', this.loginService.getToken());
+    this.headers.set('X-TOKEN', this.loginService.getSessionId());
     let userListUrl = this.config.Server + 'nsdc/v1.0/users';
     return this.http.get(userListUrl, { headers: this.headers})
     .toPromise()
@@ -39,7 +39,7 @@ export class UserService {
   }
 
   getUserById(id: number) {
-    this.headers.set('X-TOKEN', this.loginService.getToken());
+    this.headers.set('X-TOKEN', this.loginService.getSessionId());
     let userUrl = this.config.Server + 'nsdc/v1.0/users/' + id;
     return this.http.get(userUrl, { headers: this.headers })
     .toPromise().then(response => response.json() as User)
@@ -47,7 +47,7 @@ export class UserService {
   }
 
   getUsersByRole(roleId: number) {
-    this.headers.set('X-TOKEN', this.loginService.getToken());
+    this.headers.set('X-TOKEN', this.loginService.getSessionId());
     let userUrl = this.config.Server + 'nsdc/v1.0/users/role/' + roleId;
     return this.http.get(userUrl, { headers: this.headers })
     .toPromise()
@@ -56,14 +56,14 @@ export class UserService {
   }
 
   updateUser( user: User) {
-    this.headers.set('X-TOKEN', this.loginService.getToken());
+    this.headers.set('X-TOKEN', this.loginService.getSessionId());
     let userEditUrl = this.config.Server + 'nsdc/v1.0/users/' + user.id;
     return this.http.put(userEditUrl, JSON.stringify(user),
     { headers: this.headers }).toPromise().then(() => user).catch(this.handleError);
   }
 
   deleteUser(id: number) {
-    this.headers.set('X-TOKEN', this.loginService.getToken());
+    this.headers.set('X-TOKEN', this.loginService.getSessionId());
     let deleteUrl = this.config.Server + 'nsdc/v1.0/users/' + id;
     this.http.delete(deleteUrl, { headers: this.headers });
   }

@@ -3,25 +3,27 @@ from flask_restful import Resource
 from functools import wraps
 from data.user import UserData
 from data.role import RoleData
-from itsdangerous import (BadSignature, SignatureExpired)
+from common.session import verify_session_id, SessionExpired, BadSession
+
 
 def protected_decorator_factory(permission_string):
     def decorator(func):
         @wraps(func)
         def check_has_permission(*args, **kwargs):
-            token = request.headers.get("X-Token")
-            if token is None:
-                return abort(403)  # no token
+            session_id = request.headers.get("X-Token")
+            if session_id is None:
+                return abort(403)
+
             try:
-                user_id = UserData.verify_auth_token(token)
-            except SignatureExpired:
-                return abort(403)  # SignatureExpired
-            except BadSignature:
-                return abort(403)  # BadSignature
+                session = verify_session_id(session_id)
+            except SessionExpired:
+                return abort(403)
+            except BadSession:
+                return abort(403)
 
             # This gets a list of the users allowed permission short names
             # this can all be cached for the user to reduce DB queries
-            role_id = UserData.query.get(user_id).role_id
+            role_id = UserData.query.get(session.user_id).role_id
             role = RoleData.query.get(role_id)
             permissions = role.permissions.all()
             permission_short_names = map(lambda permission: permission.short_name, permissions)

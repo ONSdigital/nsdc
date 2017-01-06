@@ -32,6 +32,12 @@ For creating the Tables and Columns in Postgres run following commands:
 * `python manage.py db migrate`
 * `python manage.py db upgrade`
 
+To add support to postgres for UUID generation we need to add an extension
+
+Run this sql against your db
+
+`CREATE EXTENSION IF NOT EXISTS "pgcrypto";`
+
 Now you can run the server using the following command:
 
 * `python project.py`

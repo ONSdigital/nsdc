@@ -17,7 +17,7 @@ export class UserPermissionsService {
     if (!this.permissions) {
       const userPermissionsUrl = this.config.Server + 'nsdc/v1.0/permissions/user/' + this.loginService.getCurrentUserId();
       let headers = new Headers();
-      headers.append('X-TOKEN', this.loginService.getToken());
+      headers.append('X-TOKEN', this.loginService.getSessionId());
       this.permissions = this.http.get(userPermissionsUrl, { headers })
       .map(res => res.json())
       .publishReplay(1)
