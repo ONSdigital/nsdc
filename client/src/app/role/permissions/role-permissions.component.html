@@ -1,0 +1,31 @@
+<div class="col-md-12" *ngIf="role">
+  <div>
+    name: {{role.name}}
+  </div>
+  <div>
+    description: {{role.name}}
+  </div>
+</div>
+<div class="col-md-12" *ngIf="allPermissions && selectedPermissions">
+  <div class="dual-list-header-row">
+    <h5 class="dual-list-header">Other Permissions</h5>
+    <h5 class="dual-list-header">Current Permissions</h5>
+  </div>
+</div>
+<div class="col-md-12" *ngIf="allPermissions && selectedPermissions">
+  <dual-list
+    [sort]="keepSorted"
+    [source]="allPermissions"
+    [key]="key"
+    [display]="display"
+    [(destination)]="selectedPermissions"
+    height="265px"
+  >
+  </dual-list>
+</div>
+<div class="col-md-12" *ngIf="allPermissions && selectedPermissions">
+  <div class="btn-row">
+    <button class="btn btn-primary" (click)="saveUpdatedRolePermissions()">Save</button>
+    <button class="btn btn-danger" (click)="cancel()">Cancel</button>
+  <div>
+</div>

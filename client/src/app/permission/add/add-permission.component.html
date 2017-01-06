@@ -1,0 +1,40 @@
+<div class="container">
+    <h2>Add Permission</h2>
+    <br>
+    <form [formGroup]="permissionForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label>Name:</label>
+            <input type="text" #refName class="form-control" formControlName="name" placeholder="permission name">                       
+            <div *ngIf="permissionForm.controls['name'].hasError('required') && submitAttempt" class="alert alert-danger">
+                Please enter a name.
+            </div>
+            <div *ngIf="permissionForm.controls['name'].hasError('minlength')" class="alert alert-danger">
+                Name needs to be at least 3 characters long.
+            </div>
+            <div *ngIf="permissionForm.controls['name'].hasError('maxlength')" class="alert alert-danger">
+                Name cannot exceed 30 characters.
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Short Name:</label>
+            <input type="text" #refName class="form-control" formControlName="short_name" placeholder="permission short name">                       
+            <div *ngIf="permissionForm.controls['short_name'].hasError('required') && submitAttempt" class="alert alert-danger">
+                Please enter a short name.
+            </div>
+            <div *ngIf="permissionForm.controls['short_name'].hasError('minlength')" class="alert alert-danger">
+                Short name needs to be at least 3 characters long.
+            </div>
+            <div *ngIf="permissionForm.controls['short_name'].hasError('maxlength')" class="alert alert-danger">
+                Short name cannot exceed 30 characters.
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Description:</label>
+            <input type="text" #refName class="form-control" formControlName="description" placeholder="Description">                       
+            <div *ngIf="permissionForm.controls['description'].hasError('required') && submitAttempt" class="alert alert-danger">
+                Please enter a Description.
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>    
+    </form>
+</div>

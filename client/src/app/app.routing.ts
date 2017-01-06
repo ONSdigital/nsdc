@@ -17,8 +17,12 @@ import { RoleListComponent } from './role/role-list.component';
 import { RoleManageComponent } from './role/manage/role-manage.component';
 import { AddRoleComponent } from './role/add-role.component';
 
+import { RolePermissionsComponent } from './role/permissions/role-permissions.component';
+
 // Permission
 import { PermissionComponent } from './permission/permission.component';
+import { AddPermissionComponent } from './permission/add/add-permission.component';
+import { EditPermissionComponent } from './permission/edit/edit-permission.component';
 import { NoPermissionComponent } from './permission/no-permission.component';
 
 // Supplier
@@ -68,6 +72,10 @@ const appRoutes: Routes = [
         component: AddRoleComponent
       },
       {
+        path: 'roles/:id/permissions',
+        component: RolePermissionsComponent
+      },
+      {
         canActivate: [UserPermissionsGuard],
         path: 'journeys/details/manage',
         component: JourneyDetailsManageComponent,
@@ -76,12 +84,20 @@ const appRoutes: Routes = [
         }
       },
       {
+        path: 'permissions/add',
+        component: AddPermissionComponent
+      },
+      {
+        path: 'permissions/:id',
+        component: EditPermissionComponent
+      },
+      {
         path: 'permissions',
         component: PermissionComponent
       },
       {
-          path: 'suppliers',
-          component: SupplierComponent
+        path: 'suppliers',
+        component: SupplierComponent
       },
       {
           path: 'journeys',
@@ -92,8 +108,8 @@ const appRoutes: Routes = [
         component: JourneyManageComponent
       },
       {
-          path: 'no-permission',
-          component: NoPermissionComponent
+        path: 'no-permission',
+        component: NoPermissionComponent
       }
     ]
   }
@@ -103,18 +119,21 @@ const appRoutes: Routes = [
 export const routing = RouterModule.forRoot(appRoutes, {useHash: true});
 
 export const routedComponents = [
-    ManageModuleComponent,
-    LoginComponent,
-    UserListComponent,
-    AddUserComponent,
-    UserDetailComponent,
-    RoleListComponent,
-    PermissionComponent,
-    RoleManageComponent,
-    AddRoleComponent,
-    SupplierComponent,
-    JourneyComponent,
-    JourneyManageComponent,
-    NoPermissionComponent,
-    JourneyDetailsManageComponent
+  ManageModuleComponent,
+  LoginComponent,
+  UserListComponent,
+  AddUserComponent,
+  UserDetailComponent,
+  RoleListComponent,
+  PermissionComponent,
+  AddPermissionComponent,
+  EditPermissionComponent,
+  RoleManageComponent,
+  AddRoleComponent,
+  SupplierComponent,
+  JourneyComponent,
+  JourneyManageComponent,
+  NoPermissionComponent,
+  JourneyDetailsManageComponent,
+  RolePermissionsComponent
 ];

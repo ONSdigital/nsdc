@@ -5,5 +5,5 @@ import { Component, OnInit } from '@angular/core';
   templateUrl : './journey-details-manage.component.html',
 })
 export class JourneyDetailsManageComponent {
-    public journeydetailsmanage;
+  public journeydetailsmanage;
 }

@@ -56,6 +56,14 @@ export class RoleService {
     this.http.delete(deleteUrl, {headers: this.headers});
   }
 
+  updateRolePermissions(id: number, permissionIds: number[]) {
+    this.headers.set('X-TOKEN', this.loginService.getSessionId());
+    const rolePermissionsUrl = this.config.Server + 'nsdc/v1.0/roles/' + id + '/permissions';
+    return this.http.post(rolePermissionsUrl, JSON.stringify({
+      permissions: permissionIds
+    }), {headers: this.headers});
+  }
+
   private handleError(error: any): Promise<any> {
     return Promise.reject(error.message || error);
   }

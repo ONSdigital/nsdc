@@ -6,6 +6,7 @@ from api.journey_version import JourneyVersion
 from api.login import Login
 from api.role import Role
 from api.supplier import Supplier
+from api.role_permission import RolePermission
 from api.permission import Permission
 from api.user import User
 
@@ -23,8 +24,14 @@ api.add_resource(
 api.add_resource(
     Permission,
     base_endpoint + 'permissions',
+    base_endpoint + 'permissions/<permission_id>',
     base_endpoint + 'permissions/role/<role_id>',
     base_endpoint + 'permissions/user/<user_id>'
+)
+
+api.add_resource(
+    RolePermission,
+    base_endpoint + 'roles/<role_id>/permissions'
 )
 
 api.add_resource(
