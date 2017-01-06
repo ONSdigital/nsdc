@@ -12,8 +12,6 @@ import { UserPermissionsGuard } from './user-permissions.guard';
 import { LoginGuard } from './login/login.guard';
 import { IsLoggedInGuard } from './login/is-logged-in.guard';
 import { Configuration } from './app.constants';
-import { ModalModule } from 'angular2-modal';
-import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
 
 // import { DualListComponent } from './dual-list/dual-list.component';
 
@@ -23,8 +21,6 @@ import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
     HttpModule,
     routing,
     ReactiveFormsModule,
-    ModalModule.forRoot(),
-    BootstrapModalModule
   ],
   declarations: [
     AppComponent,
@@ -38,7 +34,7 @@ import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
     IsLoggedInGuard,
     Configuration
   ],
-  bootstrap: [ AppComponent ]
+  bootstrap: [AppComponent]
 })
 export class AppModule {
   constructor(public appRef: ApplicationRef) {}

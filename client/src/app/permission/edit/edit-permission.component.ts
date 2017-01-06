@@ -6,8 +6,7 @@ import { PermissionService } from '../permission.service';
 
 @Component({
   selector: 'edit-permission',
-  templateUrl: 'edit-permission.component.html',
-  providers: [PermissionService]
+  templateUrl: 'edit-permission.component.html'
 })
 export class EditPermissionComponent implements OnInit {
 
