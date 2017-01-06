@@ -7,6 +7,7 @@ from api.login import Login
 from api.role import Role
 from api.supplier import Supplier
 from api.role_permission import RolePermission
+from api.file_upload import FileUpload
 from api.permission import Permission
 from api.user import User
 
@@ -59,6 +60,11 @@ api.add_resource(
 api.add_resource(
     Login,
     base_endpoint + 'login'
+)
+
+api.add_resource(
+    FileUpload,
+    base_endpoint + 'upload'
 )
 
 if __name__ == '__main__':

@@ -1,86 +1,95 @@
-<div class="container">
-  <div class="navbar navbar-default">
-    <div class="navbar-header">
-      <a class="navbar-brand" href>Upload File</a>
+<div class="row">
+  <div class="col-md-12">
+    <h2>File Upload</h2>
+  </div>
+</div>
+<div [hidden]="uploading || uploadComplete || uploadError">
+  <p>
+    Drag and drop a file into the area or browse a file via button.
+  </p>
+  <div class="row">
+    <div class="col-md-12">
+      <div
+        class="dnd-container"
+        ngFileDrop
+        [options]="options"
+        (onUpload)="handleUpload($event)"
+        [ngClass]="{'file-over': hasBaseDropZoneOver}"
+        (onFileOver)="fileOverBase($event)"
+      >
+        <h2 class="dnd">
+          Drag & Drop
+        </h2>
+        <label class="btn btn-danger btn-upload">
+          <input
+            class="hidden"
+            type="file"
+            ngFileSelect
+            [options]="options"
+            (onUpload)="handleUpload($event)"
+          >
+          Browse
+        </label>
+        <div class="upload-filename" *ngIf="uploader._queue.length">
+          File Name: {{uploader._queue[0].name}}
+        </div>
+      </div>
     </div>
   </div>
   <div class="row">
-    <div class="col-md-3">
-        <h3>Select files</h3>
-        <div
-              [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
-              (fileOver)="fileOverBase($event)"
-              [uploader]="uploader"
-              class="well my-drop-zone">
-            Base drop zone
-        </div>
-        Single
-        <input type="file" ng2FileSelect [uploader]="uploader" />
+    <div class="col-md-12">
+      <button
+        type="submit"
+        class="btn btn-primary btn-upload-submit"
+        (click)="startUpload()"
+        [disabled]="!uploader._queue.length"
+      >
+        Submit
+      </button>
     </div>
-    <div class="col-md-9" style="margin-bottom: 40px">
-        <h3>Upload queue</h3>
-        <table class="table">
-            <thead>
-            <tr>
-                <th width="50%">Name</th>
-                <th>Size</th>
-                <th>Progress</th>
-                <th>Status</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let item of uploader.queue">
-                <td><strong>{{ item?.file?.name }}</strong></td>
-                <td *ngIf="uploader.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
-                <td *ngIf="uploader.isHTML5">
-                    <div class="progress" style="margin-bottom: 0;">
-                        <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
-                    </div>
-                </td>
-                <td class="text-center">
-                    <span *ngIf="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
-                    <span *ngIf="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
-                    <span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
-                </td>
-                <td nowrap>
-                    <button type="button" class="btn btn-success btn-xs"
-                            (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">
-                        <span class="glyphicon glyphicon-upload"></span> Upload
-                    </button>
-                    <button type="button" class="btn btn-warning btn-xs"
-                            (click)="item.cancel()" [disabled]="!item.isUploading">
-                        <span class="glyphicon glyphicon-ban-circle"></span> Cancel
-                    </button>
-                    <button type="button" class="btn btn-danger btn-xs"
-                            (click)="item.remove()">
-                        <span class="glyphicon glyphicon-trash"></span> Remove
-                    </button>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-
-        <div>
-            <div>
-                Queue progress:
-                <div class="progress">
-                    <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
-                </div>
-            </div>
-            <button type="button" class="btn btn-success btn-s"
-                    (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
-                <span class="glyphicon glyphicon-upload"></span> Upload all
-            </button>
-            <button type="button" class="btn btn-warning btn-s"
-                    (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
-                <span class="glyphicon glyphicon-ban-circle"></span> Cancel all
-            </button>
-            <button type="button" class="btn btn-danger btn-s"
-                    (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
-                <span class="glyphicon glyphicon-trash"></span> Remove all
-            </button>
-        </div>
+  </div>
+</div>
+<div *ngIf="uploading">
+  Uploading
+  <div class="progress">
+    <div
+      class="progress-bar progress-bar-success progress-bar-striped"
+      role="progressbar"
+      [attr.aria-valuenow]="uploadingPercentage"
+      aria-valuemin="0"
+      aria-valuemax ="100"
+      style="min-width: 2em;"
+      [style.width]="uploadingPercentage + '%'"
+    >
+      {{uploadingPercentage}}%
     </div>
+  </div>
+  {{uploadingSpeedHumanized}}
+</div>
+<div *ngIf="uploadError">
+  Error
+  <p>
+    There was a problem uploading this file.
+  </p>
+  <div>
+    <button
+      class="btn btn-primary btn-upload-another"
+      (click)="uploadAnother()"
+    >
+      Try Again
+    </button>
+  </div>
+</div>
+<div *ngIf="uploadComplete">
+  <p>File Upload Complete.</p>
+  <p>You can track the file on the audit screen if you have permission or upload another.</p>
+  <p>File name on server: {{uploadedFilename}}</p>
+  <div>
+    <button
+      class="btn btn-primary btn-upload-another"
+      (click)="uploadAnother()"
+    >
+      Upload Another
+    </button>
   </div>
 </div>
