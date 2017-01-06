@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Role } from '../role/role';
-import { Configuration } from '../app.constants';
-import { RoleService } from '../role/role.service';
+import { Router } from '@angular/router';
+import { Role } from '../role';
+import { RoleService } from '../role.service';
 
 @Component({
   selector: 'add-role',
   templateUrl : './add-role.component.html',
-  providers: [RoleService, Configuration]
+  providers: [RoleService]
 })
 export class AddRoleComponent implements OnInit {
   roleForm: FormGroup;
@@ -18,7 +18,8 @@ export class AddRoleComponent implements OnInit {
 
   constructor(
     private _formBuilder: FormBuilder,
-    private roleService: RoleService
+    private roleService: RoleService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -33,6 +34,14 @@ export class AddRoleComponent implements OnInit {
   onSubmit() {
     this.role.name = this.roleForm.controls['name'].value;
     this.role.description = this.roleForm.controls['description'].value;
-    this.roleService.addRole(this.role);
+    this.roleService.addRole(this.role)
+    .then(
+      () => {
+        this.router.navigate(['roles']);
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 }

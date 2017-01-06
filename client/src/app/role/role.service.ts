@@ -44,16 +44,24 @@ export class RoleService {
     .catch(this.handleError);
   }
 
-  updateUser(id: number, role: Role) {
+  updateRole(role: Role) {
     this.headers.set('X-TOKEN', this.loginService.getSessionId());
-    let roleEditUrl = this.config.Server + 'nsdc/v1.0/roles/' + id;
-    this.http.put(roleEditUrl, JSON.stringify(role), {headers: this.headers});
+    let roleEditUrl = this.config.Server + 'nsdc/v1.0/roles/' + role.id;
+    return this.http.put(roleEditUrl, JSON.stringify(role), {headers: this.headers})
+    .map(res => res.json())
+    .catch(res => {
+      return Observable.throw(res.json());
+    });
   }
 
   deleteRole(id: number) {
     this.headers.set('X-TOKEN', this.loginService.getSessionId());
     let deleteUrl = this.config.Server + 'nsdc/v1.0/roles/' + id;
-    this.http.delete(deleteUrl, {headers: this.headers});
+    return this.http.delete(deleteUrl, {headers: this.headers})
+    .map(res => res.json())
+    .catch(res => {
+      return Observable.throw(res.json());
+    });
   }
 
   updateRolePermissions(id: number, permissionIds: number[]) {
@@ -61,7 +69,11 @@ export class RoleService {
     const rolePermissionsUrl = this.config.Server + 'nsdc/v1.0/roles/' + id + '/permissions';
     return this.http.post(rolePermissionsUrl, JSON.stringify({
       permissions: permissionIds
-    }), {headers: this.headers});
+    }), {headers: this.headers})
+    .map(res => res.json())
+    .catch(res => {
+      return Observable.throw(res.json());
+    });
   }
 
   private handleError(error: any): Promise<any> {

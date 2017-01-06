@@ -41,3 +41,8 @@ class Role(ProtectedResource('TEST_PERM')):
 
         db.session.commit()
         return jsonify(role.serialize())
+
+    def delete(self, role_id):
+        RoleData.query.filter_by(id=role_id).delete()
+        db.session.commit()
+        return '', 204

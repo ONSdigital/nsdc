@@ -1,0 +1,34 @@
+<div class="container">
+    <h2>Edit Role</h2>
+    <br>
+    <form [formGroup]="roleForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label>Name:</label>
+            <input type="text" #refName class="form-control" formControlName="name" placeholder="Role name">                       
+            <div *ngIf="roleForm.controls['name'].hasError('required') && submitAttempt" class="alert alert-danger">
+                Please enter a name.
+            </div>
+            <div *ngIf="roleForm.controls['name'].hasError('minlength')" class="alert alert-danger">
+                Name needs to be atleast 3 characters long.
+            </div>
+            <div *ngIf="roleForm.controls['name'].hasError('maxlength')" class="alert alert-danger">
+                Name cannot exceed 30 characters.
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Description:</label>
+            <input type="text" #refName class="form-control" formControlName="description" placeholder="Description">                       
+            <div *ngIf="roleForm.controls['description'].hasError('required') && submitAttempt" class="alert alert-danger">
+                Please enter a Description.
+            </div>
+            <div *ngIf="roleForm.controls['description'].hasError('minlength')" class="alert alert-danger">
+                Description needs to be atleast 3 characters long.
+            </div>
+            <div *ngIf="roleForm.controls['description'].hasError('maxlength')" class="alert alert-danger">
+                Description cannot exceed 200 characters.
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>    
+    </form>
+</div>
