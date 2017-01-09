@@ -1,0 +1,42 @@
+<div class="navbar navbar-inverse navbar-static-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a [routerLink]="['/']" class="navbar-brand">NSDC Alpha</a>
+    </div>
+    <div id="navbar" *ngIf="showNavBarLinks()" class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li *ngIf="canViewUsers()">
+          <a [routerLink]="['/users']">Users</a>
+        </li>
+        <li *ngIf="canViewRoles()">
+          <a [routerLink]="['/roles']">Roles</a>
+        </li>
+        <li *ngIf="canViewPermissions()">
+          <a [routerLink]="['/permissions']">Permissions</a>
+        </li>
+        <li>
+          <a [routerLink]="['/upload']">File Upload</a>
+        </li>
+        <li>
+          <a [routerLink]="['/audit']">File Audit</a>
+        </li>
+      </ul>
+      <div class="nav navbar-nav navbar-right">
+        <li>
+          <a
+            class="nav-logout"
+            (click)="onLogout()"
+          >
+            Logout
+          </a>
+        </li>
+      </div>
+    </div>
+  </div>
+</div>

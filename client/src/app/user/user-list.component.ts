@@ -2,9 +2,10 @@ import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { Overlay } from 'angular2-modal';
 import { Modal } from 'angular2-modal/plugins/bootstrap';
 import { User } from './user';
+import { UserService } from './user.service';
+import { UserPermissionsService } from '../user-permissions.service';
 import { Router } from '@angular/router';
 import { Http } from '@angular/http';
-import { UserService } from './user.service';
 import { Configuration } from '../app.constants';
 
 @Component({
@@ -15,10 +16,12 @@ export class UserListComponent implements OnInit {
 
   public users: User[];
   public erroreMsg: string;
+  permissionShortNames: string[];
 
   constructor(
     private http: Http,
     private userService: UserService,
+    private userPermissionsService: UserPermissionsService,
     public modal: Modal,
     overlay: Overlay,
     vcRef: ViewContainerRef
@@ -28,6 +31,10 @@ export class UserListComponent implements OnInit {
 
   ngOnInit(): void {
     this.userService.getUsers().then((users) => this.users = users);
+    this.userPermissionsService.getUserPermissions()
+    .subscribe(permissions => {
+      this.permissionShortNames = permissions.map(permission => permission.short_name);
+    });
   }
 
   onDeleteClicked(userId) {
@@ -49,5 +56,17 @@ export class UserListComponent implements OnInit {
       },
       () => {}
     );
+  }
+
+  canEdit() {
+    return this.permissionShortNames.includes('EDIT_USERS');
+  }
+
+  canDelete() {
+    return this.permissionShortNames.includes('DELETE_USERS');
+  }
+
+  canAdd() {
+    return this.permissionShortNames.includes('ADD_USERS');
   }
 }

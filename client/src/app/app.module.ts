@@ -12,6 +12,7 @@ import { UserPermissionsGuard } from './user-permissions.guard';
 import { LoginGuard } from './login/login.guard';
 import { IsLoggedInGuard } from './login/is-logged-in.guard';
 import { Configuration } from './app.constants';
+import { NavbarComponent } from './navbar/navbar.component';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import { Configuration } from './app.constants';
   ],
   declarations: [
     AppComponent,
+    NavbarComponent,
     routedComponents
   ],
   providers: [
