@@ -1,7 +1,7 @@
 from config import db
 from flask import jsonify
-from authenticated_resource import AuthenticatedResource
-from flask_restful import reqparse
+from protected_resource import protected_resource
+from flask_restful import reqparse, Resource
 from data.role import RoleData
 
 
@@ -10,9 +10,9 @@ parser.add_argument('name')
 parser.add_argument('description')
 
 
-# all role endpoints are protected by the permission short name 'TEST_PERM'
-# will modify later e.g. to apply to only get endpoints
-class Role(AuthenticatedResource):
+class Role(Resource):
+
+    @protected_resource('VIEW_ROLES')
     def get(self, role_id=None):
         if role_id is not None:
             role = RoleData.query.get(role_id).serialize()
@@ -20,6 +20,7 @@ class Role(AuthenticatedResource):
         else:
             return jsonify(RoleData.serialize_list(RoleData.query.all()))
 
+    @protected_resource('ADD_ROLES')
     def post(self):
         request = parser.parse_args()
         role = RoleData(
@@ -31,6 +32,7 @@ class Role(AuthenticatedResource):
         db.session.commit()
         return jsonify(RoleData.serialize(role))
 
+    @protected_resource('EDIT_ROLES')
     def put(self, role_id):
         role = RoleData.query.get(role_id)
         request_json = parser.parse_args()
@@ -43,6 +45,7 @@ class Role(AuthenticatedResource):
         db.session.commit()
         return jsonify(role.serialize())
 
+    @protected_resource('DELETE_ROLES')
     def delete(self, role_id):
         RoleData.query.filter_by(id=role_id).delete()
         db.session.commit()

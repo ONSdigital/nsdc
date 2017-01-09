@@ -1,7 +1,6 @@
 from config import db
 from flask import jsonify
-from flask_restful import reqparse
-from authenticated_resource import AuthenticatedResource
+from flask_restful import reqparse, Resource
 from protected_resource import protected_resource
 from data.permission import PermissionData
 from data.role import RoleData
@@ -13,7 +12,7 @@ parser.add_argument('description')
 parser.add_argument('short_name')
 
 
-class Permission(AuthenticatedResource):
+class Permission(Resource):
 
     @protected_resource('VIEW_PERMISSIONS')
     def get(self, role_id=None, user_id=None, permission_id=None):
