@@ -20,10 +20,10 @@
         <li *ngIf="canViewPermissions()">
           <a [routerLink]="['/permissions']">Permissions</a>
         </li>
-        <li>
+        <li *ngIf="canViewUpload()">
           <a [routerLink]="['/upload']">File Upload</a>
         </li>
-        <li>
+        <li *ngIf="canViewAudit()">
           <a [routerLink]="['/audit']">File Audit</a>
         </li>
       </ul>

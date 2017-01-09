@@ -41,6 +41,14 @@ export class NavbarComponent {
     return this.permissionShortNames.includes('VIEW_ROLES');
   }
 
+  canViewUpload() {
+    return this.permissionShortNames.includes('DATA_IMPORT');
+  }
+
+  canViewAudit() {
+    return this.permissionShortNames.includes('DATA_AUDIT');
+  }
+
   onLogout() {
     this.loginService.logout();
     this.userPermissionsService.clearPermissionsCache();
