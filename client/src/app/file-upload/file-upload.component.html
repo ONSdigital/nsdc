@@ -67,9 +67,14 @@
   {{uploadingSpeedHumanized}}
 </div>
 <div *ngIf="uploadError">
-  Error
+  <p>
+    Error
+  </p>
   <p>
     There was a problem uploading this file.
+  </p>
+  <p>
+    {{uploadErrorMessage}}
   </p>
   <div>
     <button

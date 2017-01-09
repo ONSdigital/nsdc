@@ -17,6 +17,7 @@ export class FileUploadComponent implements OnInit {
   uploadingPercentage: number;
   uploadingSpeedHumanized: string;
   uploadedFilename: string;
+  uploadErrorMessage: string;
   hasBaseDropZoneOver: boolean = false;
   options: NgUploaderOptions;
   events: EventEmitter<any> = new EventEmitter();
@@ -48,10 +49,18 @@ export class FileUploadComponent implements OnInit {
       if (data.error) {
         this.uploadError = true;
         this.uploading = false;
+        this.uploadErrorMessage = 'Upload Failed';
       } else if (data && data.done) {
-        this.uploadComplete = true;
-        this.uploading = false;
-        this.uploadedFilename = data.response;
+        if (data.status === 400) {
+          const responseData = JSON.parse(data.response) || {};
+          this.uploadErrorMessage = responseData.message || 'Upload Failed';
+          this.uploadError = true;
+          this.uploading = false;
+        } else {
+          this.uploadComplete = true;
+          this.uploading = false;
+          this.uploadedFilename = data.response;
+        }
       } else {
         this.uploading = true;
         this.uploadingPercentage = data.progress.percent;
@@ -67,5 +76,6 @@ export class FileUploadComponent implements OnInit {
   uploadAnother() {
     this.uploader.clearQueue();
     this.uploadComplete = false;
+    this.uploadError = false;
   }
 }
