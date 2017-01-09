@@ -8,6 +8,8 @@ VALUES 	('Data Director', 'Role with overall corporate responsibility across the
 	('Data User', 'Very general and high level view of anyone or anything that may want to access/have permissions to access data'),
 	('Auditor', 'Audits the data/usage and roles.'),
 	('Output Checker', 'Responsible for checking all outputs. Makes a decision from results if can be made ‘public’, either for general use or as an output.'),
+	('Data Preparation', 'Responsible for Cleaning/Standardising/Applying basic business rules'),
+	('Data Importer', 'Imports the data into reception area. Checks/assesses for Malware.'),
 	('Access Control Manager', 'Agrees and sets role/data and functionality permissions. Responsible for governance process. Works in agreement with Data Manager and Risk Profile Manager to ensure access to data is approved correctly.');
 
 INSERT INTO public.permission (name, description, short_name)
@@ -29,8 +31,6 @@ VALUES ('View Users', 'The user can view a list of the users', 'VIEW_USERS'),
 	('Delete Journeys', 'The user can delete a journey', 'DELETE_JOURNEYS'),
 	('Data Importer', 'The user can import data', 'DATA_IMPORT'),
 	('Data Auditer', 'The user can audit a file', 'DATA_AUDIT');
-
- -- Data director currently can do nothing
 	
 INSERT into public.role_permission (role_id, permission_id) ( 
   SELECT role.role_id, permission.permission_id FROM role CROSS JOIN permission 
@@ -39,17 +39,17 @@ INSERT into public.role_permission (role_id, permission_id) (
 
 INSERT into public.role_permission (role_id, permission_id) ( 
   SELECT role.role_id, permission.permission_id FROM role CROSS JOIN permission 
-    WHERE role.name = 'Data Manager' AND permission.short_name in ('DATA_IMPORT')
+		WHERE role.name in ('Data Manager', 'Data Importer', 'Data Owner/Supplier') AND permission.short_name in ('DATA_IMPORT')
 );
 
 INSERT into public.role_permission (role_id, permission_id) ( 
   SELECT role.role_id, permission.permission_id FROM role CROSS JOIN permission 
-    WHERE role.name = 'Output Checker' AND permission.short_name in ('DATA_AUDIT')
+		WHERE role.name in ('Output Checker', 'Data Preparation') AND permission.short_name in ('DATA_AUDIT')
 );
 
 INSERT into public.role_permission (role_id, permission_id) ( 
   SELECT role.role_id, permission.permission_id FROM role CROSS JOIN permission 
-    WHERE role.name = 'Access Control Manager' AND permission.short_name
+		WHERE role.name in ('Access Control Manager', 'Data Director', 'Auditor') AND permission.short_name
 		in (
 			'VIEW_USERS',
 			'EDIT_USERS',
