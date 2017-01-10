@@ -35,7 +35,7 @@ export class FileUploadComponent implements OnInit {
       multiple: false,
       autoUpload: false,
       customHeaders: {
-        // 'X-TOKEN': this.loginService.getSessionId()
+        'X-TOKEN': this.loginService.getSessionId()
       }
     });
   }
