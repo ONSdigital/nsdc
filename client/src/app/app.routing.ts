@@ -1,5 +1,6 @@
 import { Routes, RouterModule } from '@angular/router';
-
+import { FileUploadModule } from './file-upload/file-upload.module';
+import { FileAuditModule } from './file-audit/file-audit.module';
 import { ManageModuleComponent } from './manage/manage-module.component';
 
 import { LoginComponent } from './login/login.component';
@@ -47,6 +48,14 @@ const appRoutes: Routes = [
       {
         path: '',
         component: ManageModuleComponent
+      },
+      {
+        path: 'upload',
+        loadChildren: () => FileUploadModule
+      },
+      {
+        path: 'audit',
+        loadChildren: () => FileAuditModule
       },
       {
         path: 'users',

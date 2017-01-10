@@ -39,8 +39,8 @@ export class AddUserComponent implements OnInit {
       username: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
       password: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
       status: [],
-      role_id: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(30)]],
-      supplier_id: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(30)]]
+      role_id: [null, [Validators.required, Validators.minLength(1), Validators.maxLength(30)]],
+      supplier_id: [null, [Validators.required, Validators.minLength(1), Validators.maxLength(30)]]
     });
     this.user = new User();
     this.roleService.getRoles().then(roles => this.roles = roles);

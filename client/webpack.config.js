@@ -29,7 +29,8 @@ var config = {
       {
         test: /\.ts$/,
         enforce: 'pre',
-        loader: 'tslint-loader'
+        loader: 'tslint-loader',
+        exclude: root('node_modules')
       },
       {
         test: /\.ts$/,

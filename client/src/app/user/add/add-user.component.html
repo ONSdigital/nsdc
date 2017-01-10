@@ -32,7 +32,7 @@
         <div class="form-group">
             <label>Role:</label>
             <select class="form-control" formControlName="role_id">
-                <option style="display:block" value="">Choose an option</option>
+                <option style="display:block" value="null">Choose an option</option>
                 <option *ngFor="let role of roles" [value]="role.id">{{ role.name }} </option>
             </select>
             <div
@@ -68,7 +68,7 @@
         <div class="form-group">
             <label>Supplier:</label>
             <select class="form-control" formControlName="supplier_id">
-                <option style="display:block" value="">Choose an option</option>
+                <option style="display:block" value="null">Choose an option</option>
                 <option *ngFor="let supplier of suppliers" [value]="supplier.id">{{ supplier.name }} </option>
             </select>
             <div
