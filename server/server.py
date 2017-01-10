@@ -10,6 +10,8 @@ from api.role_permission import RolePermission
 from api.file_upload import FileUpload
 from api.permission import Permission
 from api.user import User
+from api.self import Self
+from api.self_permission import SelfPermissions
 
 base_endpoint = '/nsdc/v1.0/'
 
@@ -55,6 +57,16 @@ api.add_resource(
 api.add_resource(
     JourneyVersion,
     base_endpoint + 'journeys/versions/<supplier_id>/<journey_id>'
+)
+
+api.add_resource(
+    Self,
+    base_endpoint + 'self'
+)
+
+api.add_resource(
+    SelfPermissions,
+    base_endpoint + 'self/permissions'
 )
 
 api.add_resource(

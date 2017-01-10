@@ -15,7 +15,7 @@ export class UserPermissionsService {
 
   getUserPermissions(): Observable<Permission[]> {
     if (!this.permissions) {
-      const userPermissionsUrl = this.config.Server + 'nsdc/v1.0/permissions/user/' + this.loginService.getCurrentUserId();
+      const userPermissionsUrl = this.config.Server + 'nsdc/v1.0/self/permissions';
       let headers = new Headers();
       headers.append('X-TOKEN', this.loginService.getSessionId());
       this.permissions = this.http.get(userPermissionsUrl, { headers })
@@ -32,5 +32,9 @@ export class UserPermissionsService {
     .map(permissions => {
       return permissions.indexOf(permissionToCheck) !== -1;
     });
+  }
+
+  clearPermissionsCache() {
+    this.permissions = null;
   }
 }

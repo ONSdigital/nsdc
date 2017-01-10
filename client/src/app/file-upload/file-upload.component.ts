@@ -1,5 +1,6 @@
 import { Component, EventEmitter, NgZone, OnInit } from '@angular/core';
 import { NgUploaderOptions, NgUploaderService } from 'ngx-uploader';
+import { LoginService } from '../login/login.service';
 
 const URL = 'http://localhost:5000/nsdc/v1.0/upload';
 
@@ -23,7 +24,8 @@ export class FileUploadComponent implements OnInit {
   events: EventEmitter<any> = new EventEmitter();
 
   constructor(
-    public uploader: NgUploaderService
+    public uploader: NgUploaderService,
+    public loginService: LoginService
   ) { }
 
   ngOnInit() {
@@ -31,7 +33,10 @@ export class FileUploadComponent implements OnInit {
     this.options = new NgUploaderOptions({
       url: URL,
       multiple: false,
-      autoUpload: false
+      autoUpload: false,
+      customHeaders: {
+        // 'X-TOKEN': this.loginService.getSessionId()
+      }
     });
   }
 
@@ -51,8 +56,13 @@ export class FileUploadComponent implements OnInit {
         this.uploading = false;
         this.uploadErrorMessage = 'Upload Failed';
       } else if (data && data.done) {
-        if (data.status === 400) {
-          const responseData = JSON.parse(data.response) || {};
+        if (data.status !== 200) {
+          let responseData;
+          try {
+            responseData = JSON.parse(data.response);
+          } catch (e) {
+            responseData = {};
+          }
           this.uploadErrorMessage = responseData.message || 'Upload Failed';
           this.uploadError = true;
           this.uploading = false;

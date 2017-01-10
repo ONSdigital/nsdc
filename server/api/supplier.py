@@ -1,11 +1,9 @@
 from flask import jsonify
-from authenticated_resource import AuthenticatedResource
-
-from common.serializer import Serializer
+from flask_restful import Resource
 from data.supplier import SupplierData
 
 
-class Supplier(AuthenticatedResource, Serializer):
+class Supplier(Resource):
     def get(self):
         suppliers = SupplierData.query.all()
         return jsonify(SupplierData.serialize_list(suppliers))

@@ -1,7 +1,7 @@
 from config import db
 from flask import jsonify
-from authenticated_resource import AuthenticatedResource
-from flask_restful import reqparse
+from flask_restful import reqparse, Resource
+from protected_resource import protected_resource
 from data.user import UserData
 
 parser = reqparse.RequestParser()
@@ -15,8 +15,9 @@ parser.add_argument("role_id", required=True, type=int, help='Role is required')
 parser.add_argument("supplier_id", required=False, type=int)
 
 
-class User(AuthenticatedResource):
+class User(Resource):
 
+    @protected_resource('VIEW_USERS')
     def get(self, user_id=None, role_id=None):
         if user_id is not None:
             user = UserData.query.get(user_id)
@@ -28,6 +29,7 @@ class User(AuthenticatedResource):
             users = UserData.query.all()
             return jsonify(UserData.serialize_list(users))
 
+    @protected_resource('ADD_USERS')
     def post(self):
         request = parser.parse_args()
         user = UserData(
@@ -45,6 +47,7 @@ class User(AuthenticatedResource):
         db.session.commit()
         return jsonify(user.serialize())
 
+    @protected_resource('EDIT_USERS')
     def put(self, user_id):
         user = UserData.query.get(user_id)
         request_json = parser.parse_args()
@@ -69,6 +72,7 @@ class User(AuthenticatedResource):
         db.session.commit()
         return jsonify(user.serialize())
 
+    @protected_resource('DELETE_USERS')
     def delete(self, user_id):
         UserData.query.filter_by(id=user_id).delete()
         db.session.commit()

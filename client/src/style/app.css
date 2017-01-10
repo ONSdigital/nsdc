@@ -4,19 +4,19 @@ body {
 }
 
 a {
-    color: #03A9F4;
+  color: #03A9F4;
 }
 
 .right {
-    float: right;
+  float: right;
 }
 
 .clear {
-    clear: both;
+  clear: both;
 }
 
 .manage {
-    padding: 0 0 20px 0;
+  padding: 0 0 20px 0;
 }
 
 .form-group-margin {
@@ -24,6 +24,11 @@ a {
 }
 
 .link {
-    color: #03A9F4;
-    cursor: pointer;
+  color: #03A9F4;
+  cursor: pointer;
+}
+
+a.disabled {
+  pointer-events: none;
+  cursor: not-allowed;
 }
