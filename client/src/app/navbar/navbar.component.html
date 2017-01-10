@@ -29,6 +29,14 @@
       </ul>
       <div class="nav navbar-nav navbar-right">
         <li>
+          <div
+            class="nav-user-account"
+            *ngIf="user"
+          >
+            {{user.username}}
+          </div>
+        </li>
+        <li>
           <a
             class="nav-logout"
             (click)="onLogout()"

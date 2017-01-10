@@ -1,5 +1,5 @@
 from config import db
-from flask import jsonify
+from flask import jsonify, request
 from flask_restful import reqparse, Resource
 from protected_resource import protected_resource
 from data.user import UserData
@@ -11,8 +11,8 @@ parser.add_argument("email")
 parser.add_argument("username")
 parser.add_argument("password")
 parser.add_argument("status")
-parser.add_argument("role_id", required=True, type=int, help='Role is required')
-parser.add_argument("supplier_id", required=False, type=int)
+parser.add_argument("role_id", type=int)
+parser.add_argument("supplier_id", type=int)
 
 
 class User(Resource):
@@ -26,7 +26,11 @@ class User(Resource):
             users = UserData.query.filter(UserData.role_id == role_id)
             return jsonify(UserData.serialize_list(users))
         else:
-            users = UserData.query.all()
+            show_inactive = request.args.get('showInactive')
+            if show_inactive == 'true':
+                users = UserData.query.all()
+            else:
+                users = UserData.query.filter(UserData.status == 'active')
             return jsonify(UserData.serialize_list(users))
 
     @protected_resource('ADD_USERS')
@@ -71,9 +75,3 @@ class User(Resource):
             user.supplier_id = request_json["supplier_id"]
         db.session.commit()
         return jsonify(user.serialize())
-
-    @protected_resource('DELETE_USERS')
-    def delete(self, user_id):
-        UserData.query.filter_by(id=user_id).delete()
-        db.session.commit()
-        return '', 204

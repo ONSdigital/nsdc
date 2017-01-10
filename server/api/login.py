@@ -15,7 +15,11 @@ class Login(Resource):
         request_json = parser.parse_args()
         username = request_json['username']
         password = request_json['password']
-        user = UserData.query.filter(UserData.username == username, UserData.password == password).first()
+        user = UserData.query.filter(
+            UserData.username == username,
+            UserData.password == password,
+            UserData.status == 'active'
+        ).first()
         if not user:
             return abort(400)
         # create new user session and return session_id
