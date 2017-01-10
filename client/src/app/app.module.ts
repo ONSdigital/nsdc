@@ -5,9 +5,6 @@ import { removeNgStyles, createNewHosts } from '@angularclass/hmr';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AppComponent }   from './app.component';
-import { RoleListComponent } from './role/role-list.component';
-import { DualListComponent } from './dual-list/dual-list.component';
-import { RoleComponent } from './role/role.component';
 import { routing, routedComponents } from './app.routing';
 import { LoginService } from './login/login.service';
 import { UserPermissionsService } from './user-permissions.service';
@@ -15,8 +12,6 @@ import { UserPermissionsGuard } from './user-permissions.guard';
 import { LoginGuard } from './login/login.guard';
 import { IsLoggedInGuard } from './login/is-logged-in.guard';
 import { Configuration } from './app.constants';
-import { ModalModule } from 'angular2-modal';
-import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
 
 
 @NgModule({
@@ -25,15 +20,9 @@ import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
     HttpModule,
     routing,
     ReactiveFormsModule,
-    FormsModule,
-    ModalModule.forRoot(),
-    BootstrapModalModule
   ],
   declarations: [
     AppComponent,
-    RoleListComponent,
-    RoleComponent,
-    DualListComponent,
     routedComponents
   ],
   providers: [
@@ -44,7 +33,7 @@ import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
     IsLoggedInGuard,
     Configuration
   ],
-  bootstrap: [ AppComponent ]
+  bootstrap: [AppComponent]
 })
 export class AppModule {
   constructor(public appRef: ApplicationRef) {}

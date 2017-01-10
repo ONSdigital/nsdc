@@ -4,6 +4,4 @@ import { Component } from '@angular/core';
   selector: 'nopermission',
   templateUrl : './no-permission.component.html'
 })
-export class NoPermissionComponent {
-  public nopermission;
-}
+export class NoPermissionComponent { }

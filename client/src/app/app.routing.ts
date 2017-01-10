@@ -8,23 +8,10 @@ import { LoginGuard } from './login/login.guard';
 import { UserPermissionsGuard } from './user-permissions.guard';
 import { IsLoggedInGuard } from './login/is-logged-in.guard';
 
-// User
-import { UserListComponent } from './user/user-list.component';
-import { AddUserComponent } from './user/add/add-user.component';
-import { EditUserComponent } from './user/edit/edit-user.component';
+import { UserModule } from './user/user.module';
+import { RoleModule } from './role/role.module';
+import { PermissionModule } from './permission/permission.module';
 
-// Role
-import { RoleListComponent } from './role/role-list.component';
-import { RoleManageComponent } from './role/manage/role-manage.component';
-import { AddRoleComponent } from './role/add/add-role.component';
-import { EditRoleComponent } from './role/edit/edit-role.component';
-
-import { RolePermissionsComponent } from './role/permissions/role-permissions.component';
-
-// Permission
-import { PermissionComponent } from './permission/permission.component';
-import { AddPermissionComponent } from './permission/add/add-permission.component';
-import { EditPermissionComponent } from './permission/edit/edit-permission.component';
 import { NoPermissionComponent } from './permission/no-permission.component';
 
 // Supplier
@@ -59,63 +46,27 @@ const appRoutes: Routes = [
       },
       {
         path: 'users',
-        component: UserListComponent
-      },
-      {
-        path: 'users/add',
-        component: AddUserComponent
-      },
-      {
-        path: 'users/:id',
-        component: EditUserComponent
+        loadChildren: () => UserModule
       },
       {
         path: 'roles',
-        component: RoleListComponent
-      },
-      {
-        path: 'roles/manage',
-        component: RoleManageComponent
-      },
-      {
-        path: 'roles/add',
-        component: AddRoleComponent
-      },
-      {
-        path: 'roles/:id',
-        component: EditRoleComponent
-      },
-      {
-        path: 'roles/:id/permissions',
-        component: RolePermissionsComponent
-      },
-      {
-        canActivate: [UserPermissionsGuard],
-        path: 'journeys/details/manage',
-        component: JourneyDetailsManageComponent,
-        data: {
-          permission: 'VIEW_JOURNEY_DETAILS'
-        }
-      },
-      {
-        path: 'permissions/add',
-        component: AddPermissionComponent
-      },
-      {
-        path: 'permissions/:id',
-        component: EditPermissionComponent
+        loadChildren: () => RoleModule
       },
       {
         path: 'permissions',
-        component: PermissionComponent
+        loadChildren: () => PermissionModule
+      },
+      {
+        path: 'journeys/details/manage',
+        component: JourneyDetailsManageComponent,
       },
       {
         path: 'suppliers',
         component: SupplierComponent
       },
       {
-          path: 'journeys',
-          component: JourneyComponent
+        path: 'journeys',
+        component: JourneyComponent
       },
       {
         path: 'journeys/manage',
@@ -135,20 +86,9 @@ export const routing = RouterModule.forRoot(appRoutes, {useHash: true});
 export const routedComponents = [
   ManageModuleComponent,
   LoginComponent,
-  UserListComponent,
-  AddUserComponent,
-  EditUserComponent,
-  RoleListComponent,
-  PermissionComponent,
-  AddPermissionComponent,
-  EditPermissionComponent,
-  RoleManageComponent,
-  AddRoleComponent,
-  EditRoleComponent,
   SupplierComponent,
   JourneyComponent,
   JourneyManageComponent,
   NoPermissionComponent,
-  JourneyDetailsManageComponent,
-  RolePermissionsComponent
+  JourneyDetailsManageComponent
 ];

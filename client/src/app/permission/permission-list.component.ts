@@ -8,10 +8,9 @@ import { Http } from '@angular/http';
 
 @Component({
   selector: 'permission-list',
-  templateUrl : './permission.component.html',
-  providers: [PermissionService]
+  templateUrl : './permission-list.component.html'
 })
-export class PermissionComponent implements OnInit {
+export class PermissionListComponent implements OnInit {
 
   public permissions: Permission[];
 

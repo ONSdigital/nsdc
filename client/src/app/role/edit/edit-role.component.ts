@@ -6,8 +6,7 @@ import { RoleService } from '../role.service';
 
 @Component({
   selector: 'edit-role',
-  templateUrl: 'edit-role.component.html',
-  providers: [RoleService]
+  templateUrl: 'edit-role.component.html'
 })
 export class EditRoleComponent implements OnInit {
   roleForm: FormGroup;

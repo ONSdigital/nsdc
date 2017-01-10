@@ -8,8 +8,7 @@ import { Modal } from 'angular2-modal/plugins/bootstrap';
 
 @Component({
   selector: 'role-list',
-  templateUrl : './role-list.component.html',
-  providers: [RoleService]
+  templateUrl : './role-list.component.html'
 })
 export class RoleListComponent implements OnInit {
 
@@ -18,9 +17,9 @@ export class RoleListComponent implements OnInit {
   constructor(
     private http: Http,
     private roleService: RoleService,
+    public modal: Modal,
     overlay: Overlay,
-    vcRef: ViewContainerRef,
-    public modal: Modal
+    vcRef: ViewContainerRef
   ) {
     overlay.defaultViewContainer = vcRef;
   }

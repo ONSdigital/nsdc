@@ -2,15 +2,14 @@ import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { Overlay } from 'angular2-modal';
 import { Modal } from 'angular2-modal/plugins/bootstrap';
 import { User } from './user';
-import { UserService } from './user.service';
 import { Router } from '@angular/router';
 import { Http } from '@angular/http';
+import { UserService } from './user.service';
 import { Configuration } from '../app.constants';
 
 @Component({
   selector: 'user-list',
-  templateUrl : './user-list.component.html',
-  providers: [UserService, Configuration]
+  templateUrl : './user-list.component.html'
 })
 export class UserListComponent implements OnInit {
 
@@ -20,9 +19,9 @@ export class UserListComponent implements OnInit {
   constructor(
     private http: Http,
     private userService: UserService,
+    public modal: Modal,
     overlay: Overlay,
-    vcRef: ViewContainerRef,
-    public modal: Modal
+    vcRef: ViewContainerRef
   ) {
     overlay.defaultViewContainer = vcRef;
   }

@@ -8,8 +8,7 @@ import { Permission } from '../../permission/permission';
 @Component({
   selector: 'role-permissions',
   templateUrl: 'role-permissions.component.html',
-  styleUrls: ['role-permissions.component.css'],
-  providers: [PermissionService, RoleService]
+  styleUrls: ['role-permissions.component.css']
 })
 export class RolePermissionsComponent implements OnInit {
 
