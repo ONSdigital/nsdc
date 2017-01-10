@@ -13,7 +13,6 @@ import { LoginGuard } from './login/login.guard';
 import { IsLoggedInGuard } from './login/is-logged-in.guard';
 import { Configuration } from './app.constants';
 
-// import { DualListComponent } from './dual-list/dual-list.component';
 
 @NgModule({
   imports: [
