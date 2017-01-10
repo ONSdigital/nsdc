@@ -19,4 +19,9 @@ export class FileAuditComponent implements OnInit {
   ngOnInit(): void {
     this.fileAuditService.getFiles().then(files => this.files = files);
   }
+
+  onChange(filename) {
+    this.fileAuditService.getFileAuditByName(filename)
+    .then(audits => this.audits = audits);
+  }
 }

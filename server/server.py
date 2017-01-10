@@ -11,6 +11,8 @@ from api.user import User
 from api.journey_steps import JourneyStep
 from api.self import Self
 from api.self_permission import SelfPermissions
+from api.file import File
+from api.file_journey_audit import FileJourneyAudit
 
 base_endpoint = '/nsdc/v1.0/'
 
@@ -65,6 +67,16 @@ api.add_resource(
 api.add_resource(
     Login,
     base_endpoint + 'login'
+)
+
+api.add_resource(
+    File,
+    base_endpoint + 'files'
+)
+
+api.add_resource(
+    FileJourneyAudit,
+    base_endpoint + 'files/audit'
 )
 
 api.add_resource(

@@ -40,3 +40,26 @@ a.disabled {
 .user-details-modal {
   display: none;
 }
+
+.btn-extra {
+  margin-right: 10px;
+}
+
+.options {
+  width: 150px;
+}
+
+.options-large {
+  width: 265px;
+}
+
+.btn-lg {
+  font-size: 23px !important;
+  padding: 20px !important;
+  margin-right: 15px !important;
+}
+
+.glyphicon {
+  top: 3px !important;
+  margin-right: 10px;
+}
