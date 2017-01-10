@@ -30,6 +30,11 @@ footer {
   cursor: pointer;
 }
 
+.nav-user-account {
+  color: #fff;
+  padding: 15px;
+}
+
 a.disabled {
   pointer-events: none;
   cursor: not-allowed;
