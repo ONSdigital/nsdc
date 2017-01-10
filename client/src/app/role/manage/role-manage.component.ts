@@ -20,7 +20,6 @@ export class RoleManageComponent implements OnInit {
   selectedRoleId: number;
 
   constructor(
-    private http: Http,
     private roleService: RoleService,
     private userService: UserService,
     private permissionService: PermissionService
