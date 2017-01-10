@@ -4,7 +4,7 @@ import { JourneyRoutingModule, routedComponents } from './journey-routing.module
 import { ReactiveFormsModule } from '@angular/forms';
 import { ModalModule } from 'angular2-modal';
 import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
-import { PermissionService } from '../permission/permission.service';
+import { JourneyService } from './journey.service';
 
 @NgModule({
   imports: [
@@ -18,7 +18,7 @@ import { PermissionService } from '../permission/permission.service';
     routedComponents
   ],
   providers: [
-    PermissionService
+    JourneyService
   ],
 })
 export class JourneyModule { }

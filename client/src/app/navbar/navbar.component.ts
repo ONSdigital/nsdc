@@ -90,6 +90,10 @@ export class NavbarComponent {
     return this.permissionShortNames.includes('DATA_AUDIT');
   }
 
+  canViewJourneys() {
+    return this.permissionShortNames.includes('VIEW_JOURNEYS');
+  }
+
   onLogout() {
     this.loginService.logout();
     this.userPermissionsService.clearPermissionsCache();

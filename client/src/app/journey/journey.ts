@@ -1,13 +1,13 @@
 export class Journey {
-    id: number;
-    name: string;
-    description: string;
+  id: number;
+  name: string;
+  description: string;
 }
 
 export class JourneyStep {
-    id: number;
-    journey_id: number;
-    name: string;
-    description: string;
-    short_name: string;
+  id: number;
+  journey_id: number;
+  name: string;
+  description: string;
+  short_name: string;
 }

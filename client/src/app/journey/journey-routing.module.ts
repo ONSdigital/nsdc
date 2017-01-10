@@ -1,11 +1,16 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { UserPermissionsGuard } from '../user-permissions.guard';
 import { JourneyListComponent } from './journey.component';
 
 const routes: Routes = [
   {
+    canActivate: [UserPermissionsGuard],
     path: '',
-    component: JourneyListComponent
+    component: JourneyListComponent,
+    data: {
+      permission: 'VIEW_JOURNEYS'
+    }
   },
 ];
 

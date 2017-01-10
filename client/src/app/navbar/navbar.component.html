@@ -20,7 +20,7 @@
         <li *ngIf="canViewPermissions()">
           <a [routerLink]="['/permissions']">Permissions</a>
         </li>
-        <li>
+        <li *ngIf="canViewJourneys()">
           <a [routerLink]="['/journeys']">Journeys</a>
         </li>
         <li *ngIf="canViewUpload()">
