@@ -29,9 +29,9 @@ export class UserService {
     });
   }
 
-  getUsers() {
+  getUsers(showInactive = false) {
     this.headers.set('X-TOKEN', this.loginService.getSessionId());
-    let userListUrl = this.config.Server + 'nsdc/v1.0/users';
+    let userListUrl = this.config.Server + 'nsdc/v1.0/users' + `?showInactive=${showInactive}`;
     return this.http.get(userListUrl, { headers: this.headers})
     .toPromise()
     .then(response => response.json() as User[])
@@ -55,17 +55,17 @@ export class UserService {
     .catch(this.handleError);
   }
 
-  updateUser( user: User) {
+  updateUser(user: User) {
     this.headers.set('X-TOKEN', this.loginService.getSessionId());
     let userEditUrl = this.config.Server + 'nsdc/v1.0/users/' + user.id;
     return this.http.put(userEditUrl, JSON.stringify(user),
     { headers: this.headers }).toPromise().then(() => user).catch(this.handleError);
   }
 
-  deleteUser(id: number) {
+  deactivateUser(id: number) {
     this.headers.set('X-TOKEN', this.loginService.getSessionId());
-    let deleteUrl = this.config.Server + 'nsdc/v1.0/users/' + id;
-    return this.http.delete(deleteUrl, { headers: this.headers })
+    let deactivateUrl = this.config.Server + 'nsdc/v1.0/users/' + id;
+    return this.http.put(deactivateUrl, JSON.stringify({status: 'inactive'}), { headers: this.headers })
     .map(res => res.json())
     .catch(res => {
       return Observable.throw(res.json());

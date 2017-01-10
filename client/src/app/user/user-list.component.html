@@ -50,10 +50,10 @@
         <td>
           <button
             class="btn btn-danger"
-            [disabled]="!canDelete()"
-            (click)="onDeleteClicked(user.id)"
+            [disabled]="!canEdit()"
+            (click)="onDeactivateClicked(user.id)"
           >
-            Delete
+            Deactivate
           </button>
         <td>
       </tr>

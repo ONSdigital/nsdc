@@ -37,19 +37,19 @@ export class UserListComponent implements OnInit {
     });
   }
 
-  onDeleteClicked(userId) {
+  onDeactivateClicked(userId) {
     const modalConfirmation = this.modal.confirm()
     .size('sm')
     .isBlocking(false)
     .showClose(true)
     .keyboard(27)
     .title('Confirm')
-    .body('Are you sure you want to delete this user?')
+    .body('Are you sure you want to deactivate this user?')
     .open();
 
     modalConfirmation.then(dialog => dialog.result).then(
       () => {
-        this.userService.deleteUser(userId)
+        this.userService.deactivateUser(userId)
         .subscribe(() => {
           this.userService.getUsers().then((users) => this.users = users);
         });
@@ -60,10 +60,6 @@ export class UserListComponent implements OnInit {
 
   canEdit() {
     return this.permissionShortNames.includes('EDIT_USERS');
-  }
-
-  canDelete() {
-    return this.permissionShortNames.includes('DELETE_USERS');
   }
 
   canAdd() {
