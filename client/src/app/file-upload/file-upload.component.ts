@@ -35,7 +35,7 @@ export class FileUploadComponent implements OnInit {
       multiple: false,
       autoUpload: false,
       customHeaders: {
-        'X-TOKEN': this.loginService.getSessionId()
+        // 'X-TOKEN': this.loginService.getSessionId()
       }
     });
   }
@@ -56,8 +56,13 @@ export class FileUploadComponent implements OnInit {
         this.uploading = false;
         this.uploadErrorMessage = 'Upload Failed';
       } else if (data && data.done) {
-        if (data.status === 400) {
-          const responseData = JSON.parse(data.response) || {};
+        if (data.status !== 200) {
+          let responseData;
+          try {
+            responseData = JSON.parse(data.response);
+          } catch (e) {
+            responseData = {};
+          }
           this.uploadErrorMessage = responseData.message || 'Upload Failed';
           this.uploadError = true;
           this.uploading = false;
