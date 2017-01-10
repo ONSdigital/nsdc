@@ -12,7 +12,6 @@ parser.add_argument("username")
 parser.add_argument("password")
 parser.add_argument("status")
 parser.add_argument("role_id", type=int)
-parser.add_argument("supplier_id", type=int)
 
 
 class User(Resource):
@@ -43,8 +42,7 @@ class User(Resource):
             email=request["email"],
             username=request["username"],
             password=request["password"],
-            status=request["status"],
-            supplier_id=request["supplier_id"]
+            status=request["status"]
         )
 
         db.session.add(user)
@@ -71,7 +69,5 @@ class User(Resource):
             user.password = password
         if request_json["status"] is not None:
             user.status = request_json["status"]
-        if request_json["supplier_id"] is not None:
-            user.supplier_id = request_json["supplier_id"]
         db.session.commit()
         return jsonify(user.serialize())

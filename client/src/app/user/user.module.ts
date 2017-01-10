@@ -6,7 +6,6 @@ import { ModalModule } from 'angular2-modal';
 import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
 import { UserService } from './user.service';
 import { RoleService } from '../role/role.service';
-import { SupplierService } from '../supplier/supplier.service';
 
 @NgModule({
   imports: [
@@ -19,8 +18,7 @@ import { SupplierService } from '../supplier/supplier.service';
   declarations: [routedComponents],
   providers: [
     UserService,
-    RoleService,
-    SupplierService
+    RoleService
   ]
 })
 export class UserModule { }

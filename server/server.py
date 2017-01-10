@@ -4,7 +4,6 @@ from config import app
 from api.journey import Journey
 from api.login import Login
 from api.role import Role
-from api.supplier import Supplier
 from api.role_permission import RolePermission
 from api.file_upload import FileUpload
 from api.permission import Permission
@@ -41,11 +40,6 @@ api.add_resource(
     Role,
     base_endpoint + 'roles',
     base_endpoint + 'roles/<role_id>'
-)
-
-api.add_resource(
-    Supplier,
-    base_endpoint + 'suppliers'
 )
 
 api.add_resource(

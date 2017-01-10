@@ -3,7 +3,7 @@
     <br>
     <form [formGroup]="userForm" (ngSubmit)="onSubmit()" >
         <div class="form-group">
-            <label>First Name:</label>
+            <label>Firstname:</label>
             <input type="text" #refName class="form-control" formControlName="firstname">                       
             <div *ngIf="userForm.controls['firstname'].hasError('required')" class="alert alert-danger">
                 Please enter a name.
@@ -16,7 +16,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label>Lastame:</label>
+            <label>Lastname:</label>
             <input type="text" #refName class="form-control" formControlName="lastname">                       
             <div *ngIf="userForm.controls['lastname'].hasError('required')" class="alert alert-danger">
                 Please enter a name.
@@ -57,16 +57,6 @@
             <input type="text" class="form-control" formControlName="email">
             <div *ngIf="userForm.controls['email'].hasError('required')" class="alert alert-danger">
                 Invalid email format.
-            </div>            
-        </div>
-        <div class="form-group">
-            <label>Supplier:</label>
-            <select class="form-control" formControlName="supplier_id">
-                <option style="display:block" value="null">Choose an option</option>
-                <option *ngFor="let supplier of suppliers" [value]="supplier.id">{{ supplier.name }} </option>
-            </select>
-            <div *ngIf="userForm.controls['supplier_id'].hasError('required')" class="alert alert-danger">
-                Please enter supplier.
             </div>            
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>    

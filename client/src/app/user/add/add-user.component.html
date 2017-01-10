@@ -3,7 +3,7 @@
     <br>
     <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
-            <label>Firstame:</label>
+            <label>Firstname:</label>
             <input type="text" #refName class="form-control" formControlName="firstname" placeholder="Your firstname">                       
             <div *ngIf="userForm.controls['firstname'].hasError('required') && submitAttempt" class="alert alert-danger">
                 Please enter a name.
@@ -16,7 +16,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label>Lastame:</label>
+            <label>Lastname:</label>
             <input type="text" #refName class="form-control" formControlName="lastname" placeholder="Your lastname">                       
             <div *ngIf="userForm.controls['lastname'].hasError('required') && submitAttempt" class="alert alert-danger">
                 Please enter a name.
@@ -64,19 +64,6 @@
             <div *ngIf="userForm.controls['email'].hasError('required') && submitAttempt" class="alert alert-danger">
                 Please enter email address.
             </div>            
-        </div>
-        <div class="form-group">
-            <label>Supplier:</label>
-            <select class="form-control" formControlName="supplier_id">
-                <option style="display:block" value="null">Choose an option</option>
-                <option *ngFor="let supplier of suppliers" [value]="supplier.id">{{ supplier.name }} </option>
-            </select>
-            <div
-                *ngIf="userForm.controls['supplier_id'].hasError('required') && userForm.controls['supplier_id'].touched"
-                class="alert alert-danger"
-            >
-                Please enter supplier.
-            </div>           
         </div>
         <div
             *ngIf="submitFailed"

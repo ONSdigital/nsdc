@@ -5,9 +5,7 @@ import { UserService } from '../user.service';
 import { User } from '../user';
 import { Configuration } from '../../app.constants';
 import { Role } from '../../role/role';
-import { Supplier } from '../../supplier/supplier';
 import { RoleService } from '../../role/role.service';
-import { SupplierService } from '../../supplier/supplier.service';
 
 @Component({
   selector: 'update-user',
@@ -19,7 +17,6 @@ export class EditUserComponent implements OnInit, OnDestroy {
   user: User;
   users: User [];
   roles: Role[];
-  suppliers: Supplier[];
   public showDetail = false;
   public sub: any;
   public errorMsg: string;
@@ -28,7 +25,6 @@ export class EditUserComponent implements OnInit, OnDestroy {
     private _formBuilder: FormBuilder,
     private userService: UserService,
     private roleService: RoleService,
-    private supplierService: SupplierService,
     private router: Router,
     private route: ActivatedRoute
   ) {}
@@ -38,7 +34,6 @@ export class EditUserComponent implements OnInit, OnDestroy {
       firstname: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
       lastname: [ null, [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
       role_id: [null, [Validators.required, Validators.minLength(1), Validators.maxLength(30)]],
-      supplier_id: [null, [Validators.required, Validators.minLength(1), Validators.maxLength(30)]],
       email: [null, [Validators.pattern('^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,63}$')]],
       username: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
       password: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
@@ -56,15 +51,10 @@ export class EditUserComponent implements OnInit, OnDestroy {
         this.userForm.patchValue({email: user.email});
         this.userForm.patchValue({status: user.status});
         this.userForm.patchValue({role_id: user.role_id});
-        this.userForm.patchValue({supplier_id: user.supplier_id});
 
         this.roleService.getRoles().then(roles => {
           this.roles = roles;
           this.userForm.patchValue({role: roles});
-        });
-        this.supplierService.getSuppliers().then(suppliers => {
-          this.suppliers = suppliers;
-          this.userForm.patchValue({supplier: suppliers});
         });
       });
     });
@@ -77,7 +67,6 @@ export class EditUserComponent implements OnInit, OnDestroy {
     this.user.password = this.userForm.controls['password'].value;
     this.user.email = this.userForm.controls['email'].value;
     this.user.role_id = this.userForm.controls['role_id'].value;
-    this.user.supplier_id = this.userForm.controls['supplier_id'].value;
     this.userService.updateUser(this.user).then(
       () => {
         this.router.navigate(['/users']);

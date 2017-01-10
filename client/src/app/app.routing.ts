@@ -14,10 +14,6 @@ import { JourneyModule } from './journey/journey.module';
 
 import { NoPermissionComponent } from './permission/no-permission.component';
 
-// Supplier
-import { SupplierComponent } from './supplier/supplier.component';
-
-
 const appRoutes: Routes = [
   {
     canActivate: [IsLoggedInGuard],
@@ -57,10 +53,6 @@ const appRoutes: Routes = [
         loadChildren: () => JourneyModule
       },
       {
-        path: 'suppliers',
-        component: SupplierComponent
-      },
-      {
         path: 'no-permission',
         component: NoPermissionComponent
       }
@@ -74,6 +66,5 @@ export const routing = RouterModule.forRoot(appRoutes, {useHash: true});
 export const routedComponents = [
   ManageModuleComponent,
   LoginComponent,
-  SupplierComponent,
   NoPermissionComponent
 ];

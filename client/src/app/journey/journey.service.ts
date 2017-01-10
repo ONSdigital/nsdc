@@ -29,9 +29,9 @@ export class JourneyService {
   getJourneySteps() {
     this.headers.set('X-TOKEN', this.loginService.getSessionId());
     return this.http.get(this.actionUrl + '/steps', { headers: this.headers })
-        .toPromise()
-        .then(response => response.json() as JourneyStep[])
-        .catch(this.handleError);
+    .toPromise()
+    .then(response => response.json() as JourneyStep[])
+    .catch(this.handleError);
   }
 
   private handleError(error: any): Promise<any> {
