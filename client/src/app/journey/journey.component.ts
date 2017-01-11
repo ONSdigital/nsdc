@@ -11,11 +11,21 @@ export class JourneyListComponent implements OnInit {
 
   public journeys: Journey[];
   public steps: JourneyStep[];
+  journeyLoading = false;
+  journeyStepsLoading = false;
 
   constructor(private journeyService: JourneyService ) {}
 
-  ngOnInit(): void {
-    this.journeyService.getJourneys().then(journeys => this.journeys = journeys);
-    this.journeyService.getJourneySteps().then(steps => this.steps = steps);
+  ngOnInit() {
+    this.journeyLoading = true;
+    this.journeyStepsLoading = true;
+    this.journeyService.getJourneys().then(journeys => {
+      this.journeys = journeys;
+      this.journeyLoading = false;
+    });
+    this.journeyService.getJourneySteps().then(steps => {
+      this.steps = steps;
+      this.journeyStepsLoading = false;
+    });
   }
 }

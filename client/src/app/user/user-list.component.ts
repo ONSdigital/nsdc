@@ -16,6 +16,7 @@ export class UserListComponent implements OnInit {
 
   public users: User[];
   permissionShortNames: string[];
+  loading = false;
 
   constructor(
     private http: Http,
@@ -29,7 +30,11 @@ export class UserListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userService.getUsers().then((users) => this.users = users);
+    this.loading = true;
+    this.userService.getUsers().then((users) => {
+      this.users = users;
+      this.loading = false;
+    });
     this.userPermissionsService.getUserPermissions()
     .subscribe(permissions => {
       this.permissionShortNames = permissions.map(permission => permission.short_name);

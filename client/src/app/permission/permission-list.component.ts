@@ -13,6 +13,7 @@ import { Http } from '@angular/http';
 export class PermissionListComponent implements OnInit {
 
   public permissions: Permission[];
+  loading = false;
 
   constructor(
     private http: Http,
@@ -25,7 +26,11 @@ export class PermissionListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.permissionService.getPermissions().then(permissions => this.permissions = permissions);
+    this.loading = true;
+    this.permissionService.getPermissions().then(permissions => {
+      this.loading = false;
+      this.permissions = permissions;
+    });
   }
 
   onDeleteClicked(permissionId) {
