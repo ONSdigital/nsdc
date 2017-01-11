@@ -9,6 +9,7 @@ import { RoleService } from './role.service';
 import { UserService } from '../user/user.service';
 import { PermissionService } from '../permission/permission.service';
 import { DualListModule } from '../dual-list/dual-list.module';
+import { EditRoleResolver } from './edit/edit-role.resolver';
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import { DualListModule } from '../dual-list/dual-list.module';
   providers: [
     UserService,
     RoleService,
-    PermissionService
+    PermissionService,
+    EditRoleResolver
   ]
 })
 export class RoleModule { }

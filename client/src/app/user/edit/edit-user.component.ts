@@ -11,14 +11,13 @@ import { RoleService } from '../../role/role.service';
   selector: 'update-user',
   templateUrl : './edit-user.component.html'
 })
-export class EditUserComponent implements OnInit, OnDestroy {
+export class EditUserComponent implements OnInit {
 
   userForm: FormGroup;
   user: User;
   users: User [];
   roles: Role[];
   public showDetail = false;
-  public sub: any;
   public errorMsg: string;
 
   constructor(
@@ -40,22 +39,21 @@ export class EditUserComponent implements OnInit, OnDestroy {
       status: []
     });
 
-    this.sub = this.route.params.subscribe(params => {
-      const id = Number.parseInt(params['id']);
-      this.userService.getUserById(id).then((user) => {
-        this.user = user;
-        this.userForm.patchValue({username: user.username});
-        this.userForm.patchValue({lastname: user.lastname});
-        this.userForm.patchValue({password: user.password});
-        this.userForm.patchValue({firstname: user.firstname});
-        this.userForm.patchValue({email: user.email});
-        this.userForm.patchValue({status: user.status});
-        this.userForm.patchValue({role_id: user.role_id});
+    this.roleService.getRoles().then(roles => {
+      this.roles = roles;
+    });
 
-        this.roleService.getRoles().then(roles => {
-          this.roles = roles;
-          this.userForm.patchValue({role: roles});
-        });
+    this.route.data.subscribe(data => {
+      const user = data['user'];
+      this.user = user;
+      this.userForm.patchValue({
+        username: user.username,
+        lastname: user.lastname,
+        password: user.password,
+        firstname: user.firstname,
+        email: user.email,
+        status: user.status,
+        role_id: user.role_id
       });
     });
   }
@@ -76,8 +74,4 @@ export class EditUserComponent implements OnInit, OnDestroy {
       }
     );
   }
-
-  ngOnDestroy() {
-    this.sub.unsubscribe();
-  };
 }

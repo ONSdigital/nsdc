@@ -4,6 +4,7 @@ import { UserPermissionsGuard } from '../user-permissions.guard';
 import { PermissionListComponent } from './permission-list.component';
 import { AddPermissionComponent } from './add/add-permission.component';
 import { EditPermissionComponent } from './edit/edit-permission.component';
+import { EditPermissionResolver } from './edit/edit-permission.resolver';
 
 const routes: Routes = [
   {
@@ -20,6 +21,9 @@ const routes: Routes = [
     component: EditPermissionComponent,
     data: {
       permission: 'EDIT_PERMISSIONS'
+    },
+    resolve: {
+      permission: EditPermissionResolver
     }
   },
   {

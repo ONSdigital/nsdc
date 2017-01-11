@@ -7,6 +7,7 @@ import { ModalModule } from 'angular2-modal';
 import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
 import { UserService } from './user.service';
 import { RoleService } from '../role/role.service';
+import { EditUserResolver } from './edit/edit-user.resolver';
 
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ import { RoleService } from '../role/role.service';
   ],
   providers: [
     UserService,
-    RoleService
+    RoleService,
+    EditUserResolver
   ]
 })
 export class UserModule { }

@@ -27,14 +27,9 @@ export class EditRoleComponent implements OnInit {
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
       description: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]]
     });
-    this.route.params.subscribe(params => {
-      const id = Number.parseInt(params['id']);
-      this.role = new Role();
-      this.roleService.getRoleById(id)
-      .then(role => {
-        this.role = role;
-        this.roleForm.patchValue(role);
-      });
+    this.route.data.subscribe(data => {
+      this.role = data['role'] as Role;
+      this.roleForm.patchValue(this.role);
     });
   }
 
