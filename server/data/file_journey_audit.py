@@ -9,7 +9,8 @@ class FileJourneyAuditData(db.Model, Serializer):
     filename = db.Column('filename', db.String(50), nullable=False, server_default=u'')
     status = db.Column('status', db.String(10), nullable=False, server_default=u'')
     description = db.Column('description', db.String(150), nullable=False, server_default=u'')
-    timestamp = db.Column('timestamp', db.TIMESTAMP, server_default=db.func.current_timestamp(), nullable=False)
+    start_time = db.Column('start_time', db.TIMESTAMP, server_default=db.func.current_timestamp(), nullable=False)
+    end_time = db.Column('end_time', db.TIMESTAMP, server_default=db.func.current_timestamp(), nullable=False)
 
     def __init__(self, step, filename, status, description):
         self.step = step
