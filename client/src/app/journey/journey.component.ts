@@ -1,23 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { Journey } from './journey';
+import { Journey, JourneyStep } from './journey';
 import { JourneyService } from './journey.service';
-import { Router } from '@angular/router';
-import { Http } from '@angular/http';
 import { Configuration } from '../app.constants';
 
 @Component({
   selector: 'journey-list',
-  templateUrl : './journey.component.html',
-  providers: [JourneyService, Configuration]
+  templateUrl : './journey.component.html'
 })
-export class JourneyComponent implements OnInit {
+export class JourneyListComponent implements OnInit {
 
-    public journeys: Journey[];
-    public erroreMsg: string;
+  public journeys: Journey[];
+  public steps: JourneyStep[];
 
-    constructor(private http: Http, private journeyService: JourneyService ) {}
+  constructor(private journeyService: JourneyService ) {}
 
-    ngOnInit(): void {
-        this.journeyService.getJourneys().then(journeys => this.journeys = journeys);
-    }
+  ngOnInit(): void {
+    this.journeyService.getJourneys().then(journeys => this.journeys = journeys);
+    this.journeyService.getJourneySteps().then(steps => this.steps = steps);
+  }
 }

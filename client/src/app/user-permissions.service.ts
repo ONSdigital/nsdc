@@ -4,14 +4,13 @@ import { LoginService } from './login/login.service';
 import { Permission } from './permission/permission';
 import { Configuration } from './app.constants';
 import { Observable } from 'rxjs/Rx';
-import { Router, CanActivate, CanActivateChild, ActivatedRouteSnapshot } from '@angular/router';
 
 @Injectable()
 export class UserPermissionsService {
 
   private permissions: Observable<Permission[]>;
 
-  constructor(private http: Http, private loginService: LoginService, private config: Configuration, private router: Router) {}
+  constructor(private http: Http, private loginService: LoginService, private config: Configuration) {}
 
   getUserPermissions(): Observable<Permission[]> {
     if (!this.permissions) {

@@ -2,16 +2,17 @@ from flask_restful import Api
 
 from config import app
 from api.journey import Journey
-from api.journey_version import JourneyVersion
 from api.login import Login
 from api.role import Role
-from api.supplier import Supplier
 from api.role_permission import RolePermission
 from api.file_upload import FileUpload
 from api.permission import Permission
 from api.user import User
+from api.journey_steps import JourneyStep
 from api.self import Self
 from api.self_permission import SelfPermissions
+from api.file import File
+from api.file_journey_audit import FileJourneyAudit
 
 base_endpoint = '/nsdc/v1.0/'
 
@@ -44,19 +45,13 @@ api.add_resource(
 )
 
 api.add_resource(
-    Supplier,
-    base_endpoint + 'suppliers'
-)
-
-api.add_resource(
     Journey,
-    base_endpoint + 'journeys',
-    base_endpoint + 'journeys/supplier/<supplier_id>'
+    base_endpoint + 'journeys'
 )
 
 api.add_resource(
-    JourneyVersion,
-    base_endpoint + 'journeys/versions/<supplier_id>/<journey_id>'
+    JourneyStep,
+    base_endpoint + 'journeys/steps'
 )
 
 api.add_resource(
@@ -72,6 +67,16 @@ api.add_resource(
 api.add_resource(
     Login,
     base_endpoint + 'login'
+)
+
+api.add_resource(
+    File,
+    base_endpoint + 'files'
+)
+
+api.add_resource(
+    FileJourneyAudit,
+    base_endpoint + 'files/audit/<id>'
 )
 
 api.add_resource(

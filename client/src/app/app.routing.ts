@@ -5,22 +5,14 @@ import { ManageModuleComponent } from './manage/manage-module.component';
 
 import { LoginComponent } from './login/login.component';
 import { LoginGuard } from './login/login.guard';
-import { UserPermissionsGuard } from './user-permissions.guard';
 import { IsLoggedInGuard } from './login/is-logged-in.guard';
 
 import { UserModule } from './user/user.module';
 import { RoleModule } from './role/role.module';
 import { PermissionModule } from './permission/permission.module';
+import { JourneyModule } from './journey/journey.module';
 
 import { NoPermissionComponent } from './permission/no-permission.component';
-
-// Supplier
-import { SupplierComponent } from './supplier/supplier.component';
-
-// Journey
-import { JourneyComponent } from './journey/journey.component';
-import { JourneyManageComponent } from './journey/manage/journey-manage.component';
-import { JourneyDetailsManageComponent } from './journey/manage/journey-details-manage.component';
 
 const appRoutes: Routes = [
   {
@@ -57,20 +49,8 @@ const appRoutes: Routes = [
         loadChildren: () => PermissionModule
       },
       {
-        path: 'journeys/details/manage',
-        component: JourneyDetailsManageComponent,
-      },
-      {
-        path: 'suppliers',
-        component: SupplierComponent
-      },
-      {
         path: 'journeys',
-        component: JourneyComponent
-      },
-      {
-        path: 'journeys/manage',
-        component: JourneyManageComponent
+        loadChildren: () => JourneyModule
       },
       {
         path: 'no-permission',
@@ -86,9 +66,5 @@ export const routing = RouterModule.forRoot(appRoutes, {useHash: true});
 export const routedComponents = [
   ManageModuleComponent,
   LoginComponent,
-  SupplierComponent,
-  JourneyComponent,
-  JourneyManageComponent,
-  NoPermissionComponent,
-  JourneyDetailsManageComponent
+  NoPermissionComponent
 ];

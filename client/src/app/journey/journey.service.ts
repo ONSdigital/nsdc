@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, Response, RequestOptions } from '@angular/http';
+import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
-import { Observable } from 'rxjs/Observable';
-import { Journey, JourneyVersion } from './journey';
+import { Journey, JourneyStep } from './journey';
 import { Configuration } from '../app.constants';
 import { LoginService } from '../login/login.service';
 
@@ -27,19 +26,11 @@ export class JourneyService {
     .catch(this.handleError);
   }
 
-  getJourneysBySupplier(supplierId) {
+  getJourneySteps() {
     this.headers.set('X-TOKEN', this.loginService.getSessionId());
-    return this.http.get(this.actionUrl + '/supplier/' + supplierId, { headers: this.headers })
+    return this.http.get(this.actionUrl + '/steps', { headers: this.headers })
     .toPromise()
-    .then(response => response.json() as Journey[])
-    .catch(this.handleError);
-  }
-
-  getVersionsBySupplierAndJourney(supplierId, journeyId) {
-    this.headers.set('X-TOKEN', this.loginService.getSessionId());
-    return this.http.get(this.actionUrl + '/versions/' + supplierId + '/' + journeyId, { headers: this.headers })
-    .toPromise()
-    .then(response => response.json() as JourneyVersion[])
+    .then(response => response.json() as JourneyStep[])
     .catch(this.handleError);
   }
 

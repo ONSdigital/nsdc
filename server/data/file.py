@@ -2,11 +2,13 @@ from config import db
 from common.serializer import Serializer
 
 
-class SupplierData(db.Model, Serializer):
-    __tablename__ = 'supplier'
-    id = db.Column('supplier_id', db.Integer, primary_key=True)
+class FileData(db.Model, Serializer):
+    __tablename__ = 'file'
+    id = db.Column('file_id', db.Integer, primary_key=True)
     name = db.Column('name', db.String(50), nullable=False, server_default=u'')
-    journeys = db.relationship('JourneyData', backref='journey', lazy='dynamic')
+
+    def __init__(self, name):
+        self.name = name
 
     def serialize(self):
         return {

@@ -2,6 +2,7 @@
   <h2>Roles</h2>
   <div class="manage">
     <a class="btn btn-primary right" [routerLink]="['/roles/add']">Add Role</a>
+    <a class="btn btn-primary btn-extra right" [routerLink]="['/roles/manage']">Manage</a>
     <div class="clear"></div>
   </div>     
   <table class="table table-hover">
@@ -10,24 +11,25 @@
         <th>Role Name</th>
         <th>Description</th>
         <th></th>
-        <th></th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let role of roles">
         <td><a href="#" [routerLink]="['/roles', role.id]" routerLinkActive="active">{{role.name}}</a></td>
         <td>{{role.description}}</td>
-        <td>
+        <td class="options options-large">
+          <button class="btn btn-danger right" (click)="onDeleteClicked(role.id)">
+            Delete
+          </button>
           <button
-            class="btn btn-primary"
-            [routerLink]="['/roles', role.id]"
-          >
+                  class="btn btn-primary btn-extra right "
+                  [routerLink]="['/roles', role.id]">
             Edit
           </button>
-        <td>
-        <td>
-          <button class="btn btn-danger" (click)="onDeleteClicked(role.id)">
-            Delete
+          <button
+                  class="btn btn-info btn-extra right "
+                  [routerLink]="['/roles/' + role.id + '/permissions']">
+            Permissions
           </button>
         <td>
       </tr>

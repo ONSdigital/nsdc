@@ -17,8 +17,8 @@
         <th>Lastname</th>
         <th>Email</th>
         <th>Status</th>                   
-        <th></th>                   
-        <th></th>                   
+        <th></th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -41,12 +41,12 @@
         <td>
           <button
             [disabled]="!canEdit()"
-            class="btn btn-primary"
+            class="btn btn-primary btn-extra right"
             [routerLink]="['/users', user.id]"
           >
             Edit
           </button>
-        <td>
+        </td>
         <td>
           <button
             class="btn btn-danger"

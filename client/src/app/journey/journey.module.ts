@@ -1,24 +1,24 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { UserRoutingModule, routedComponents } from './user-routing.module';
+import { JourneyRoutingModule, routedComponents } from './journey-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ModalModule } from 'angular2-modal';
 import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
-import { UserService } from './user.service';
-import { RoleService } from '../role/role.service';
+import { JourneyService } from './journey.service';
 
 @NgModule({
   imports: [
-    UserRoutingModule,
+    JourneyRoutingModule,
     CommonModule,
     ReactiveFormsModule,
     ModalModule.forRoot(),
     BootstrapModalModule
   ],
-  declarations: [routedComponents],
+  declarations: [
+    routedComponents
+  ],
   providers: [
-    UserService,
-    RoleService
-  ]
+    JourneyService
+  ],
 })
-export class UserModule { }
+export class JourneyModule { }

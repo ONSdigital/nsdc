@@ -1,11 +1,13 @@
 export class Journey {
-    a: number;
-    name: string;
-    supplier_id: number;
+  id: number;
+  name: string;
+  description: string;
 }
 
-export class JourneyVersion {
-    supplier_id: number;
-    journey_id: number;
-    version_number: number;
+export class JourneyStep {
+  id: number;
+  journey_id: number;
+  name: string;
+  description: string;
+  short_name: string;
 }

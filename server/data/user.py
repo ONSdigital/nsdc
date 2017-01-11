@@ -12,9 +12,8 @@ class UserData(db.Model, Serializer):
     created_at = db.Column('user_creationDate', db.TIMESTAMP, server_default=db.func.current_timestamp(), nullable=False)
     status = db.Column('status', db.String(10), nullable=False, server_default='active')
     role_id = db.Column(db.Integer, db.ForeignKey('role.role_id'))
-    supplier_id = db.Column(db.Integer, db.ForeignKey('supplier.supplier_id'))
 
-    def __init__(self, role_id, firstname, lastname, email, username, password, status, supplier_id=None):
+    def __init__(self, role_id, firstname, lastname, email, username, password, status):
         self.role_id = role_id
         self.firstname = firstname
         self.lastname = lastname
@@ -22,7 +21,6 @@ class UserData(db.Model, Serializer):
         self.username = username
         self.password = password
         self.status = status
-        self.supplier_id = supplier_id
 
     def serialize(self):
         return {
@@ -33,6 +31,5 @@ class UserData(db.Model, Serializer):
             'email': self.email,
             'username': self.username,
             'password': self.password,
-            'status': self.status,
-            'supplier_id': self.supplier_id
+            'status': self.status
         }

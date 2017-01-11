@@ -10,7 +10,6 @@
         <th>Short Name</th>
         <th>Description</th>
         <th></th>
-        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -18,17 +17,14 @@
         <td><a href="#" [routerLink]="['/permissions', permission.id]" routerLinkActive="active">{{permission.name}}</a></td>
         <td>{{permission.short_name}}</td>
         <td>{{permission.description}}</td>
-        <td >
-          <button
-            class="btn btn-primary"
-            [routerLink]="['/permissions', permission.id]"
-          >
-            Edit
-          </button>
-        <td>
-        <td>
-          <button class="btn btn-danger" (click)="onDeleteClicked(permission.id)">
+        <td class="options">
+          <button class="btn btn-danger right" (click)="onDeleteClicked(permission.id)">
             Delete
+          </button>
+          <button
+            class="btn btn-primary btn-extra right"
+            [routerLink]="['/permissions', permission.id]">
+            Edit
           </button>
         <td>
       </tr>

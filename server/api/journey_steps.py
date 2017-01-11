@@ -1,10 +1,10 @@
 from flask import jsonify
 from flask_restful import Resource
 from protected_resource import protected_resource
-from data.journey import JourneyData
+from data.journey_steps import JourneyStepData
 
 
-class Journey(Resource):
+class JourneyStep(Resource):
     @protected_resource('VIEW_JOURNEYS')
     def get(self):
-        return jsonify(JourneyData.serialize_list(JourneyData.query.all()))
+        return jsonify(JourneyStepData.serialize_list(JourneyStepData.query.all()))

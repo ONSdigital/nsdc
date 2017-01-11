@@ -7,5 +7,4 @@ export class User {
   status: string;
   email: string;
   role_id: number;
-  supplier_id: number;
 }
