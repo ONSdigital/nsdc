@@ -34,12 +34,12 @@ export class NavbarComponent {
 
   showNavBarLinks() {
     if (this.loginService.isLoggedIn()) {
+      this.userPermissionsService.getUserPermissions()
+      .subscribe(permissions => {
+        this.permissionShortNames = permissions.map(permission => permission.short_name);
+      });
       if (!this.loggedIn) {
         this.loggedIn = true;
-        this.userPermissionsService.getUserPermissions()
-        .subscribe(permissions => {
-          this.permissionShortNames = permissions.map(permission => permission.short_name);
-        });
         this.userAccountService.getUser()
         .subscribe(self => this.self = self);
       }

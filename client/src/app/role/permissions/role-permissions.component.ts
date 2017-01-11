@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RoleService } from '../role.service';
 import { PermissionService } from '../../permission/permission.service';
+import { UserPermissionsService } from '../../user-permissions.service';
 import { Role } from '../role';
 import { Permission } from '../../permission/permission';
 
@@ -26,7 +27,8 @@ export class RolePermissionsComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private roleService: RoleService,
-    private permissionService: PermissionService
+    private permissionService: PermissionService,
+    private userPermissionsService: UserPermissionsService
   ) {}
 
   ngOnInit() {
@@ -54,6 +56,7 @@ export class RolePermissionsComponent implements OnInit {
     .subscribe(
       () => {
         this.submitPending = false;
+        this.userPermissionsService.clearPermissionsCache();
         this.router.navigate(['/roles/manage']);
       },
       error => {
