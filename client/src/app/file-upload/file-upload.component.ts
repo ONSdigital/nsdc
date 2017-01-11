@@ -1,4 +1,4 @@
-import { Component, EventEmitter, NgZone, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { NgUploaderOptions, NgUploaderService } from 'ngx-uploader';
 import { LoginService } from '../login/login.service';
 
@@ -21,7 +21,6 @@ export class FileUploadComponent implements OnInit {
   uploadErrorMessage: string;
   hasBaseDropZoneOver: boolean = false;
   options: NgUploaderOptions;
-  events: EventEmitter<any> = new EventEmitter();
 
   constructor(
     public uploader: NgUploaderService,
