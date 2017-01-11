@@ -31,7 +31,7 @@ class FileUpload(Resource):
         filename = secure_filename(uploaded_file.filename)
         file_exists = FileJourneyAuditData.query\
             .filter(FileJourneyAuditData.filename == filename, FileJourneyAuditData.status == 'success').count() > 0
-        # file_exists = FileData.query.filter(FileData.name == filename).count() > 0
+
         if file_exists:
             error_message = 'File with same name exists'
             write_file_status(filename, 'error', error_message)
