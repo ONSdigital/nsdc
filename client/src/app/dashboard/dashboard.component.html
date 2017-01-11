@@ -1,32 +1,50 @@
 <h2>Dashboard</h2>
 <br />
-<div *ngIf="showMenuItems()">
-    <a class="btn btn-default btn-lg" [routerLink]="['/users']">
-        <span class="glyphicon glyphicon-user"></span>
-        Users
-    </a>
-
-    <a class="btn btn-default btn-lg" [routerLink]="['/roles']">
-        <span class="glyphicon  glyphicon-list-alt"></span>
-        Roles
-    </a>
-
-    <a class="btn btn-default btn-lg" [routerLink]="['/permissions']">
-        <span class="glyphicon glyphicon-remove-circle"></span>Permissions
-    </a>
-
-    <a class="btn btn-default btn-lg" [routerLink]="['/journeys']">
-        <span class="glyphicon glyphicon-globe"></span>
-        Journeys
-    </a>
-
-    <a class="btn btn-default btn-lg" [routerLink]="['/upload']">
-        <span class="glyphicon glyphicon-upload"></span>
-        File Upload
-    </a>
-
-    <a class="btn btn-default btn-lg" [routerLink]="['/audit']">
-        <span class="glyphicon glyphicon-file"></span>
-        File Audit
-    </a>
+<div>
+  <a
+    *ngIf="canViewUsers()"
+    class="btn btn-default btn-lg"
+    [routerLink]="['/users']"
+  >
+    <span class="glyphicon glyphicon-user"></span>
+    Users
+  </a>
+  <a
+    *ngIf="canViewRoles()"
+    class="btn btn-default btn-lg"
+    [routerLink]="['/roles']"
+  >
+    <span class="glyphicon  glyphicon-list-alt"></span>
+    Roles
+  </a>
+  <a
+    *ngIf="canViewPermissions()"
+    class="btn btn-default btn-lg"
+    [routerLink]="['/permissions']"
+  >
+    <span class="glyphicon glyphicon-remove-circle"></span>Permissions
+  </a>
+  <a
+    *ngIf="canViewJourneys()"
+    class="btn btn-default btn-lg"
+    [routerLink]="['/journeys']"
+  >
+    <span class="glyphicon glyphicon-globe"></span>
+    Journeys
+  </a>
+  <a
+    *ngIf="canViewUpload()"
+    class="btn btn-default btn-lg" 
+    [routerLink]="['/upload']">
+    <span class="glyphicon glyphicon-upload"></span>
+    File Upload
+  </a>
+  <a
+    *ngIf="canViewAudit()"
+    class="btn btn-default btn-lg"
+    [routerLink]="['/audit']"
+  >
+    <span class="glyphicon glyphicon-file"></span>
+    File Audit
+  </a>
 </div>
