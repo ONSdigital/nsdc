@@ -15,7 +15,6 @@ import { Configuration } from '../app.constants';
 export class UserListComponent implements OnInit {
 
   public users: User[];
-  public erroreMsg: string;
   permissionShortNames: string[];
 
   constructor(

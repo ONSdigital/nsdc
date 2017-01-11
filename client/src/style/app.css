@@ -28,7 +28,15 @@ a {
   cursor: pointer;
 }
 
+.success {
+  color: green;
+}
+
 a.disabled {
   pointer-events: none;
   cursor: not-allowed;
+}
+
+.user-details-modal {
+  display: none;
 }
