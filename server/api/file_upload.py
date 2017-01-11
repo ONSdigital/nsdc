@@ -12,7 +12,7 @@ from config import db
 
 def write_file_status(filename, status, description):
     db.session.add(FileData(filename))
-    db.session.add(FileJourneyAuditData("UPLOAD", filename, status, description))
+    db.session.add(FileJourneyAuditData("UPLOAD_TO_SERVER", filename, status, description))
     db.session.commit()
 
 
@@ -43,5 +43,5 @@ class FileUpload(Resource):
                 error_message = 'Could not write file to folder'
                 write_file_status(filename, 'error', error_message)
                 return abort(400, error_message)
-        write_file_status(filename, 'success', '')
+        write_file_status(filename, 'success', 'Uploaded to server')
         return jsonify(filename)
