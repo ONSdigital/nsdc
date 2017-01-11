@@ -63,3 +63,7 @@ a.disabled {
   top: 3px !important;
   margin-right: 10px;
 }
+
+.profile-link {
+  cursor: pointer;
+}

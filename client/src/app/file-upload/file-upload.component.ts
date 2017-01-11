@@ -23,7 +23,7 @@ export class FileUploadComponent implements OnInit {
   hasBaseDropZoneOver: boolean = false;
   options: NgUploaderOptions;
 
-  private allowedExtensions: string[] = ['txt'];
+  private allowedExtensions: string[] = ['txt', 'xml', 'csv'];
 
   constructor(
     public uploader: NgUploaderService,
