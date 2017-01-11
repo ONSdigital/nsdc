@@ -1,14 +1,13 @@
 <div class="container">
     <h2>Manage Roles</h2>
-    <div class="form-group">
+    <div class="form-group" *ngIf="!dropdownLoading">
         <select class="form-control" (change)="onChange($event.target.value)">
             <option style="display:block" value="">Choose a Role</option>
             <option *ngFor="let role of roles" [value]="role.id">{{ role.name }} </option>
         </select>       
     </div>
 </div>
-
-<div *ngIf="selectedRoleId" class="container">
+<div *ngIf="selectedRoleId && !loading" class="container">
   <h4>Users</h4>
   <table class="table table-hover">
     <thead>
@@ -54,5 +53,6 @@
     >
       Add/Remove Permissions
     </a>
-  </div>  
+  </div>
 </div>
+<loading *ngIf="loading"></loading>

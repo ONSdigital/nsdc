@@ -18,6 +18,8 @@ export class RoleManageComponent implements OnInit {
   users: User[];
   permissions: Permission[];
   selectedRoleId: number;
+  loading = false;
+  dropdownLoading = false;
 
   constructor(
     private roleService: RoleService,
@@ -26,12 +28,23 @@ export class RoleManageComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.roleService.getRoles().then(roles => this.roles = roles);
+    this.loading = true;
+    this.dropdownLoading = true;
+    this.roleService.getRoles().then(roles => {
+      this.loading = false;
+      this.dropdownLoading = false;
+      this.roles = roles;
+    });
   }
 
   onChange(roleId) {
+    this.loading = true;
     this.selectedRoleId = roleId;
-    this.userService.getUsersByRole(roleId).then(users => this.users = users);
-    this.permissionService.getPermissionByRole(roleId).then(permissions => this.permissions = permissions);
+    Promise.all([
+      this.userService.getUsersByRole(roleId).then(users => this.users = users),
+      this.permissionService.getPermissionByRole(roleId).then(permissions => this.permissions = permissions)
+    ]).then(() => {
+      this.loading = false;
+    });
   }
 }
