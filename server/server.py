@@ -76,7 +76,7 @@ api.add_resource(
 
 api.add_resource(
     FileJourneyAudit,
-    base_endpoint + 'files/audit'
+    base_endpoint + 'files/audit/<id>'
 )
 
 api.add_resource(

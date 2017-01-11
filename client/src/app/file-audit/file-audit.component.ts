@@ -20,8 +20,8 @@ export class FileAuditComponent implements OnInit {
     this.fileAuditService.getFiles().then(files => this.files = files);
   }
 
-  onChange(filename) {
-    this.fileAuditService.getFileAuditByName(filename)
+  onChange(id) {
+    this.fileAuditService.getFileAudits(id)
     .then(audits => this.audits = audits);
   }
 }

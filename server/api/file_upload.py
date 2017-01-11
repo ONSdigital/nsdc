@@ -9,11 +9,12 @@ from data.file_journey_audit import FileJourneyAuditData
 from config import db
 
 
-def audit_details(status, error_msg):
-    return {
-        'status': 'error' if status else 'success',
-        'description': error_msg if status else '-'
-    }
+
+def write_file_status(filename, status, description):
+    db.session.add(FileData(filename))
+    db.session.add(FileJourneyAuditData("UPLOAD", filename, status, description))
+    db.session.commit()
+
 
 class FileUpload(Resource):
     @protected_resource('DATA_IMPORT')
@@ -24,23 +25,23 @@ class FileUpload(Resource):
         uploaded_file = request.files['file']
 
         if uploaded_file.filename == '':
-            return abort(400, 'Invalid filename')
-        if uploaded_file:
-            filename = secure_filename(uploaded_file.filename)
+            error_message = 'Invalid filename'
+            return abort(400, error_message)
+
+        filename = secure_filename(uploaded_file.filename)
+        file_exists = FileJourneyAuditData.query\
+            .filter(FileJourneyAuditData.filename == filename, FileJourneyAuditData.status == 'success').count() > 0
+        # file_exists = FileData.query.filter(FileData.name == filename).count() > 0
+        if file_exists:
+            error_message = 'File with same name exists'
+            write_file_status(filename, 'error', error_message)
+            abort(400, error_message)
+        else:
             try:
                 uploaded_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                file_exists = FileData.query.filter(FileData.name == filename).count() > 0
-                details = audit_details(file_exists, 'File with same name exists')
-                # Save uploaded filename to database
-                db.session.add(FileData(filename))
-                db.session.add(FileJourneyAuditData("UPLOAD", filename, details['status'], details['description']))
-                db.session.commit()
-                if file_exists:
-                    abort(400, details['description'])
-                else:
-                    uploaded_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             except IOError:
-                # could not write to folder
-                return abort(400, 'Could not write file to folder')
-
-            return jsonify(filename)
+                error_message = 'Could not write file to folder'
+                write_file_status(filename, 'error', error_message)
+                return abort(400, error_message)
+        write_file_status(filename, 'success', '')
+        return jsonify(filename)

@@ -2,11 +2,16 @@
   <h2>File Audit</h2>
   <br />
   <div class="form-group">
-    <select class="form-control">
+    <select
+      class="form-control"
+      (change)="onChange($event.target.value)"
+    >
       <option style="display:block" value="">Choose a File</option>
       <option
         *ngFor="let file of files"
-        [value]="file.name">{{ file.name }}
+        [value]="file.id"
+      >{{ file.name }}
+
       </option>
     </select>
   </div>

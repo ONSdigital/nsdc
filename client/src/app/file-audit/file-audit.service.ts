@@ -21,17 +21,17 @@ export class FileAuditService {
   getFiles() {
     this.headers.set('X-TOKEN', this.loginService.getSessionId());
     return this.http.get(this.actionUrl, { headers: this.headers })
-        .toPromise()
-        .then(response => response.json() as File[])
-        .catch(this.handleError);
+    .toPromise()
+    .then(response => response.json() as File[])
+    .catch(this.handleError);
   }
 
-  getFileAuditByName(name) {
+  getFileAudits(id) {
     this.headers.set('X-TOKEN', this.loginService.getSessionId());
-    return this.http.get(this.actionUrl + '/audits/' + name, { headers: this.headers })
-        .toPromise()
-        .then(response => response.json() as FileAudit[])
-        .catch(this.handleError);
+    return this.http.get(this.actionUrl + '/audit/' + id, { headers: this.headers })
+    .toPromise()
+    .then(response => response.json() as FileAudit[])
+    .catch(this.handleError);
   }
 
   private handleError(error: any): Promise<any> {

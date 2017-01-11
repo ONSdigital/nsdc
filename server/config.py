@@ -3,7 +3,7 @@ from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 
 # change this to the place where files will be stored
-UPLOAD_FOLDER = '/ssavery/temp'
+UPLOAD_FOLDER = '/dev/temp'
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:password@localhost:5432/nsdc"
