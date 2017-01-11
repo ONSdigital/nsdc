@@ -24,5 +24,6 @@ class FileJourneyAuditData(db.Model, Serializer):
             'filename': self.filename,
             'status': self.status,
             'description': self.description,
-            'timestamp': self.timestamp
+            'start_time': self.start_time,
+            'end_time': self.end_time
         }

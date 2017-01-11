@@ -9,5 +9,6 @@ export class FileAudit {
   status: string;
   step: string;
   description: string;
-  timestamp: string;
+  start_time: string;
+  end_time: string;
 }
