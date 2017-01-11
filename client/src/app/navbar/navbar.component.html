@@ -29,18 +29,15 @@
       </ul>
       <div class="nav navbar-nav navbar-right">
         <li>
-          <div
-            class="nav-user-account"
-            *ngIf="user"
-          >
-            {{user.username}}
+          <div class="nav-user-account" *ngIf="self?.user">
+            Logged in as: {{self.user?.username}}
           </div>
         </li>
+        <li *ngIf="self?.user">
+          <a (click)="displayUserDetails()">My Profile</a>
+        </li>
         <li>
-          <a
-            class="nav-logout"
-            (click)="onLogout()"
-          >
+          <a class="nav-logout" (click)="onLogout()">
             Logout
           </a>
         </li>

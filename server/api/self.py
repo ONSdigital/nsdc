@@ -2,6 +2,7 @@ from flask import request, abort, jsonify
 from flask_restful import Resource
 from common.session import verify_session_id, SessionExpired, BadSession
 from data.user import UserData
+from data.role import RoleData
 
 
 class Self(Resource):
@@ -17,4 +18,5 @@ class Self(Resource):
             return abort(403)
 
         user = UserData.query.get(user_session.user_id)
-        return jsonify(user.serialize())
+        role = RoleData.query.get(user.role_id)
+        return jsonify({'user': user.serialize(), 'role': role.serialize()})
