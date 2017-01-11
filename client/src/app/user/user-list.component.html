@@ -18,19 +18,16 @@
         <th>Email</th>
         <th>Status</th>                   
         <th></th>
-        <th></th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let user of users">
         <td>
-          <a
-            [class.disabled]="!canEdit()"
-            (keydown.enter)="!canEdit() ? false : true"
+          <a [class.disabled]="!canEdit()"
+            (keydown.enter)="canEdit()"
             href="#"
             [routerLink]="['/users', user.id]"
-            routerLinkActive="active"
-          >
+            routerLinkActive="active">
             {{user.username}}
           </a>
         </td>
@@ -38,22 +35,18 @@
         <td>{{user.lastname}}</td>
         <td>{{user.email}}</td> 
         <td>{{user.status}}</td>
-        <td>
+        <td class="options options-large">
+          <button
+            class="btn btn-danger right"
+            [disabled]="!canEdit()"
+            (click)="onDeactivateClicked(user.id)">
+            Deactivate
+          </button>
           <button
             [disabled]="!canEdit()"
             class="btn btn-primary btn-extra right"
-            [routerLink]="['/users', user.id]"
-          >
+            [routerLink]="['/users', user.id]">
             Edit
-          </button>
-        </td>
-        <td>
-          <button
-            class="btn btn-danger"
-            [disabled]="!canEdit()"
-            (click)="onDeactivateClicked(user.id)"
-          >
-            Deactivate
           </button>
         <td>
       </tr>

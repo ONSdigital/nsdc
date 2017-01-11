@@ -1,4 +1,4 @@
-import { Component, EventEmitter, NgZone, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { NgUploaderOptions, NgUploaderService } from 'ngx-uploader';
 import { LoginService } from '../login/login.service';
 
@@ -12,6 +12,7 @@ const URL = 'http://localhost:5000/nsdc/v1.0/upload';
 export class FileUploadComponent implements OnInit {
 
   private zone: NgZone;
+  invalidFile = false;
   uploadError = false;
   uploadComplete = false;
   uploading = false;
@@ -21,7 +22,8 @@ export class FileUploadComponent implements OnInit {
   uploadErrorMessage: string;
   hasBaseDropZoneOver: boolean = false;
   options: NgUploaderOptions;
-  events: EventEmitter<any> = new EventEmitter();
+
+  private allowedExtensions: string[] = ['txt', 'xml', 'csv'];
 
   constructor(
     public uploader: NgUploaderService,
@@ -43,10 +45,20 @@ export class FileUploadComponent implements OnInit {
   startUpload() {
     // only upload the file that the user can see (Fixes bug with dnd and multiple files)
     if (this.uploader._queue.length) {
-      const fileToUpload = this.uploader._queue[0];
-      if (fileToUpload.uploading) { return; }
+      const fileToUpload = this.uploader._queue[0],
+          isInvalidFile = !this.validateFileExtension(fileToUpload.name);
+
+      this.invalidFile = isInvalidFile;
+      if (fileToUpload.uploading || isInvalidFile) {
+        return;
+      }
+
       this.uploader.uploadFile(fileToUpload);
     }
+  }
+
+  validateFileExtension(filename) {
+    return this.allowedExtensions.indexOf(filename && filename.split('.').pop()) !== -1;
   }
 
   handleUpload(data): void {
