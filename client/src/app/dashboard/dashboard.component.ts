@@ -4,10 +4,10 @@ import { Router } from '@angular/router';
 
 
 @Component({
-  selector: 'managemodule',
-  templateUrl : './manage-module.component.html'
+  selector: 'dashboard',
+  templateUrl : './dashboard.component.html'
 })
-export class ManageModuleComponent {
+export class DashboardComponent {
     constructor(private loginService: LoginService, private router: Router) {}
 
     showMenuItems() {

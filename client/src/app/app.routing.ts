@@ -1,7 +1,7 @@
 import { Routes, RouterModule } from '@angular/router';
 import { FileUploadModule } from './file-upload/file-upload.module';
 import { FileAuditModule } from './file-audit/file-audit.module';
-import { ManageModuleComponent } from './manage/manage-module.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 import { LoginComponent } from './login/login.component';
 import { LoginGuard } from './login/login.guard';
@@ -26,7 +26,7 @@ const appRoutes: Routes = [
     children: [
       {
         path: '',
-        component: ManageModuleComponent
+        component: DashboardComponent
       },
       {
         path: 'upload',
@@ -64,7 +64,7 @@ const appRoutes: Routes = [
 export const routing = RouterModule.forRoot(appRoutes, {useHash: true});
 
 export const routedComponents = [
-  ManageModuleComponent,
+  DashboardComponent,
   LoginComponent,
   NoPermissionComponent
 ];
