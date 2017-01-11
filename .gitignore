@@ -52,4 +52,5 @@ node_modules
 # Python
 *.pyc
 
+/server/migrations
 
