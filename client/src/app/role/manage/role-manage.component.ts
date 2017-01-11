@@ -38,13 +38,15 @@ export class RoleManageComponent implements OnInit {
   }
 
   onChange(roleId) {
-    this.loading = true;
     this.selectedRoleId = roleId;
-    Promise.all([
-      this.userService.getUsersByRole(roleId).then(users => this.users = users),
-      this.permissionService.getPermissionByRole(roleId).then(permissions => this.permissions = permissions)
-    ]).then(() => {
-      this.loading = false;
-    });
+    if (roleId !== '') {
+      this.loading = true;
+      Promise.all([
+        this.userService.getUsersByRole(roleId).then(users => this.users = users),
+        this.permissionService.getPermissionByRole(roleId).then(permissions => this.permissions = permissions)
+      ]).then(() => {
+        this.loading = false;
+      });
+    }
   }
 }

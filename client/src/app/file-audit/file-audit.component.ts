@@ -31,10 +31,12 @@ export class FileAuditComponent implements OnInit {
   }
 
   onChange(id) {
-    this.loading = true;
     this.selectedFileId = id;
-    this.fileAuditService.getFileAudits(id)
-    .then(audits => this.audits = audits)
-    .then(() => this.loading = false);
+    if (id !== '') {
+      this.loading = true;
+      this.fileAuditService.getFileAudits(id)
+      .then(audits => this.audits = audits)
+      .then(() => this.loading = false);
+    }
   }
 }
