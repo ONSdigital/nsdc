@@ -40,7 +40,7 @@ Run this sql against your db
 
 Now you can run the server using the following command:
 
-* `python project.py`
+* `python server.py`
 
 ### Notes
 
