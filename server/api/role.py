@@ -18,7 +18,7 @@ class Role(Resource):
             role = RoleData.query.get(role_id).serialize()
             return jsonify(role)
         else:
-            return jsonify(RoleData.serialize_list(RoleData.query.all().order_by(RoleData.name.asc())))
+            return jsonify(RoleData.serialize_list(RoleData.query.all()))
 
     @protected_resource('ADD_ROLES')
     def post(self):
