@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { File, FileAudit } from './file';
 import { FileAuditService } from './file-audit.service';
 import { Configuration } from '../app.constants';
@@ -9,13 +9,14 @@ import { Configuration } from '../app.constants';
   providers: [FileAuditService, Configuration]
 })
 
-export class FileAuditComponent implements OnInit {
+export class FileAuditComponent implements OnInit, OnDestroy {
 
   public files: File[];
   public audits: FileAudit[];
   loading = false;
   dropdownLoading = false;
   selectedFileId;
+  pollSubscription;
 
   constructor(private fileAuditService: FileAuditService ) {}
 
@@ -30,13 +31,24 @@ export class FileAuditComponent implements OnInit {
     });
   }
 
+  ngOnDestroy() {
+    if (this.pollSubscription) {
+      this.pollSubscription.unsubscribe();
+    }
+  }
+
   onChange(id) {
     this.selectedFileId = id;
+    if (this.pollSubscription) {
+      this.pollSubscription.unsubscribe();
+    }
     if (id !== '') {
       this.loading = true;
-      this.fileAuditService.getFileAudits(id)
-      .then(audits => this.audits = audits)
-      .then(() => this.loading = false);
+      this.pollSubscription = this.fileAuditService.pollForFileAudits(id, 2000)
+      .subscribe(audits => {
+        this.audits = audits;
+        this.loading = false;
+      });
     }
   }
 }
