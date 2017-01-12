@@ -27,7 +27,7 @@ class Permission(Resource):
             permissions = RoleData.query.get(UserData.query.get(user_id).role_id).permissions.all()
         else:
             permissions = PermissionData.query.all()
-        return jsonify(PermissionData.serialize_list(permissions))
+        return jsonify(PermissionData.serialize_list(permissions.order_by(PermissionData.name.asc())))
 
     @protected_resource('ADD_PERMISSIONS')
     def post(self):
