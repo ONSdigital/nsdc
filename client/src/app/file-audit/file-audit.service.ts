@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
-
+import { Observable } from 'rxjs/Rx';
 import { File, FileAudit } from './file';
 import { Configuration } from '../app.constants';
 import { LoginService } from '../login/login.service';
@@ -32,6 +32,13 @@ export class FileAuditService {
     .toPromise()
     .then(response => response.json() as FileAudit[])
     .catch(this.handleError);
+  }
+
+  pollForFileAudits(id, interval): Observable<FileAudit[]> {
+    this.headers.set('X-TOKEN', this.loginService.getSessionId());
+    return Observable.interval(interval).startWith(0)
+    .switchMap(() => this.http.get(this.actionUrl + '/audit/' + id, { headers: this.headers })
+    .map(response => response.json()));
   }
 
   private handleError(error: any): Promise<any> {
