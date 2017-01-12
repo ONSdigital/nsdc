@@ -21,7 +21,8 @@ export class NavbarComponent {
   userMenuOptions: MenuItem[] = [];
   self: Self;
   loggedIn = false;
-  isCollapsed = true;
+  menuIsOpen = false;
+  menuClass = '';
 
   constructor(
     private loginService: LoginService,
@@ -60,8 +61,13 @@ export class NavbarComponent {
     return false;
   }
 
-  public get menuIcon(): string {
-    return this.isCollapsed ? '☰' : '✖';
+  toggleMenu() {
+    this.menuIsOpen = !this.menuIsOpen;
+    if (!this.menuIsOpen) {
+      this.menuClass = ' collapse ';
+    } else {
+      this.menuClass = '';
+    }
   }
 
   displayUserDetails() {

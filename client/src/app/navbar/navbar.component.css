@@ -40,3 +40,15 @@ a.disabled {
   cursor: not-allowed;
   text-decoration: line-through;
 }
+
+@media (max-width: 1200px) {
+  .nav-user-account {
+    display: none;
+  }
+}
+
+@media (max-width: 992px) {
+  .nav-user-account, .profile-link {
+    display: none;
+  }
+}
