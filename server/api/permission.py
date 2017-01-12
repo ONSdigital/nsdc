@@ -22,12 +22,12 @@ class Permission(Resource):
             return jsonify(permission.serialize())
 
         if role_id is not None:
-            permissions = RoleData.query.get(role_id).permissions.all()
+            permissions = RoleData.query.get(role_id).permissions
         elif user_id is not None:
-            permissions = RoleData.query.get(UserData.query.get(user_id).role_id).permissions.all()
+            permissions = RoleData.query.get(UserData.query.get(user_id).role_id).permissions
         else:
-            permissions = PermissionData.query.all()
-        return jsonify(PermissionData.serialize_list(permissions))
+            permissions = PermissionData.query
+        return jsonify(PermissionData.serialize_list(permissions.order_by(PermissionData.name.asc()).all()))
 
     @protected_resource('ADD_PERMISSIONS')
     def post(self):

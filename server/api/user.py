@@ -27,10 +27,10 @@ class User(Resource):
         else:
             show_inactive = request.args.get('showInactive')
             if show_inactive == 'true':
-                users = UserData.query.all()
+                users = UserData.query
             else:
                 users = UserData.query.filter(UserData.status == 'active')
-            return jsonify(UserData.serialize_list(users))
+            return jsonify(UserData.serialize_list(users.order_by(UserData.username.asc()).all()))
 
     @protected_resource('ADD_USERS')
     def post(self):
