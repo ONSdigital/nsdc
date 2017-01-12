@@ -20,7 +20,7 @@ def db_entry(start_time, end_time, step, filename, status, description):
 
 
 class MyHandler(PatternMatchingEventHandler):
-    patterns = ["*.txt", "*.xml"]
+    patterns = ['*.txt', '*.xml', '*.csv', '*.zip']
 
     def process(self, event):
         # Upload file to MoveIt server
