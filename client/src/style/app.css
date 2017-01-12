@@ -57,6 +57,7 @@ a.disabled {
   font-size: 23px !important;
   padding: 20px !important;
   margin-right: 15px !important;
+  margin-bottom: 15px;
 }
 
 .glyphicon {

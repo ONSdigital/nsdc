@@ -1,7 +1,8 @@
 <div class="navbar navbar-inverse navbar-static-top">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+              data-target="#navbar" aria-expanded="false" aria-controls="navbar">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -11,23 +12,8 @@
     </div>
     <div id="navbar" *ngIf="showNavBarLinks()" class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
-        <li *ngIf="canViewUsers()">
-          <a [routerLink]="['/users']">Users</a>
-        </li>
-        <li *ngIf="canViewRoles()">
-          <a [routerLink]="['/roles']">Roles</a>
-        </li>
-        <li *ngIf="canViewPermissions()">
-          <a [routerLink]="['/permissions']">Permissions</a>
-        </li>
-        <li *ngIf="canViewJourneys()">
-          <a [routerLink]="['/journeys']">Journeys</a>
-        </li>
-        <li *ngIf="canViewUpload()">
-          <a [routerLink]="['/upload']">File Upload</a>
-        </li>
-        <li *ngIf="canViewAudit()">
-          <a [routerLink]="['/audit']">File Audit</a>
+        <li *ngFor="let userMenuOption of userMenuOptions">
+          <a [routerLink]="['/' + userMenuOption.path]">{{ userMenuOption.title }}</a>
         </li>
       </ul>
       <div class="nav navbar-nav navbar-right">

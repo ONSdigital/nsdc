@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
 import { Self } from '../user-account';
 import { Modal } from 'angular2-modal/plugins/bootstrap';
 import { Overlay } from 'angular2-modal';
+import { MenuItem } from './navbar.metadata';
+import { MenuItems } from './navbar.routes.config';
 
 @Component({
   selector: 'navbar',
@@ -16,9 +18,10 @@ import { Overlay } from 'angular2-modal';
 })
 export class NavbarComponent {
 
-  permissionShortNames: string[] = [];
+  userMenuOptions: MenuItem[] = [];
   self: Self;
   loggedIn = false;
+  isCollapsed = true;
 
   constructor(
     private loginService: LoginService,
@@ -36,16 +39,29 @@ export class NavbarComponent {
     if (this.loginService.isLoggedIn()) {
       this.userPermissionsService.getUserPermissions()
       .subscribe(permissions => {
-        this.permissionShortNames = permissions.map(permission => permission.short_name);
+        const permissionShortNames = permissions.map(permission => permission.short_name);
+        MenuItems.forEach(item => {
+          if (permissionShortNames.includes(item.permission) &&
+            this.userMenuOptions.filter(i => i.permission === item.permission).length === 0
+          ) {
+            this.userMenuOptions.push(item);
+          }
+        });
       });
+
       if (!this.loggedIn) {
         this.loggedIn = true;
         this.userAccountService.getUser()
         .subscribe(self => this.self = self);
       }
+
       return true;
     }
     return false;
+  }
+
+  public get menuIcon(): string {
+    return this.isCollapsed ? '☰' : '✖';
   }
 
   displayUserDetails() {
@@ -70,35 +86,11 @@ export class NavbarComponent {
         '<p><b>Email Address:</b> ' + this.self.user.email + '</p>';
   }
 
-  canViewUsers() {
-    return this.permissionShortNames.includes('VIEW_USERS');
-  }
-
-  canViewPermissions() {
-    return this.permissionShortNames.includes('VIEW_PERMISSIONS');
-  }
-
-  canViewRoles() {
-    return this.permissionShortNames.includes('VIEW_ROLES');
-  }
-
-  canViewUpload() {
-    return this.permissionShortNames.includes('DATA_IMPORT');
-  }
-
-  canViewAudit() {
-    return this.permissionShortNames.includes('DATA_AUDIT');
-  }
-
-  canViewJourneys() {
-    return this.permissionShortNames.includes('VIEW_JOURNEYS');
-  }
-
   onLogout() {
     this.loginService.logout();
     this.userPermissionsService.clearPermissionsCache();
-    this.permissionShortNames = [];
     this.loggedIn = false;
+    this.userMenuOptions = [];
     this.router.navigate(['login']);
   }
 }
