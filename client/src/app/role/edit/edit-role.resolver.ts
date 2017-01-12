@@ -1,0 +1,16 @@
+import { Injectable } from '@angular/core';
+import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
+import { Observable } from 'rxjs/Rx';
+import { RoleService } from '../role.service';
+import { Role } from '../role';
+
+@Injectable()
+export class EditRoleResolver implements Resolve<Role> {
+  constructor(
+    private roleService: RoleService
+  ) {}
+
+  resolve(route: ActivatedRouteSnapshot, state): Promise<Role> {
+    return this.roleService.getRoleById(route.params['id']);
+  }
+}

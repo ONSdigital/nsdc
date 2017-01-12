@@ -1,7 +1,7 @@
 <div>
   <h2>File Audit</h2>
   <br />
-  <div class="form-group">
+  <div *ngIf="!dropdownLoading" class="form-group">
     <select
       class="form-control"
       (change)="onChange($event.target.value)"
@@ -10,12 +10,12 @@
       <option
         *ngFor="let file of files"
         [value]="file.id"
-      >{{ file.name }}
-
+      >
+        {{ file.name }}
       </option>
     </select>
   </div>
-  <table class="table">
+  <table *ngIf="selectedFileId && !loading" class="table">
     <thead>
     <tr>
       <th>Journey Step</th>
@@ -35,4 +35,5 @@
     </tr>
     </tbody>
   </table>
+  <loading *ngIf="loading"></loading>
 </div>

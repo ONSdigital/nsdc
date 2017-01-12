@@ -13,15 +13,30 @@ export class FileAuditComponent implements OnInit {
 
   public files: File[];
   public audits: FileAudit[];
+  loading = false;
+  dropdownLoading = false;
+  selectedFileId;
 
   constructor(private fileAuditService: FileAuditService ) {}
 
   ngOnInit(): void {
-    this.fileAuditService.getFiles().then(files => this.files = files);
+    this.loading = true;
+    this.dropdownLoading = true;
+    this.fileAuditService.getFiles()
+    .then(files => this.files = files)
+    .then(() => {
+      this.loading = false;
+      this.dropdownLoading = false;
+    });
   }
 
   onChange(id) {
-    this.fileAuditService.getFileAudits(id)
-    .then(audits => this.audits = audits);
+    this.selectedFileId = id;
+    if (id !== '') {
+      this.loading = true;
+      this.fileAuditService.getFileAudits(id)
+      .then(audits => this.audits = audits)
+      .then(() => this.loading = false);
+    }
   }
 }

@@ -9,7 +9,7 @@
       Add User
     </button>
   </div>
-  <table class="table table-hover">
+  <table *ngIf="!loading" class="table table-hover">
     <thead>
       <tr>
         <th>UserName</th>
@@ -52,4 +52,5 @@
       </tr>
     </tbody>
   </table>
+  <loading *ngIf="loading"></loading>
 </div>

@@ -6,6 +6,7 @@ import { AddRoleComponent } from './add/add-role.component';
 import { EditRoleComponent } from './edit/edit-role.component';
 import { RoleManageComponent } from './manage/role-manage.component';
 import { RolePermissionsComponent } from './permissions/role-permissions.component';
+import { EditRoleResolver } from './edit/edit-role.resolver';
 
 
 const routes: Routes = [
@@ -47,6 +48,9 @@ const routes: Routes = [
     component: EditRoleComponent,
     data: {
       permission: 'EDIT_ROLES'
+    },
+    resolve: {
+      role: EditRoleResolver
     }
   }
 ];

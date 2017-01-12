@@ -1,38 +1,41 @@
 <div class="container">
   <h2>Journeys</h2>
   <br />
-  <table class="table table-hover">
-    <thead>
-    <tr>
-      <th>Journey Name</th>
-      <th>Description</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let journey of journeys">
-      <td>{{ journey.name }}</td>
-      <td>{{ journey.description }}</td>
-    </tr>
-    </tbody>
-  </table>
-  <div>
-    <h2>Steps</h2>
-    <br />
+  <div *ngIf="!loading">
     <table class="table table-hover">
       <thead>
       <tr>
         <th>Journey Name</th>
         <th>Description</th>
-        <th>Short Name</th>
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let step of steps">
-        <td>{{ step.name }}</td>
-        <td>{{ step.description }}</td>
-        <td>{{ step.short_name }}</td>
+      <tr *ngFor="let journey of journeys">
+        <td>{{ journey.name }}</td>
+        <td>{{ journey.description }}</td>
       </tr>
       </tbody>
     </table>
+    <div>
+      <h2>Steps</h2>
+      <br />
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <th>Journey Name</th>
+          <th>Description</th>
+          <th>Short Name</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let step of steps">
+          <td>{{ step.name }}</td>
+          <td>{{ step.description }}</td>
+          <td>{{ step.short_name }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
+  <loading *ngIf="loading"></loading>
 </div>

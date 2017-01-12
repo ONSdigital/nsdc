@@ -28,14 +28,9 @@ export class EditPermissionComponent implements OnInit {
       short_name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
       description: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]]
     });
-    this.route.params.subscribe(params => {
-      const id = Number.parseInt(params['id']);
-      this.permission = new Permission();
-      this.permissionService.getPermissionById(id)
-      .then(permission => {
-        this.permission = permission;
-        this.permissionForm.patchValue(permission);
-      });
+    this.route.data.subscribe(data => {
+      this.permission = data['permission'];
+      this.permissionForm.patchValue(this.permission);
     });
   }
 

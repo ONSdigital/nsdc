@@ -13,6 +13,7 @@ import { Modal } from 'angular2-modal/plugins/bootstrap';
 export class RoleListComponent implements OnInit {
 
   public roles: Role[];
+  loading = false;
 
   constructor(
     private http: Http,
@@ -25,7 +26,11 @@ export class RoleListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.roleService.getRoles().then((roles) => this.roles = roles);
+    this.loading = true;
+    this.roleService.getRoles().then((roles) => {
+      this.loading = false;
+      this.roles = roles;
+    });
   }
 
     onDeleteClicked(roleId) {
