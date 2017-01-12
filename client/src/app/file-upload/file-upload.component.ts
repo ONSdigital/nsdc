@@ -1,4 +1,4 @@
-import { Component, NgZone, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit, ElementRef } from '@angular/core';
 import { NgUploaderOptions, NgUploaderService } from 'ngx-uploader';
 import { LoginService } from '../login/login.service';
 
@@ -26,6 +26,7 @@ export class FileUploadComponent implements OnInit {
   private allowedExtensions: string[] = ['txt', 'xml', 'csv'];
 
   constructor(
+    public el: ElementRef,
     public uploader: NgUploaderService,
     public loginService: LoginService
   ) { }
@@ -97,6 +98,10 @@ export class FileUploadComponent implements OnInit {
 
   uploadAnother() {
     this.uploader.clearQueue();
+    const fileInputs = this.el.nativeElement.getElementsByClassName('file-input');
+    if (fileInputs && fileInputs.length > 0) {
+      fileInputs[0].value = '';
+    }
     this.uploadComplete = false;
     this.uploadError = false;
   }
