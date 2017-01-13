@@ -77,3 +77,19 @@ a.disabled {
   padding: 15px 0 25px 0;
   font-style: italic;
 }
+
+.manage-permissions {
+  float: right;
+  width: 50%;
+  overflow: auto;
+  position: relative;
+  top: -20px;
+}
+
+.role-user-section {
+  margin: 25px 0 25px 0;
+}
+
+.role-section {
+  margin: 25px 0 0 0;
+}

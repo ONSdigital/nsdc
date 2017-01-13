@@ -8,51 +8,54 @@
     </div>
 </div>
 <div *ngIf="selectedRoleId && !loading" class="container">
-  <h4>Users</h4>
-  <table class="table table-hover">
-    <thead>
-      <tr>
-        <th>UserName</th>
-        <th>Firstname</th>
-        <th>Lastname</th>
-        <th>Email</th>
-        <th>Status</th>                        
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let user of users">
-        <td><a href="#" [routerLink]="['/users', user.id]" routerLinkActive="active">{{user.username}}</a></td>
-        <td>{{user.firstname}}</td>
-        <td>{{user.lastname}}</td>
-        <td>{{user.email}}</td> 
-        <td>{{user.status}}</td>               
-      </tr>
-    </tbody>
-  </table>
-  <h4>Permissions</h4>
-  <table class="table table-hover">
-    <thead>
-      <tr>
-        <th>Permission Name</th>
-        <th>Short Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let permission of permissions">
-        <td><a href="#" [routerLink]="['/permissions', permission.id]" routerLinkActive="active">{{permission.name}}</a></td>
-        <td>{{permission.short_name}}</td>
-        <td>{{permission.description}}</td>            
-      </tr>
-    </tbody>
-  </table>
-  <div class="col-sm-12">
-    <a
-      class="btn btn-primary right"
-      [routerLink]="['/roles', selectedRoleId, 'permissions']"
-    >
-      Add/Remove Permissions
-    </a>
+  <div class="role-user-section">
+    <h4>Users</h4>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>UserName</th>
+          <th>Firstname</th>
+          <th>Lastname</th>
+          <th>Email</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <td><a href="#" [routerLink]="['/users', user.id]" routerLinkActive="active">{{user.username}}</a></td>
+          <td>{{user.firstname}}</td>
+          <td>{{user.lastname}}</td>
+          <td>{{user.email}}</td>
+          <td>{{user.status}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="role-section">
+    <h4>Permissions</h4>
+    <div class="manage-permissions">
+        <a class="btn btn-primary right"
+          [routerLink]="['/roles', selectedRoleId, 'permissions']"
+        >
+          Add/Remove Permissions
+        </a>
+    </div>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Permission Name</th>
+          <th>Short Name</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let permission of permissions">
+          <td><a href="#" [routerLink]="['/permissions', permission.id]" routerLinkActive="active">{{permission.name}}</a></td>
+          <td>{{permission.short_name}}</td>
+          <td>{{permission.description}}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
 <loading *ngIf="loading"></loading>
