@@ -38,6 +38,11 @@ Run this sql against your db
 
 `CREATE EXTENSION IF NOT EXISTS "pgcrypto";`
 
+You will not be able to use the UI unless you have appropriate users/roles and permissions in your database.
+There are sample users for each role/permission in the following script.  Running this will seed your database accordingly
+
+`sql\sample_data.sql`
+
 Now you can run the server using the following command:
 
 * `python server.py`
