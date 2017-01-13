@@ -1,51 +1,45 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginService } from '../login/login.service';
-import { Router } from '@angular/router';
 import { UserPermissionsService } from '../user-permissions.service';
+import { UserAccountService } from '../user-account.service';
+import { MenuItem } from '../navbar/navbar.metadata';
+import { MenuItems } from '../navbar/navbar.routes.config';
+import { Self } from '../user-account';
 
 
 @Component({
   selector: 'dashboard',
-  templateUrl : './dashboard.component.html'
+  templateUrl : './dashboard.component.html',
+  providers: [UserAccountService]
 })
 export class DashboardComponent implements OnInit {
 
-  permissionShortNames: string[] = [];
+  self: Self;
+  userMenuOptions: MenuItem[] = [];
+  loggedIn = false;
+
+  constructor(
+      private userPermissionsService: UserPermissionsService,
+      private userAccountService: UserAccountService
+  ) {}
 
   ngOnInit() {
     this.userPermissionsService.getUserPermissions()
     .subscribe(permissions => {
-      this.permissionShortNames = permissions.map(permission => permission.short_name);
+      const permissionShortNames = permissions.map(permission => permission.short_name);
+      MenuItems.forEach(item => {
+        if (permissionShortNames.includes(item.permission) &&
+            this.userMenuOptions.filter(i => i.permission === item.permission).length === 0
+        ) {
+          this.userMenuOptions.push(item);
+        }
+      });
     });
-  }
 
-  constructor(
-    private userPermissionsService: UserPermissionsService,
-    private router: Router
-  ) {}
-
-    canViewUsers() {
-    return this.permissionShortNames.includes('VIEW_USERS');
-  }
-
-  canViewPermissions() {
-    return this.permissionShortNames.includes('VIEW_PERMISSIONS');
-  }
-
-  canViewRoles() {
-    return this.permissionShortNames.includes('VIEW_ROLES');
-  }
-
-  canViewUpload() {
-    return this.permissionShortNames.includes('DATA_IMPORT');
-  }
-
-  canViewAudit() {
-    return this.permissionShortNames.includes('DATA_AUDIT');
-  }
-
-  canViewJourneys() {
-    return this.permissionShortNames.includes('VIEW_JOURNEYS');
+    if (!this.loggedIn) {
+      this.loggedIn = true;
+      this.userAccountService.getUser()
+          .subscribe(self => this.self = self);
+    }
   }
 
 }

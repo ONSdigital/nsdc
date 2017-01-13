@@ -56,7 +56,8 @@ a.disabled {
 .btn-lg {
   font-size: 23px !important;
   padding: 20px !important;
-  margin-right: 15px !important;
+  margin-right: 10px !important;
+  margin-bottom: 15px;
 }
 
 .glyphicon {
@@ -66,4 +67,29 @@ a.disabled {
 
 .profile-link {
   cursor: pointer;
+}
+
+.btn-container {
+  display: inline;
+}
+
+.dashboard-tag {
+  padding: 15px 0 25px 0;
+  font-style: italic;
+}
+
+.manage-permissions {
+  float: right;
+  width: 50%;
+  overflow: auto;
+  position: relative;
+  top: -20px;
+}
+
+.role-user-section {
+  margin: 25px 0 25px 0;
+}
+
+.role-section {
+  margin: 25px 0 0 0;
 }
