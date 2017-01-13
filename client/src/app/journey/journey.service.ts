@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { Journey, JourneyStep } from './journey';
+import { Journey } from './journey';
+import { JourneyStep } from './journey-step';
 import { Configuration } from '../app.constants';
 import { LoginService } from '../login/login.service';
 

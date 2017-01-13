@@ -19,7 +19,7 @@
     "clean:dist": "npm run rimraf -- dist",
     "clean:install": "npm set progress=false && npm install",
     "clean": "npm cache clean && npm run rimraf -- node_modules doc coverage dist compiled dll",
-    "lint": "npm run tslint \"src/**/*.ts\"",
+    "lint": "tslint \"src/**/*.ts\"",
     "preclean:install": "npm run clean",
     "rimraf": "rimraf",
     "server:dev:hmr": "npm run server:dev -- --inline --hot",

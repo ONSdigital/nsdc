@@ -18,8 +18,8 @@ export class DashboardComponent implements OnInit {
   loggedIn = false;
 
   constructor(
-      private userPermissionsService: UserPermissionsService,
-      private userAccountService: UserAccountService
+    private userPermissionsService: UserPermissionsService,
+    private userAccountService: UserAccountService
   ) {}
 
   ngOnInit() {

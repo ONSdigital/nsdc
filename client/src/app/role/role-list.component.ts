@@ -27,7 +27,7 @@ export class RoleListComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading = true;
-    this.roleService.getRoles().then((roles) => {
+    this.roleService.getRoles().then(roles => {
       this.loading = false;
       this.roles = roles;
     });
@@ -47,7 +47,7 @@ export class RoleListComponent implements OnInit {
       () => {
         this.roleService.deleteRole(roleId)
         .subscribe(() => {
-          this.roleService.getRoles().then((roles) => this.roles = roles);
+          this.roleService.getRoles().then(roles => this.roles = roles);
         });
       },
       () => {}
