@@ -1,20 +1,11 @@
 import { Routes, RouterModule } from '@angular/router';
-import { FileUploadModule } from './file-upload/file-upload.module';
-import { FileAuditModule } from './file-audit/file-audit.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
-
 import { LoginComponent } from './login/login.component';
 import { LoginGuard } from './login/login.guard';
 import { IsLoggedInGuard } from './login/is-logged-in.guard';
-
-import { UserModule } from './user/user.module';
-import { RoleModule } from './role/role.module';
-import { PermissionModule } from './permission/permission.module';
-import { JourneyModule } from './journey/journey.module';
-
 import { NoPermissionComponent } from './permission/no-permission.component';
 
-const appRoutes: Routes = [
+export const appRoutes: Routes = [
   {
     canActivate: [IsLoggedInGuard],
     path: 'login',
@@ -30,27 +21,27 @@ const appRoutes: Routes = [
       },
       {
         path: 'upload',
-        loadChildren: () => FileUploadModule
+        loadChildren: './file-upload/file-upload.module#FileUploadModule'
       },
       {
         path: 'audit',
-        loadChildren: () => FileAuditModule
+        loadChildren: './file-audit/file-audit.module#FileAuditModule'
       },
       {
         path: 'users',
-        loadChildren: () => UserModule
+        loadChildren: './user/user.module#UserModule'
       },
       {
         path: 'roles',
-        loadChildren: () => RoleModule
+        loadChildren: './role/role.module#RoleModule'
       },
       {
         path: 'permissions',
-        loadChildren: () => PermissionModule
+        loadChildren: './permission/permission.module#PermissionModule'
       },
       {
         path: 'journeys',
-        loadChildren: () => JourneyModule
+        loadChildren: './journey/journey.module#JourneyModule'
       },
       {
         path: 'no-permission',

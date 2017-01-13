@@ -14,7 +14,7 @@ import { Configuration } from './app.constants';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ModalModule } from 'angular2-modal';
 import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
-
+import '../styles/app.css';
 
 @NgModule({
   imports: [
@@ -42,13 +42,18 @@ import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
 })
 export class AppModule {
   constructor(public appRef: ApplicationRef) {}
+
+  public hmrOnInit(store) {
+    this.appRef.tick();
+  }
+
   hmrOnDestroy(store) {
     let cmpLocation = this.appRef.components.map(cmp => cmp.location.nativeElement);
     store.disposeOldHosts = createNewHosts(cmpLocation);
     removeNgStyles();
   }
+
   hmrAfterDestroy(store) {
-    // display new elements
     store.disposeOldHosts();
     delete store.disposeOldHosts;
   }
