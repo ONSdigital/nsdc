@@ -81,8 +81,8 @@ VALUES 	('Test', 'Test', 'test_dd@test.com', 'test_dd', 'test', 'active', (SELEC
  	('Test', 'Test', 'test_di@test.com', 'test_di', 'test', 'active', (SELECT role.role_id FROM role WHERE role.name = 'Data Importer')),
 	('Test', 'Test', 'test_acm@test.com', 'test_acm', 'test', 'active', (SELECT role.role_id FROM role WHERE role.name = 'Access Control Manager'));
 
-INSERT INTO public.journey (name, description)
-VALUES ('VAT', 'VAT File Journey');
+INSERT INTO public.journey (name, description, validator)
+VALUES ('VAT', 'VAT File Journey', 'vat_*');
 
 INSERT INTO public.journey_step (journey_id, name, description, short_name)
 VALUES (1, 'Upload to Server', 'Upload the file to the server', 'UPLOAD_TO_SERVER'),

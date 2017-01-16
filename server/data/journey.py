@@ -7,10 +7,12 @@ class JourneyData(db.Model, Serializer):
     id = db.Column('journey_id', db.Integer, primary_key=True)
     name = db.Column('name', db.String(50), nullable=False, server_default=u'')
     description = db.Column('description', db.String(150), nullable=False, server_default=u'')
+    validator = db.Column('validator', db.String(50), nullable=False, server_default=u'')
 
     def serialize(self):
         return {
             'id': self.id,
             'name': self.name,
-            'description': self.description
+            'description': self.description,
+            'validator': self.validator
         }

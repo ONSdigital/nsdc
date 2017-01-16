@@ -46,12 +46,14 @@ class Permission(Resource):
     def put(self, permission_id):
         permission = PermissionData.query.get(permission_id)
         request_json = parser.parse_args()
+
         if request_json['name'] is not None:
             permission.name = request_json['name']
         if request_json['short_name'] is not None:
             permission.short_name = request_json['short_name']
         if request_json['description'] is not None:
             permission.description = request_json['description']
+
         db.session.commit()
         return jsonify(permission.serialize())
 
