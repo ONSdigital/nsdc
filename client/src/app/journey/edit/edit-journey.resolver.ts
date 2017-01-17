@@ -6,11 +6,10 @@ import { Journey } from '../journey';
 
 @Injectable()
 export class EditJourneyResolver implements Resolve<Journey> {
-    constructor(
-        private journeyService: JourneyService
-    ) {}
+  constructor(private journeyService: JourneyService) {
+  }
 
-    resolve(route: ActivatedRouteSnapshot, state): Promise<Journey> {
-        return this.journeyService.getJourneyById(route.params['id']);
-    }
+  resolve(route: ActivatedRouteSnapshot, state): Promise<Journey> {
+    return this.journeyService.getJourneyById(route.params['id']);
+  }
 }

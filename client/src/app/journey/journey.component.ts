@@ -7,20 +7,18 @@ import { Http } from '@angular/http';
 
 @Component({
   selector: 'journey-list',
-  templateUrl : './journey.component.html'
+  templateUrl: './journey.component.html'
 })
 export class JourneyListComponent implements OnInit {
 
   public journeys: Journey[];
   loading = false;
 
-  constructor(
-      private http: Http,
-      private journeyService: JourneyService,
-      overlay: Overlay,
-      vcRef: ViewContainerRef,
-      public modal: Modal
-  ) {
+  constructor(private http: Http,
+              private journeyService: JourneyService,
+              overlay: Overlay,
+              vcRef: ViewContainerRef,
+              public modal: Modal) {
     overlay.defaultViewContainer = vcRef;
   }
 
@@ -29,29 +27,30 @@ export class JourneyListComponent implements OnInit {
     Promise.all([
       this.journeyService.getJourneys().then(journeys => this.journeys = journeys)
     ])
-    .then(() => {
-      this.loading = false;
-    });
+      .then(() => {
+        this.loading = false;
+      });
   }
 
   onDeleteClicked(journeyId) {
     const modalConfirmation = this.modal.confirm()
-        .size('sm')
-        .isBlocking(false)
-        .showClose(true)
-        .keyboard(27)
-        .title('Confirm')
-        .body('Are you sure you want to delete this journey?')
-        .open();
+      .size('sm')
+      .isBlocking(false)
+      .showClose(true)
+      .keyboard(27)
+      .title('Confirm')
+      .body('Are you sure you want to delete this journey?')
+      .open();
 
     modalConfirmation.then(dialog => dialog.result).then(
-        () => {
-          this.journeyService.deleteJourney(journeyId)
-              .subscribe(() => {
-                this.journeyService.getJourneys().then(journeys => this.journeys = journeys);
-              });
-        },
-        () => {}
+      () => {
+        this.journeyService.deleteJourney(journeyId)
+          .subscribe(() => {
+            this.journeyService.getJourneys().then(journeys => this.journeys = journeys);
+          });
+      },
+      () => {
+      }
     );
   }
 }
