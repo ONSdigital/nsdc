@@ -7,12 +7,14 @@
       <tr>
         <th>Journey Name</th>
         <th>Description</th>
+        <th>Validator</th>
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let journey of journeys">
         <td>{{ journey.name }}</td>
         <td>{{ journey.description }}</td>
+        <td>{{ journey.validator }}</td>
       </tr>
       </tbody>
     </table>
