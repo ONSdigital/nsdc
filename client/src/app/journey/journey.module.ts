@@ -6,11 +6,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ModalModule } from 'angular2-modal';
 import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
 import { JourneyService } from './journey.service';
+import { EditJourneyResolver } from './edit/edit-journey.resolver';
+import { DualListModule } from '../dual-list/dual-list.module';
 
 @NgModule({
   imports: [
     JourneyRoutingModule,
     LoadingModule,
+    DualListModule,
     CommonModule,
     ReactiveFormsModule,
     ModalModule.forRoot(),
@@ -20,7 +23,8 @@ import { JourneyService } from './journey.service';
     routedComponents
   ],
   providers: [
-    JourneyService
+    JourneyService,
+    EditJourneyResolver
   ],
 })
 export class JourneyModule { }

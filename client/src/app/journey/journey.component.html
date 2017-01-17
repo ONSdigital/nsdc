@@ -1,5 +1,13 @@
 <div class="container">
   <h2>Journeys</h2>
+  <div class="manage">
+    <button
+            class="btn btn-primary right"
+            [routerLink]="['/journeys/add']"
+    >
+      Add Journey
+    </button>
+  </div>
   <br />
   <div *ngIf="!loading">
     <table class="table table-hover">
@@ -15,29 +23,24 @@
         <td>{{ journey.name }}</td>
         <td>{{ journey.description }}</td>
         <td>{{ journey.validator }}</td>
+        <td class="options options-large">
+          <button class="btn btn-danger right" (click)="onDeleteClicked(journey.id)">
+            Delete
+          </button>
+          <button
+                  class="btn btn-primary btn-extra right"
+                  [routerLink]="['/journeys', journey.id]">
+            Edit
+          </button>
+          <button
+                  class="btn btn-info btn-extra right "
+                  [routerLink]="['/journeys/' + journey.id + '/steps']">
+            Steps
+          </button>
+        <td>
       </tr>
       </tbody>
     </table>
-    <div>
-      <h2>Steps</h2>
-      <br />
-      <table class="table table-hover">
-        <thead>
-        <tr>
-          <th>Journey Name</th>
-          <th>Description</th>
-          <th>Short Name</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let step of steps">
-          <td>{{ step.name }}</td>
-          <td>{{ step.description }}</td>
-          <td>{{ step.short_name }}</td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
   </div>
   <loading *ngIf="loading"></loading>
 </div>
