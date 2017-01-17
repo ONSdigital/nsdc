@@ -5,6 +5,7 @@ import { JourneyListComponent } from './journey.component';
 import { AddJourneyComponent } from './add/add-journey.component';
 import { EditJourneyComponent } from './edit/edit-journey.component';
 import { EditJourneyResolver } from './edit/edit-journey.resolver';
+import { JourneyStepsComponent } from './steps/journey.steps.component';
 
 const routes: Routes = [
   {
@@ -28,6 +29,14 @@ const routes: Routes = [
   },
   {
     canActivate: [UserPermissionsGuard],
+    path: ':id/steps',
+    component: JourneyStepsComponent,
+    data: {
+      permission: 'EDIT_JOURNEYS'
+    }
+  },
+  {
+    canActivate: [UserPermissionsGuard],
     path: '',
     component: JourneyListComponent,
     data: {
@@ -45,5 +54,6 @@ export class JourneyRoutingModule { }
 export const routedComponents = [
   AddJourneyComponent,
   EditJourneyComponent,
-  JourneyListComponent
+  JourneyListComponent,
+  JourneyStepsComponent
 ];
