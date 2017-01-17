@@ -8,11 +8,12 @@ from api.role_permission import RolePermission
 from api.file_upload import FileUpload
 from api.permission import Permission
 from api.user import User
-from api.journey_steps import JourneyStep
 from api.self import Self
 from api.self_permission import SelfPermissions
 from api.file import File
 from api.file_journey_audit import FileJourneyAudit
+from api.journey_step import JourneyStep
+from api.step import Step
 
 base_endpoint = '/nsdc/v1.0/'
 
@@ -52,7 +53,14 @@ api.add_resource(
 
 api.add_resource(
     JourneyStep,
-    base_endpoint + 'journeys/steps'
+    base_endpoint + 'journeys/<journey_id>/steps'
+)
+
+
+api.add_resource(
+    Step,
+    base_endpoint + 'steps',
+    base_endpoint + 'steps/journey/<journey_id>'
 )
 
 api.add_resource(
