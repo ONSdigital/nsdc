@@ -24,7 +24,7 @@
         <td>{{ journey.description }}</td>
         <td>{{ journey.validator }}</td>
         <td class="options options-large">
-          <button class="btn btn-danger right">
+          <button class="btn btn-danger right" (click)="onDeleteClicked(journey.id)">
             Delete
           </button>
           <button

@@ -27,3 +27,9 @@ class Journey(Resource):
         db.session.add(journey)
         db.session.commit()
         return jsonify(journey.serialize())
+
+    @protected_resource('DELETE_JOURNEYS')
+    def delete(self, journey_id):
+        JourneyData.query.filter_by(id=journey_id).delete()
+        db.session.commit()
+        return '', 204

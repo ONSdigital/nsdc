@@ -37,6 +37,16 @@ export class JourneyService {
     .catch(this.handleError);
   }
 
+  deleteJourney(id: number) {
+    this.headers.set('X-TOKEN', this.loginService.getSessionId());
+    let journeyDeleteUrl = this.config.Server + 'nsdc/v1.0/journeys/' + id;
+    return this.http.delete(journeyDeleteUrl, { headers: this.headers } )
+        .map(res => res.json())
+        .catch(res => {
+          return Observable.throw(res.json());
+        });
+  }
+
   getJourneySteps() {
     this.headers.set('X-TOKEN', this.loginService.getSessionId());
     return this.http.get(this.actionUrl + '/steps', { headers: this.headers })
