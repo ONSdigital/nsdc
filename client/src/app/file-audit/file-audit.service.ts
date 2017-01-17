@@ -26,6 +26,14 @@ export class FileAuditService {
     .catch(this.handleError);
   }
 
+  getFilesByJourney(id) {
+    this.headers.set('X-TOKEN', this.loginService.getSessionId());
+    return this.http.get(this.actionUrl + '/journey/' + id, { headers: this.headers })
+    .toPromise()
+    .then(response => response.json() as File[])
+    .catch(this.handleError);
+  }
+
   getFileAudits(id) {
     this.headers.set('X-TOKEN', this.loginService.getSessionId());
     return this.http.get(this.actionUrl + '/audit/' + id, { headers: this.headers })

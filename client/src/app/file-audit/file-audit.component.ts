@@ -1,7 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { File } from './file';
 import { FileAudit } from './file-audit';
+import { Journey } from '../journey/journey';
 import { FileAuditService } from './file-audit.service';
+import { JourneyService } from '../journey/journey.service';
 import { Configuration } from '../app.constants';
 
 @Component({
@@ -13,22 +15,28 @@ import { Configuration } from '../app.constants';
 export class FileAuditComponent implements OnInit, OnDestroy {
 
   public files: File[];
+  public journeys: Journey[];
   public audits: FileAudit[];
   loading = false;
-  dropdownLoading = false;
+  journeyDropdownLoading = false;
+  fileDropdownLoading = false;
   selectedFileId;
+  selectedJourneyId;
   pollSubscription;
 
-  constructor(private fileAuditService: FileAuditService ) {}
+  constructor(
+    private fileAuditService: FileAuditService,
+    private journeyService: JourneyService
+  ) {}
 
   ngOnInit(): void {
     this.loading = true;
-    this.dropdownLoading = true;
-    this.fileAuditService.getFiles()
-    .then(files => this.files = files)
+    this.journeyDropdownLoading = true;
+    this.journeyService.getJourneys()
+    .then(journeys => this.journeys = journeys)
     .then(() => {
       this.loading = false;
-      this.dropdownLoading = false;
+      this.journeyDropdownLoading = false;
     });
   }
 
@@ -38,7 +46,22 @@ export class FileAuditComponent implements OnInit, OnDestroy {
     }
   }
 
-  onChange(id) {
+  onJourneySelectChange(id) {
+    this.selectedJourneyId = id;
+    this.selectedFileId = null;
+    if (id !== '') {
+      this.loading = true;
+      this.fileDropdownLoading = true;
+      this.fileAuditService.getFilesByJourney(id)
+      .then((files) => this.files = files)
+      .then(() => {
+        this.loading = false;
+        this.fileDropdownLoading = false;
+      });
+    }
+  }
+
+  onFileSelectChange(id) {
     this.selectedFileId = id;
     if (this.pollSubscription) {
       this.pollSubscription.unsubscribe();

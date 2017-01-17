@@ -1,10 +1,24 @@
 <div>
-  <h2>File Audit</h2>
+  <h2>Journey Audit</h2>
   <br />
-  <div *ngIf="!dropdownLoading" class="form-group">
+  <div *ngIf="!journeyDropdownLoading" class="form-group">
     <select
       class="form-control"
-      (change)="onChange($event.target.value)"
+      (change)="onJourneySelectChange($event.target.value)"
+    >
+      <option style="display:block" value="">Choose a Journey</option>
+      <option
+        *ngFor="let journey of journeys"
+        [value]="journey.id"
+      >
+        {{ journey.name }}
+      </option>
+    </select>
+  </div>
+  <div *ngIf="!fileDropdownLoading && selectedJourneyId" class="form-group">
+    <select
+      class="form-control"
+      (change)="onFileSelectChange($event.target.value)"
     >
       <option style="display:block" value="">Choose a File</option>
       <option
