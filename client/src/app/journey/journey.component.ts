@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Journey, JourneyStep } from './journey';
+import { Journey } from './journey';
 import { JourneyService } from './journey.service';
-import { Configuration } from '../app.constants';
 
 @Component({
   selector: 'journey-list',
@@ -10,7 +9,6 @@ import { Configuration } from '../app.constants';
 export class JourneyListComponent implements OnInit {
 
   public journeys: Journey[];
-  public steps: JourneyStep[];
   loading = false;
 
   constructor(private journeyService: JourneyService ) {}
@@ -18,8 +16,7 @@ export class JourneyListComponent implements OnInit {
   ngOnInit() {
     this.loading = true;
     Promise.all([
-      this.journeyService.getJourneys().then(journeys => this.journeys = journeys),
-      this.journeyService.getJourneySteps().then(steps => this.steps = steps)
+      this.journeyService.getJourneys().then(journeys => this.journeys = journeys)
     ])
     .then(() => {
       this.loading = false;

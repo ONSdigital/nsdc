@@ -9,6 +9,11 @@ class JourneyData(db.Model, Serializer):
     description = db.Column('description', db.String(150), nullable=False, server_default=u'')
     validator = db.Column('validator', db.String(50), nullable=False, server_default=u'')
 
+    def __init__(self, name, description, validator):
+        self.name = name
+        self.description = description
+        self.validator = validator
+
     def serialize(self):
         return {
             'id': self.id,

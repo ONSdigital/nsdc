@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/toPromise';
 
 import { Journey, JourneyStep } from './journey';
@@ -16,6 +17,16 @@ export class JourneyService {
     this.actionUrl = config.Server + 'nsdc/v1.0/journeys';
     this.headers = new Headers();
     this.headers.set('Content-Type', 'application/json');
+  }
+
+  addJourney(journey: Journey) {
+    this.headers.set('X-TOKEN', this.loginService.getSessionId());
+    let journeyAddUrl = this.config.Server + 'nsdc/v1.0/journeys';
+    return this.http.post(journeyAddUrl, JSON.stringify(journey), { headers: this.headers } )
+        .map(res => res.json())
+        .catch(res => {
+          return Observable.throw(res.json());
+        });
   }
 
   getJourneys() {
