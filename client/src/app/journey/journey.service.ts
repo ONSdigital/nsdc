@@ -37,6 +37,25 @@ export class JourneyService {
     .catch(this.handleError);
   }
 
+  updateJourney(journey: Journey) {
+    this.headers.set('X-TOKEN', this.loginService.getSessionId());
+    let journeyEditUrl = this.config.Server + 'nsdc/v1.0/journeys/' + journey.id;
+    return this.http.put(journeyEditUrl, JSON.stringify(journey), { headers: this.headers } )
+        .map(res => res.json())
+        .catch(res => {
+          return Observable.throw(res.json());
+        });
+  }
+
+  getJourneyById(id: number) {
+    this.headers.set('X-TOKEN', this.loginService.getSessionId());
+    let journeyUrl = this.config.Server + 'nsdc/v1.0/journeys/' + id;
+    return this.http.get(journeyUrl, { headers: this.headers })
+        .toPromise()
+        .then(response => response.json() as Journey)
+        .catch(this.handleError);
+  }
+
   deleteJourney(id: number) {
     this.headers.set('X-TOKEN', this.loginService.getSessionId());
     let journeyDeleteUrl = this.config.Server + 'nsdc/v1.0/journeys/' + id;

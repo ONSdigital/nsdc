@@ -3,6 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { UserPermissionsGuard } from '../user-permissions.guard';
 import { JourneyListComponent } from './journey.component';
 import { AddJourneyComponent } from './add/add-journey.component';
+import { EditJourneyComponent } from './edit/edit-journey.component';
+import { EditJourneyResolver } from './edit/edit-journey.resolver';
 
 const routes: Routes = [
   {
@@ -11,6 +13,17 @@ const routes: Routes = [
     component: AddJourneyComponent,
     data: {
       permission: 'ADD_JOURNEYS'
+    }
+  },
+  {
+    canActivate: [UserPermissionsGuard],
+    path: ':id',
+    component: EditJourneyComponent,
+    data: {
+      permission: 'EDIT_JOURNEYS'
+    },
+    resolve: {
+      journey: EditJourneyResolver
     }
   },
   {
@@ -31,5 +44,6 @@ export class JourneyRoutingModule { }
 
 export const routedComponents = [
   AddJourneyComponent,
+  EditJourneyComponent,
   JourneyListComponent
 ];

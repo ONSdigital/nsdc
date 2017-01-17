@@ -12,7 +12,11 @@ parser.add_argument('validator')
 
 class Journey(Resource):
     @protected_resource('VIEW_JOURNEYS')
-    def get(self):
+    def get(self, journey_id=None):
+        if journey_id is not None:
+            journey = JourneyData.query.get(journey_id)
+            return jsonify(journey.serialize())
+
         return jsonify(JourneyData.serialize_list(JourneyData.query.all()))
 
     @protected_resource('ADD_JOURNEYS')
@@ -25,6 +29,21 @@ class Journey(Resource):
         )
 
         db.session.add(journey)
+        db.session.commit()
+        return jsonify(journey.serialize())
+
+    @protected_resource('EDIT_JOURNEYS')
+    def put(self, journey_id):
+        journey = JourneyData.query.get(journey_id)
+        request_json = parser.parse_args()
+
+        if request_json['name'] is not None:
+            journey.name = request_json['name']
+        if request_json['description'] is not None:
+            journey.description = request_json['description']
+        if request_json['validator'] is not None:
+            journey.validator = request_json['validator']
+
         db.session.commit()
         return jsonify(journey.serialize())
 

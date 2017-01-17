@@ -6,6 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ModalModule } from 'angular2-modal';
 import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
 import { JourneyService } from './journey.service';
+import { EditJourneyResolver } from './edit/edit-journey.resolver';
 
 @NgModule({
   imports: [
@@ -20,7 +21,8 @@ import { JourneyService } from './journey.service';
     routedComponents
   ],
   providers: [
-    JourneyService
+    JourneyService,
+    EditJourneyResolver
   ],
 })
 export class JourneyModule { }
