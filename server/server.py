@@ -12,8 +12,8 @@ from api.self import Self
 from api.self_permission import SelfPermissions
 from api.file import File
 from api.file_journey_audit import FileJourneyAudit
+from api.journey_version_step import JourneyVersionStep
 from api.journey_step import JourneyStep
-from api.step import Step
 from api.supplier import Supplier
 
 base_endpoint = '/nsdc/v1.0/'
@@ -53,15 +53,15 @@ api.add_resource(
 )
 
 api.add_resource(
-    JourneyStep,
-    base_endpoint + 'journeys/<journey_id>/steps'
+    JourneyVersionStep,
+    base_endpoint + 'journeys/version/<journey_version_id>/steps'
 )
 
 
 api.add_resource(
-    Step,
-    base_endpoint + 'steps',
-    base_endpoint + 'steps/journey/<journey_id>'
+    JourneyStep,
+    base_endpoint + 'journeys/steps',
+    base_endpoint + 'journeys/steps/journey/<journey_id>'
 )
 
 api.add_resource(
