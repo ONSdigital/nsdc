@@ -13,7 +13,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let supplier of suppliers">
-        <td><a href="#" [routerLink]="['/suppliers', supplier.id]" routerLinkActive="active">{{supplier.name}}</a></td>
+        <td>{{supplier.name}}</td>
         <td>{{supplier.description}}</td>
         <td class="options">
           <button class="btn btn-danger right" (click)="onDeleteClicked(supplier.id)">
