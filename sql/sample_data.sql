@@ -1,6 +1,4 @@
 
-BEGIN;
-
 INSERT INTO public.role (name, description)
 VALUES 	('Data Director', 'Role with overall corporate responsibility across the data holding. Senior political figure to provide assurance and ultimately resolve any/all reputational issues. Unlikely to have permissions to the data'),
 	('Data Owner/Supplier', 'Supplier and owner of the data. Both external and internal sources'),
@@ -97,4 +95,3 @@ VALUES ('Upload to Server', 'Upload the file to the server', 'UPLOAD_TO_SERVER')
 INSERT INTO public.journey_version (journey_id, version_number, validator)
 VALUES ((SELECT journey.journey_id FROM journey WHERE journey.name = 'VAT'), 1, 'vat_*');
 
-COMMIT;
