@@ -3,7 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { JourneyService } from '../journey.service';
 import { PermissionService } from '../../permission/permission.service';
 import { UserPermissionsService } from '../../user-permissions.service';
-import { Journey, JourneyStep } from '../journey';
+import { Journey } from '../journey';
+import { JourneyStep } from '../journey-step';
 import { Permission } from '../../permission/permission';
 
 @Component({
