@@ -46,8 +46,8 @@ export class FileUploadComponent implements OnInit {
   startUpload() {
     // only upload the file that the user can see (Fixes bug with dnd and multiple files)
     if (this.uploader._queue.length) {
-      const fileToUpload = this.uploader._queue[0],
-          isInvalidFile = !this.validateFileExtension(fileToUpload.name);
+      const fileToUpload = this.uploader._queue[0];
+      const isInvalidFile = !this.validateFileExtension(fileToUpload.name);
 
       this.invalidFile = isInvalidFile;
       if (fileToUpload.uploading || isInvalidFile) {

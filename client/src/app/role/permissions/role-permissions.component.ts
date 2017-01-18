@@ -42,7 +42,7 @@ export class RolePermissionsComponent implements OnInit {
       });
       this.permissionService.getPermissionByRole(id)
       .then(permissions => {
-        this.originalPermissionIds = permissions.map((permission) => permission.id);
+        this.originalPermissionIds = permissions.map(permission => permission.id);
         this.selectedPermissions = permissions;
       });
     });

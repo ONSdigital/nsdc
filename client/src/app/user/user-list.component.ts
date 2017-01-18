@@ -31,7 +31,7 @@ export class UserListComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading = true;
-    this.userService.getUsers().then((users) => {
+    this.userService.getUsers().then(users => {
       this.users = users;
       this.loading = false;
     });
@@ -55,7 +55,7 @@ export class UserListComponent implements OnInit {
       () => {
         this.userService.deactivateUser(userId)
         .subscribe(() => {
-          this.userService.getUsers().then((users) => this.users = users);
+          this.userService.getUsers().then(users => this.users = users);
         });
       },
       () => {}

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
-import 'rxjs/add/operator/toPromise';
 import { Observable } from 'rxjs/Rx';
-import { File, FileAudit } from './file';
+import { File } from './file';
+import { FileAudit } from './file-audit';
 import { Configuration } from '../app.constants';
 import { LoginService } from '../login/login.service';
 

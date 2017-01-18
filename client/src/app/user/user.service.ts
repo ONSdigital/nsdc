@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, Response, RequestOptions } from '@angular/http';
-import 'rxjs/add/operator/toPromise';
 import { LoginService } from '../login/login.service';
 import { Observable } from 'rxjs/Observable';
 import { User } from './user';

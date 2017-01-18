@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { File, FileAudit } from './file';
+import { File } from './file';
+import { FileAudit } from './file-audit';
 import { FileAuditService } from './file-audit.service';
 import { Configuration } from '../app.constants';
 

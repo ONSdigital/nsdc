@@ -42,7 +42,8 @@ client/src/**/*.js
 /tsd_typings/
 
 # Dist #
-/dist
+dist
+dll
 .webpack.json
 
 # IDE #
