@@ -9,7 +9,7 @@ class JourneyVersionData(db.Model, Serializer):
     version_number = db.Column('version_number', db.Integer, nullable=False)
     journey_id = db.Column(db.Integer, db.ForeignKey('journey.journey_id'))
     validator = db.Column('validator', db.String(50), nullable=False, server_default=u'')
-    steps = db.relationship('JourneyStepData', secondary=journey_version_step, lazy='dynamic',
+    journey_steps = db.relationship('JourneyStepData', secondary=journey_version_step, lazy='dynamic',
                             backref=db.backref('journey_versions', lazy='dynamic'))
 
     def __init__(self, version_number, journey_id, validator):

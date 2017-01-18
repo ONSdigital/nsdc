@@ -15,6 +15,7 @@ from api.file_journey_audit import FileJourneyAudit
 from api.journey_version_step import JourneyVersionStep
 from api.journey_step import JourneyStep
 from api.supplier import Supplier
+from api.journey_version import JourneyVersion
 
 base_endpoint = '/nsdc/v1.0/'
 
@@ -53,8 +54,14 @@ api.add_resource(
 )
 
 api.add_resource(
+    JourneyVersion,
+    base_endpoint + 'journeys/versions',
+    base_endpoint + 'journeys/versions/<journey_version_id>'
+)
+
+api.add_resource(
     JourneyVersionStep,
-    base_endpoint + 'journeys/version/<journey_version_id>/steps'
+    base_endpoint + 'journeys/versions/<journey_version_id>/steps'
 )
 
 
