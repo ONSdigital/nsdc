@@ -81,19 +81,20 @@ VALUES 	('Test', 'Test', 'test_dd@test.com', 'test_dd', 'test', 'active', (SELEC
  	('Test', 'Test', 'test_di@test.com', 'test_di', 'test', 'active', (SELECT role.role_id FROM role WHERE role.name = 'Data Importer')),
 	('Test', 'Test', 'test_acm@test.com', 'test_acm', 'test', 'active', (SELECT role.role_id FROM role WHERE role.name = 'Access Control Manager'));
 
-INSERT INTO public.journey (name, description, validator)
-VALUES ('VAT', 'VAT File Journey', 'vat_*');
+INSERT INTO public.supplier (name, description)
+VALUES ('HMRC', 'HMRC description');
 
-INSERT INTO public.step (name, description, short_name)
+INSERT INTO public.journey (name, description, supplier_id)
+VALUES ('VAT', 'VAT File Journey', (SELECT supplier.supplier_id FROM supplier WHERE supplier.name = 'HMRC'));
+
+INSERT INTO public.journey_step (name, description, short_name)
 VALUES ('Upload to Server', 'Upload the file to the server', 'UPLOAD_TO_SERVER'),
 ('Upload to Move It', 'Upload the file to the move it server', 'UPLOAD_TO_MOVEIT'),
 ('Upload to Sandbox VM', 'Upload the file to the Sandbox VM', 'UPLOAD_TO_SANDBOX'),
 ('Antivirus Check', 'Perform the Antivirus check on the uploaded file', 'ANTIVIRUS_CHECK'),
 ('File Level Check', 'Perform the File Level check on the uploaded file', 'FILE_LEVEL_CHECK');
 
-INSERT into public.journey_step (journey_id, step_id) (
-  SELECT journey.journey_id, step.step_id FROM journey CROSS JOIN step
-		WHERE journey.name = 'VAT' AND step.short_name in ('UPLOAD_TO_SERVER')
-);
+INSERT INTO public.journey_version (journey_id, version_number, validator)
+VALUES ((SELECT journey.journey_id FROM journey WHERE journey.name = 'VAT'), 1, 'vat_*');
 
 COMMIT;
