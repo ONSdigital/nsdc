@@ -1,0 +1,32 @@
+<div class="container">
+  <h2>Suppliers</h2>
+  <div class="manage">
+    <a class="btn btn-primary right" [routerLink]="['/suppliers/add']">Add Supplier</a>
+  </div>                
+  <table *ngIf="!loading" class="table table-hover">
+    <thead>
+      <tr>
+        <th>Supplier Name</th>
+        <th>Description</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let supplier of suppliers">
+        <td><a href="#" [routerLink]="['/suppliers', supplier.id]" routerLinkActive="active">{{supplier.name}}</a></td>
+        <td>{{supplier.description}}</td>
+        <td class="options">
+          <button class="btn btn-danger right" (click)="onDeleteClicked(supplier.id)">
+            Delete
+          </button>
+          <button
+            class="btn btn-primary btn-extra right"
+            [routerLink]="['/suppliers', supplier.id]">
+            Edit
+          </button>
+        <td>
+      </tr>
+    </tbody>
+  </table>
+  <loading *ngIf="loading"></loading>
+</div>

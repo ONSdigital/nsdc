@@ -14,6 +14,7 @@ from api.file import File
 from api.file_journey_audit import FileJourneyAudit
 from api.journey_step import JourneyStep
 from api.step import Step
+from api.supplier import Supplier
 
 base_endpoint = '/nsdc/v1.0/'
 
@@ -61,6 +62,12 @@ api.add_resource(
     Step,
     base_endpoint + 'steps',
     base_endpoint + 'steps/journey/<journey_id>'
+)
+
+api.add_resource(
+    Supplier,
+    base_endpoint + 'suppliers',
+    base_endpoint + 'suppliers/<supplier_id>'
 )
 
 api.add_resource(
