@@ -44,6 +44,10 @@ export const appRoutes: Routes = [
         loadChildren: './journey/journey.module#JourneyModule'
       },
       {
+        path: 'suppliers',
+        loadChildren: './supplier/supplier.module#SupplierModule'
+      },
+      {
         path: 'no-permission',
         component: NoPermissionComponent
       }
