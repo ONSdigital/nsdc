@@ -4,6 +4,7 @@ import { Modal } from 'angular2-modal/plugins/bootstrap';
 import { Journey } from './journey';
 import { JourneyVersion } from './journey-version';
 import { JourneyService } from './journey.service';
+import { JourneyStep } from './journey-step';
 import { Http } from '@angular/http';
 
 @Component({
@@ -14,9 +15,10 @@ export class JourneyListComponent implements OnInit {
 
   public journeys: Journey[];
   public versions: JourneyVersion[];
+  public steps: JourneyStep[];
   public selectedJourney: Journey;
+  public selectedVersion: JourneyVersion;
   loading = false;
-  showVersions = false;
 
   constructor(private http: Http,
               private journeyService: JourneyService,
@@ -37,6 +39,7 @@ export class JourneyListComponent implements OnInit {
   }
 
   onSelectJourney(journey) {
+    this.resetData();
     this.loading = true;
     this.selectedJourney = journey;
     Promise.all([
@@ -44,7 +47,17 @@ export class JourneyListComponent implements OnInit {
     ])
       .then(() => {
         this.loading = false;
-        this.showVersions = true;
+      });
+  }
+
+  onSelectJourneyVersion(journeyVersion) {
+    this.loading = true;
+    this.selectedVersion = journeyVersion;
+    Promise.all([
+      this.journeyService.getStepsByJourneyVersion(journeyVersion.id).then(steps => this.steps = steps)
+    ])
+      .then(() => {
+        this.loading = false;
       });
   }
 
@@ -68,5 +81,10 @@ export class JourneyListComponent implements OnInit {
       () => {
       }
     );
+  }
+
+  resetData() {
+    this.versions = [];
+    this.steps = [];
   }
 }

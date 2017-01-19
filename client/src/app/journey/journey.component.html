@@ -9,12 +9,13 @@
     </button>
   </div>
   <br />
-  <div *ngIf="!loading">
-    <table class="journey-table table table-hover">
+  <div>
+    <table class="journey-table table table-hover" *ngIf="!loading">
       <thead>
       <tr>
         <th>Journey Name</th>
         <th>Description</th>
+        <th></th>
         <th></th>
       </tr>
       </thead>
@@ -31,7 +32,7 @@
       </tbody>
     </table>
     <div class="journey-section" *ngIf="!loading && versions">
-      <h3>{{ selectedJourney.name }} Versions</h3>
+      <h3>Versions</h3>
       <div class="manage">
         <button
                 class="btn btn-primary right"
@@ -44,12 +45,12 @@
         <thead>
         <tr>
           <th>Version Number</th>
-          <th>Validator</th>
+          <th>File Validator</th>
           <th></th>
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let version of versions">
+        <tr *ngFor="let version of versions" [ngClass]="{'row-selected': selectedVersion?.id == version.id }" (click)="onSelectJourneyVersion(version)">
           <td>{{ version.version_number }}</td>
           <td>{{ version.validator }}</td>
           <td class="options options-large">
@@ -59,6 +60,23 @@
         </tr>
         </tbody>
       </table>
+    </div>
+    <div class="journey-section" *ngIf="!loading">
+      <div class="row">
+        <div class="col-xs-6" *ngIf="steps">
+          <span class="h3">Steps</span> <a href="#">Edit</a>
+          <table class="journey-table journey-section-table table table-hover">
+              <tbody>
+                <tr *ngFor="let step of steps">
+                  <td>{{ step.short_name }}</td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+        <div class="col-xs-6" *ngIf="steps">
+          <h3>Schedule</h3>
+        </div>
+      </div>
     </div>
   </div>
   <loading *ngIf="loading"></loading>

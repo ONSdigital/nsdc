@@ -119,10 +119,25 @@ a.disabled {
 
 .journey-table tr td:last-child {
   width: 0;
-  padding: 0;
+  padding: 8px 0 8px 0;
   margin: 0;
 }
 
 .journey-section {
   margin: 50px 0 50px 0;
+}
+
+.journey-section-table {
+  margin-top: 20px;
+}
+
+.journey-section a {
+  position: relative;
+  top: -2px;
+  left: 8px;
+}
+
+.h3 {
+  font-size: 24px;
+  margin: 20px 0 10px 0;
 }
