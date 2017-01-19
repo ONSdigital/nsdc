@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { JourneyService } from '../journey.service';
+import { JourneyService } from '../../journey.service';
 import { PermissionService } from '../../permission/permission.service';
-import { UserPermissionsService } from '../../user-permissions.service';
-import { Journey } from '../journey';
-import { JourneyStep } from '../journey-step';
+import { UserPermissionsService } from '../../../user-permissions.service';
+import { JourneyVersion } from '../journey-version';
+import { JourneyStep } from './journey-step';
 import { Permission } from '../../permission/permission';
 
 @Component({
@@ -14,7 +14,7 @@ import { Permission } from '../../permission/permission';
 })
 export class JourneyStepsComponent implements OnInit {
 
-  journey: Journey;
+  version: JourneyVersion;
   allSteps: JourneyStep[];
   originalStepIds: number[];
   selectedSteps: JourneyStep[];
@@ -33,13 +33,11 @@ export class JourneyStepsComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(params => {
       const id = Number.parseInt(params['id']);
-      this.journeyService.getJourneyById(id)
-        .then(journey => this.journey = journey);
+      this.journeyService.getJourneyVersionById(id)
+        .then(version => this.version = version);
       this.journeyService.getSteps()
-        .then(steps => {
-          this.allSteps = steps;
-        });
-      this.journeyService.getStepsByJourney(id)
+        .then(steps => this.allSteps = steps);
+      this.journeyService.getStepsByJourneyVersion(id)
         .then(steps => {
           this.originalStepIds = steps.map(step => step.id);
           this.selectedSteps = steps;
@@ -47,11 +45,11 @@ export class JourneyStepsComponent implements OnInit {
     });
   }
 
-  saveUpdatedJourneySteps() {
+  saveUpdatedJourneyVersionSteps() {
     this.submitPending = true;
     this.submitFailed = false;
     const selectedStepIds = this.selectedSteps.map(step => step.id);
-    this.journeyService.updateJourneySteps(this.journey.id, selectedStepIds)
+    this.journeyService.updateJourneyVersionSteps(this.version.id, selectedStepIds)
       .subscribe(
         () => {
           this.submitPending = false;

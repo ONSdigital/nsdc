@@ -1,5 +1,6 @@
-export class Journey {
+export class JourneyStep {
   id: number;
   name: string;
   description: string;
+  short_name: string;
 }

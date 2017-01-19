@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Journey } from './journey';
-import { JourneyStep } from './journey-step';
+import { JourneyVersion } from './versions/journey-version';
+import { JourneyStep } from './versions/steps/journey-step';
 import { Configuration } from '../app.constants';
 import { LoginService } from '../login/login.service';
 
@@ -67,24 +68,42 @@ export class JourneyService {
 
   getSteps() {
     this.headers.set('X-TOKEN', this.loginService.getSessionId());
-    return this.http.get(this.config.Server + 'nsdc/v1.0/steps', { headers: this.headers })
+    return this.http.get(this.config.Server + 'nsdc/v1.0/journeys/steps', { headers: this.headers })
     .toPromise()
     .then(response => response.json() as JourneyStep[])
     .catch(this.handleError);
   }
 
-  getStepsByJourney(journeyId: number) {
+  getStepsByJourneyVersion(journeyVersionId: number) {
     this.headers.set('X-TOKEN', this.loginService.getSessionId());
-    let stepsUrl = this.config.Server + 'nsdc/v1.0/steps/journey/' + journeyId;
+    let stepsUrl = this.config.Server + 'nsdc/v1.0/journeys/versions/' + journeyVersionId + '/steps';
     return this.http.get(stepsUrl, { headers: this.headers })
     .toPromise()
     .then(response => response.json() as JourneyStep[])
     .catch(this.handleError);
   }
 
-  updateJourneySteps(id: number, stepIds: number[]) {
+  getJourneyVersions(journeyId) {
     this.headers.set('X-TOKEN', this.loginService.getSessionId());
-    const rolePermissionsUrl = this.config.Server + 'nsdc/v1.0/journeys/' + id + '/steps';
+    let versionsUrl = this.config.Server + 'nsdc/v1.0/journeys/' + journeyId + '/versions';
+    return this.http.get(versionsUrl, { headers: this.headers })
+      .toPromise()
+      .then(response => response.json() as JourneyVersion[])
+      .catch(this.handleError);
+  }
+
+  getJourneyVersionById(id: number) {
+    this.headers.set('X-TOKEN', this.loginService.getSessionId());
+    let journeyVersionUrl = this.config.Server + 'nsdc/v1.0/journeys/versions/' + id;
+    return this.http.get(journeyVersionUrl, { headers: this.headers })
+      .toPromise()
+      .then(response => response.json() as JourneyVersion)
+      .catch(this.handleError);
+  }
+
+  updateJourneyVersionSteps(id: number, stepIds: number[]) {
+    this.headers.set('X-TOKEN', this.loginService.getSessionId());
+    const rolePermissionsUrl = this.config.Server + 'nsdc/v1.0/journeys/versions/' + id + '/updatesteps';
     return this.http.post(rolePermissionsUrl, JSON.stringify({
       steps: stepIds
     }), {headers: this.headers})

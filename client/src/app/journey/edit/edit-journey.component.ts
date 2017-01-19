@@ -24,8 +24,7 @@ export class EditJourneyComponent implements OnInit {
   ngOnInit() {
     this.journeyForm = this._formBuilder.group({
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
-      description: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
-      validator: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]]
+      description: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]]
     });
     this.route.data.subscribe(data => {
       this.journey = data['journey'];
@@ -36,7 +35,6 @@ export class EditJourneyComponent implements OnInit {
   onSubmit() {
     this.journey.name = this.journeyForm.controls['name'].value;
     this.journey.description = this.journeyForm.controls['description'].value;
-    this.journey.validator = this.journeyForm.controls['validator'].value;
     this.journeyService.updateJourney(this.journey)
       .subscribe(
         () => {

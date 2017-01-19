@@ -7,7 +7,6 @@ from data.journey import JourneyData
 parser = reqparse.RequestParser()
 parser.add_argument('name')
 parser.add_argument('description')
-parser.add_argument('validator')
 
 
 class Journey(Resource):
@@ -24,8 +23,7 @@ class Journey(Resource):
         request_json = parser.parse_args()
         journey = JourneyData(
             request_json['name'],
-            request_json['description'],
-            request_json['validator']
+            request_json['description']
         )
 
         db.session.add(journey)
@@ -41,8 +39,6 @@ class Journey(Resource):
             journey.name = request_json['name']
         if request_json['description'] is not None:
             journey.description = request_json['description']
-        if request_json['validator'] is not None:
-            journey.validator = request_json['validator']
 
         db.session.commit()
         return jsonify(journey.serialize())

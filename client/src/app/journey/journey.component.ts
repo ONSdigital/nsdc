@@ -2,7 +2,9 @@ import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { Overlay } from 'angular2-modal';
 import { Modal } from 'angular2-modal/plugins/bootstrap';
 import { Journey } from './journey';
+import { JourneyVersion } from './versions/journey-version';
 import { JourneyService } from './journey.service';
+import { JourneyStep } from './versions/steps/journey-step';
 import { Http } from '@angular/http';
 
 @Component({
@@ -12,7 +14,12 @@ import { Http } from '@angular/http';
 export class JourneyListComponent implements OnInit {
 
   public journeys: Journey[];
+  public versions: JourneyVersion[];
+  public steps: JourneyStep[];
+  public selectedJourney: Journey;
+  public selectedVersion: JourneyVersion;
   loading = false;
+  showSteps = false;
 
   constructor(private http: Http,
               private journeyService: JourneyService,
@@ -29,6 +36,30 @@ export class JourneyListComponent implements OnInit {
     ])
       .then(() => {
         this.loading = false;
+      });
+  }
+
+  onSelectJourney(journey) {
+    this.resetData();
+    this.loading = true;
+    this.selectedJourney = journey;
+    Promise.all([
+      this.journeyService.getJourneyVersions(journey.id).then(versions => this.versions = versions)
+    ])
+      .then(() => {
+        this.loading = false;
+      });
+  }
+
+  onSelectJourneyVersion(journeyVersion) {
+    this.loading = true;
+    this.selectedVersion = journeyVersion;
+    Promise.all([
+      this.journeyService.getStepsByJourneyVersion(journeyVersion.id).then(steps => this.steps = steps)
+    ])
+      .then(() => {
+        this.loading = false;
+        this.showSteps = true;
       });
   }
 
@@ -52,5 +83,11 @@ export class JourneyListComponent implements OnInit {
       () => {
       }
     );
+  }
+
+  resetData() {
+    this.versions = [];
+    this.steps = [];
+    this.showSteps = false;
   }
 }
