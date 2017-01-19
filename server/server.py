@@ -56,6 +56,7 @@ api.add_resource(
 api.add_resource(
     JourneyVersion,
     base_endpoint + 'journeys/versions',
+    base_endpoint + 'journeys/versions/<journey_version_id>',
     base_endpoint + 'journeys/<journey_id>/versions'
 )
 
@@ -63,6 +64,11 @@ api.add_resource(
     JourneyStep,
     base_endpoint + 'journeys/steps',
     base_endpoint + 'journeys/versions/<journey_version_id>/steps'
+)
+
+api.add_resource(
+    JourneyVersionStep,
+    base_endpoint + 'journeys/versions/<journey_version_id>/updatesteps'
 )
 
 api.add_resource(

@@ -9,8 +9,8 @@ from data.journey_step import JourneyStepData
 class JourneyVersionStep(Resource):
 
     @protected_resource('VIEW_JOURNEYS')
-    def post(self, journey_id):
-        journey_version = JourneyVersionData.query.filter(JourneyVersionData.journey_id == journey_id)
+    def post(self, journey_version_id):
+        journey_version = JourneyVersionData.query.get(journey_version_id)
         step_ids = request.json['steps']
         steps = JourneyStepData.query.filter(JourneyStepData.id.in_(step_ids)).all()
         journey_version.journey_steps = steps

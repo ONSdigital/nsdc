@@ -61,10 +61,10 @@
         </tbody>
       </table>
     </div>
-    <div class="journey-section" *ngIf="!loading">
+    <div class="journey-section" *ngIf="!loading && versions && showSteps">
       <div class="row">
-        <div class="col-xs-6" *ngIf="steps">
-          <span class="h3">Steps</span> <a href="#">Edit</a>
+        <div class="col-xs-6">
+          <span class="h3">Steps</span> <a [routerLink]="['/journeys/versions/', selectedVersion.id, 'steps']">Edit</a>
           <table class="journey-table journey-section-table table table-hover">
               <tbody>
                 <tr *ngFor="let step of steps">
@@ -73,7 +73,7 @@
               </tbody>
             </table>
         </div>
-        <div class="col-xs-6" *ngIf="steps">
+        <div class="col-xs-6">
           <h3>Schedule</h3>
         </div>
       </div>
