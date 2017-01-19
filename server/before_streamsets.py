@@ -232,27 +232,29 @@ def main():
     """
     if len(sys.argv[1:]) > 0:
         filename = sys.argv[-1]
-        starttime = timestamp()
         file_size = file_size_mb(filename)
         check_file_name = check_filename(filename)
         filedata = file_data(filename)
 
         if check_file_name:
-            status = check_file_name[0]
-            reason = check_file_name[1]
-            endtime = timestamp()
+            starttime = check_file_name[0]
+            endtime = check_file_name[1]
+            status = check_file_name[2]
+            reason = check_file_name[3]
             db_entry(starttime, endtime, filename, status, reason)
 
         if file_size:
-            status = file_size[0]
-            reason = file_size[1]
-            endtime = timestamp()
+            starttime = file_size[0]
+            endtime = file_size[1]
+            status = file_size[2]
+            reason = file_size[3]
             db_entry(starttime, endtime, filename, status, reason)
 
         if filedata:
-            status = filedata[0]
-            reason = filedata[1]
-            endtime = timestamp()
+            starttime = filedata[0]
+            endtime = filedata[1]
+            status = filedata[2]
+            reason = filedata[3]
             db_entry(starttime, endtime, filename, status, reason)
     else:
         print """
