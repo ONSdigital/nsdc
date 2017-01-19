@@ -2,6 +2,7 @@ import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { Overlay } from 'angular2-modal';
 import { Modal } from 'angular2-modal/plugins/bootstrap';
 import { Journey } from './journey';
+import { JourneyVersion } from './journey-version';
 import { JourneyService } from './journey.service';
 import { Http } from '@angular/http';
 
@@ -12,7 +13,10 @@ import { Http } from '@angular/http';
 export class JourneyListComponent implements OnInit {
 
   public journeys: Journey[];
+  public versions: JourneyVersion[];
+  public selectedJourney: Journey;
   loading = false;
+  showVersions = false;
 
   constructor(private http: Http,
               private journeyService: JourneyService,
@@ -29,6 +33,18 @@ export class JourneyListComponent implements OnInit {
     ])
       .then(() => {
         this.loading = false;
+      });
+  }
+
+  onSelectJourney(journey) {
+    this.loading = true;
+    this.selectedJourney = journey;
+    Promise.all([
+      this.journeyService.getJourneyVersions(journey.id).then(versions => this.versions = versions)
+    ])
+      .then(() => {
+        this.loading = false;
+        this.showVersions = true;
       });
   }
 

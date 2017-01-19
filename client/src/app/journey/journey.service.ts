@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Journey } from './journey';
+import { JourneyVersion } from './journey-version';
 import { JourneyStep } from './journey-step';
 import { Configuration } from '../app.constants';
 import { LoginService } from '../login/login.service';
@@ -80,6 +81,15 @@ export class JourneyService {
     .toPromise()
     .then(response => response.json() as JourneyStep[])
     .catch(this.handleError);
+  }
+
+  getJourneyVersions(journeyId) {
+    this.headers.set('X-TOKEN', this.loginService.getSessionId());
+    let versionsUrl = this.config.Server + 'nsdc/v1.0/journeys/' + journeyId + '/versions';
+    return this.http.get(versionsUrl, { headers: this.headers })
+      .toPromise()
+      .then(response => response.json() as JourneyVersion[])
+      .catch(this.handleError);
   }
 
   updateJourneySteps(id: number, stepIds: number[]) {
