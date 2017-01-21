@@ -1,6 +1,7 @@
 from config import db
 from common.serializer import Serializer
 from data.role_permission import role_permission
+from data.journey_version_role import journey_version_role
 
 
 class RoleData(db.Model, Serializer):
@@ -10,6 +11,7 @@ class RoleData(db.Model, Serializer):
     description = db.Column('description', db.Unicode(255))
     timestamp = db.Column('timestamp', db.TIMESTAMP, server_default=db.func.current_timestamp(), nullable=False)
     permissions = db.relationship('PermissionData', secondary=role_permission, lazy='dynamic', backref=db.backref('roles', lazy='dynamic'))
+    journey_versions = db.relationship('JourneyVersionData', secondary=journey_version_role, lazy='dynamic', backref=db.backref('roles', lazy='dynamic'))
 
     def __init__(self, name, description):
         self.name = name

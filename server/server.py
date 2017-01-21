@@ -16,6 +16,8 @@ from api.journey_version_step import JourneyVersionStep
 from api.journey_step import JourneyStep
 from api.supplier import Supplier
 from api.journey_version import JourneyVersion
+from api.journey_version_role import JourneyVersionRole
+from api.journey_version_schedule import JourneyVersionSchedule
 
 base_endpoint = '/nsdc/v1.0/'
 
@@ -39,6 +41,11 @@ api.add_resource(
 api.add_resource(
     RolePermission,
     base_endpoint + 'roles/<role_id>/permissions'
+)
+
+api.add_resource(
+    JourneyVersionRole,
+    base_endpoint + 'journeys/versions/roles/<role_id>'
 )
 
 api.add_resource(
@@ -69,6 +76,11 @@ api.add_resource(
 api.add_resource(
     JourneyVersionStep,
     base_endpoint + 'journeys/versions/<journey_version_id>/updatesteps'
+)
+
+api.add_resource(
+    JourneyVersionSchedule,
+    base_endpoint + 'journeys/versions/<journey_version_id>/schedules'
 )
 
 api.add_resource(

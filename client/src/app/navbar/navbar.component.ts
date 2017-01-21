@@ -14,7 +14,7 @@ import { MenuItems } from './navbar.routes.config';
   selector: 'navbar',
   templateUrl: 'navbar.component.html',
   styleUrls: ['navbar.component.css'],
-  providers: [UserAccountService, RoleService]
+  providers: [RoleService]
 })
 export class NavbarComponent {
 

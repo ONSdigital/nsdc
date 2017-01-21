@@ -47,6 +47,20 @@ export class JourneyService {
     });
   }
 
+  getVersionsByRole(roleId) {
+    this.headers.set('X-TOKEN', this.loginService.getSessionId());
+    let url = this.config.Server + 'nsdc/v1.0/journeys/versions/roles/' + roleId;
+    return this.http.get(url, { headers: this.headers })
+    .map(response => response.json());
+  }
+
+  getVersionById(id) {
+    this.headers.set('X-TOKEN', this.loginService.getSessionId());
+    let url = this.config.Server + 'nsdc/v1.0/journeys/versions/' + id;
+    return this.http.get(url, { headers: this.headers })
+    .map(response => response.json());
+  }
+
   getJourneyById(id: number) {
     this.headers.set('X-TOKEN', this.loginService.getSessionId());
     let journeyUrl = this.config.Server + 'nsdc/v1.0/journeys/' + id;

@@ -8,6 +8,7 @@ import { routing, routedComponents } from './app.routing';
 import { LoginService } from './login/login.service';
 import { UserPermissionsService } from './user-permissions.service';
 import { UserPermissionsGuard } from './user-permissions.guard';
+import { UserAccountService } from './user-account.service';
 import { LoginGuard } from './login/login.guard';
 import { IsLoggedInGuard } from './login/is-logged-in.guard';
 import { Configuration } from './app.constants';
@@ -31,6 +32,7 @@ import '../styles/app.css';
     routedComponents
   ],
   providers: [
+    UserAccountService,
     UserPermissionsService,
     UserPermissionsGuard,
     LoginService,
