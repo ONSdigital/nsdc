@@ -8,6 +8,7 @@ import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
 import { JourneyService } from './journey.service';
 import { EditJourneyResolver } from './edit/edit-journey.resolver';
 import { DualListModule } from '../dual-list/dual-list.module';
+import { ScheduleModule } from '../schedule/schedule.module';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { DualListModule } from '../dual-list/dual-list.module';
     LoadingModule,
     DualListModule,
     CommonModule,
+    ScheduleModule,
     ReactiveFormsModule,
     ModalModule.forRoot(),
     BootstrapModalModule

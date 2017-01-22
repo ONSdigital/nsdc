@@ -3,6 +3,7 @@ import { Http, Headers } from '@angular/http';
 import { LoginService } from '../login/login.service';
 import { Configuration } from '../app.constants';
 import { Observable } from 'rxjs/Observable';
+import { Schedule } from './schedule';
 import { JourneyVersionSchedule } from './journey-version-schedule';
 
 @Injectable()
@@ -15,18 +16,18 @@ export class ScheduleService {
     this.headers.set('Content-Type', 'application/json');
   }
 
-  getSchedulesByVersion(versionId: number, validOnly = true) {
+  getSchedulesByVersion(versionId: number) {
     this.headers.set('X-TOKEN', this.loginService.getSessionId());
     let schedulesUrl = this.config.Server +
       `nsdc/v1.0/journeys/versions/${versionId}/schedules`;
     return this.http.get(schedulesUrl, {headers: this.headers})
-    .map(res => res.json());
+    .map(res => res.json() as Schedule[]);
   }
 
-  getNextValidScheduleByVersion(versionId: number, validOnly = true): Observable<JourneyVersionSchedule> {
+  getNextValidScheduleByVersion(versionId: number): Observable<JourneyVersionSchedule> {
     this.headers.set('X-TOKEN', this.loginService.getSessionId());
     let schedulesUrl = this.config.Server +
-      `nsdc/v1.0/journeys/versions/${versionId}/schedules`;
+      `nsdc/v1.0/journeys/versions/${versionId}/schedules/with-version`;
     return this.http.get(schedulesUrl, {headers: this.headers})
     .map(res => res.json() as JourneyVersionSchedule);
   }

@@ -15,6 +15,7 @@ from api.file_journey_audit import FileJourneyAudit
 from api.journey_version_step import JourneyVersionStep
 from api.journey_step import JourneyStep
 from api.supplier import Supplier
+from api.schedule import Schedule
 from api.journey_version import JourneyVersion
 from api.journey_version_role import JourneyVersionRole
 from api.journey_version_schedule import JourneyVersionSchedule
@@ -80,6 +81,11 @@ api.add_resource(
 
 api.add_resource(
     JourneyVersionSchedule,
+    base_endpoint + 'journeys/versions/<journey_version_id>/schedules/with-version'
+)
+
+api.add_resource(
+    Schedule,
     base_endpoint + 'journeys/versions/<journey_version_id>/schedules'
 )
 
