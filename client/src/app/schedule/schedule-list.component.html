@@ -9,7 +9,7 @@
   </thead>
   <tbody>
     <tr *ngFor="let schedule of schedules">
-      <td>{{schedule.date}}</td>
+      <td>{{schedule.date | date:"MMMM y" }}</td>
       <td>{{schedule.status}}</td>
     </tr>
   </tbody>

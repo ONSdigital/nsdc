@@ -37,7 +37,6 @@ export class FileUploadComponent implements OnInit {
     })
     .subscribe((journeyVersionSchedules: JourneyVersionSchedule[]) => {
       this.loading = false;
-      console.log(journeyVersionSchedules);
       this.journeyVersionSchedules = journeyVersionSchedules;
     });
   }
