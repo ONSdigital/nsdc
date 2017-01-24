@@ -56,7 +56,7 @@
           <td>{{ version.validator }}</td>
           <td>{{ version.extensions }}</td>
           <td class="options options-large">
-            <a class="icon-links glyphicon glyphicon-remove right" (click)="onVersionDeleteClicked(version.id)"></a>
+            <a class="icon-links glyphicon glyphicon-remove right" (click)="onVersionDeleteClicked($event, version.id)"></a>
             <a class="icon-links glyphicon glyphicon-edit right" [routerLink]="['/journeys', selectedJourney.id, 'edit-version', version.id]"></a>
           <td>
         </tr>
