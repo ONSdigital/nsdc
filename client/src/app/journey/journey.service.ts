@@ -107,6 +107,16 @@ export class JourneyService {
       });
   }
 
+  updateJourneyVersion(journeyVersion: JourneyVersion) {
+    this.headers.set('X-TOKEN', this.loginService.getSessionId());
+    let journeyVersionEditUrl = this.config.Server + 'nsdc/v1.0/journeys/versions/' + journeyVersion.id;
+    return this.http.put(journeyVersionEditUrl, JSON.stringify(journeyVersion), { headers: this.headers } )
+      .map(res => res.json())
+      .catch(res => {
+        return Observable.throw(res.json());
+      });
+  }
+
   getJourneyVersions(journeyId) {
     this.headers.set('X-TOKEN', this.loginService.getSessionId());
     let versionsUrl = this.config.Server + 'nsdc/v1.0/journeys/' + journeyId + '/versions';

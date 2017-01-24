@@ -8,6 +8,7 @@ import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
 import { JourneyService } from './journey.service';
 import { EditJourneyResolver } from './edit/edit-journey.resolver';
 import { AddJourneyVersionResolver } from './versions/add/add-journey-version.resolver';
+import { EditJourneyVersionResolver } from './versions/edit/edit-journey-version.resolver';
 import { DualListModule } from '../dual-list/dual-list.module';
 import { ScheduleModule } from '../schedule/schedule.module';
 
@@ -28,7 +29,8 @@ import { ScheduleModule } from '../schedule/schedule.module';
   providers: [
     JourneyService,
     EditJourneyResolver,
-    AddJourneyVersionResolver
+    AddJourneyVersionResolver,
+    EditJourneyVersionResolver
   ],
 })
 export class JourneyModule { }
