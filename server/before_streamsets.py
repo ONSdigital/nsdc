@@ -6,6 +6,7 @@ import shutil
 from subprocess import check_output
 import psycopg2
 
+
 def check_dir(directory):
     """
     Checks if Accepted and Rejected directories are created or not for
@@ -130,52 +131,52 @@ def file_data(filename):
                 count = count + 1
                 print "\n", count
                 vatref = line[0:7]
-                if vatref == 9999999:
+                if int(vatref) == 9999999:
                     null_data = null_data + 1
                 else:
                     print "Vatref :", vatref
                 checkdigits = line[7:9]
-                if checkdigits == 99:
+                if int(checkdigits) == 99:
                     null_data = null_data + 1
                 else:
                     print "Checkdigits :", checkdigits
                 periods = line[9:12]
-                if  periods == 999:
+                if  int(periods) == 999:
                     null_data = null_data + 1
                 else:
                     print "Periods : ", periods
                 record_type = line[12:14]
-                if record_type == 99:
+                if int(record_type) == 99:
                     null_data = null_data + 1
                 else:
                     print "Record Type :", record_type
                 stagger = line[17:19]
-                if stagger == 99:
+                if int(stagger) == 99:
                     null_data = null_data + 1
                 else:
                     print "Stagger :", stagger
                 sic2007 = line[19:24]
-                if sic2007 == 99999:
+                if int(sic2007) == 99999:
                     null_data = null_data + 1
                 else:
                     print "Sic2007 :", sic2007
                 return_type = line[24:25]
-                if return_type == 9:
+                if int(return_type) == 9:
                     null_data = null_data + 1
                 else:
                     print "Return Type :", return_type
                 turnover = line[25:36]
-                if turnover == 99999999999:
+                if int(turnover) == 99999999999:
                     null_data = null_data + 1
                 else:
                     print "Turnover :", turnover
                 expenditure = line[36:44]
-                if expenditure == 99999999:
+                if int(expenditure) == 99999999:
                     null_data = null_data + 1
                 else:
                     print "Expenditure :", expenditure
                 dates = line[44:]
-                if dates == 999999:
+                if int(dates) == 999999:
                     null_data = null_data + 1
                 else:
                     print "Date :", dates
