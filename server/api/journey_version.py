@@ -1,7 +1,14 @@
+from config import db
 from flask import jsonify
-from flask_restful import Resource
+from flask_restful import reqparse, Resource
 from protected_resource import protected_resource
 from data.journey_version import JourneyVersionData
+
+parser = reqparse.RequestParser()
+parser.add_argument('journey_id')
+parser.add_argument('version_number')
+parser.add_argument('validator')
+parser.add_argument('extensions')
 
 
 class JourneyVersion(Resource):
@@ -17,3 +24,17 @@ class JourneyVersion(Resource):
             journey_versions = JourneyVersionData.query
 
         return jsonify(JourneyVersionData.serialize_list(journey_versions.all()))
+
+    @protected_resource('ADD_JOURNEYS')
+    def post(self):
+        request_json = parser.parse_args()
+        journey_version = JourneyVersionData(
+            request_json['journey_id'],
+            request_json['version_number'],
+            request_json['validator'],
+            request_json['extensions']
+        )
+
+        db.session.add(journey_version)
+        db.session.commit()
+        return jsonify(journey_version.serialize())

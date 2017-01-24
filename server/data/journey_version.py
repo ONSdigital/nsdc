@@ -13,9 +13,9 @@ class JourneyVersionData(db.Model, Serializer):
     journey_steps = db.relationship('JourneyStepData', secondary=journey_version_step, lazy='dynamic',
                             backref=db.backref('journey_versions', lazy='dynamic'))
 
-    def __init__(self, version_number, journey_id, validator, extensions):
-        self.version_number = version_number
+    def __init__(self, journey_id, version_number, validator, extensions):
         self.journey_id = journey_id
+        self.version_number = version_number
         self.validator = validator
         self.extensions = extensions
 
