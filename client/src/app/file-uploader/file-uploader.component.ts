@@ -19,8 +19,9 @@ export class FileUploaderComponent implements OnInit {
   uploadedFilename: string;
   uploadErrorMessage: string;
   hasBaseDropZoneOver: boolean = false;
+  extensions: string[];
 
-  @Input() private allowedExtensions: string[] = ['txt', 'xml', 'csv', 'zip'];
+  @Input() private allowedExtensions: string;
   @Input() private validator: RegExp;
   @Input() private options: NgUploaderOptions;
   @Output() private onUploadAnother = new EventEmitter();
@@ -32,6 +33,7 @@ export class FileUploaderComponent implements OnInit {
 
   ngOnInit() {
     this.zone = new NgZone({ enableLongStackTrace: false });
+    this.extensions = this.allowedExtensions && this.allowedExtensions.split(',');
   }
 
   startUpload() {
@@ -49,7 +51,7 @@ export class FileUploaderComponent implements OnInit {
   }
 
   validateFileExtension(filename) {
-    return this.allowedExtensions.indexOf(filename && filename.split('.').pop()) !== -1;
+    return this.extensions && this.extensions.indexOf(filename && filename.split('.').pop()) !== -1;
   }
 
   validateFile(filename) {

@@ -46,6 +46,7 @@
         <tr>
           <th>Version Number</th>
           <th>File Validator</th>
+          <th>Valid Extensions</th>
           <th></th>
         </tr>
         </thead>
@@ -53,6 +54,7 @@
         <tr *ngFor="let version of versions" [ngClass]="{'row-selected': selectedVersion?.id == version.id }" (click)="onSelectJourneyVersion(version)">
           <td>{{ version.version_number }}</td>
           <td>{{ version.validator }}</td>
+          <td>{{ version.extensions }}</td>
           <td class="options options-large">
             <a class="icon-links glyphicon glyphicon-remove right" (click)="onDeleteClicked(version.id)"></a>
             <a class="icon-links glyphicon glyphicon-edit right" [routerLink]="['/journeys', version.id]"></a>
