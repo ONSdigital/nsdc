@@ -3,5 +3,5 @@ export class JourneyVersion {
   version_number: number;
   journey_id: number;
   validator: string;
-  extension: string;
+  extensions: string;
 }
