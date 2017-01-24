@@ -38,3 +38,18 @@ class JourneyVersion(Resource):
         db.session.add(journey_version)
         db.session.commit()
         return jsonify(journey_version.serialize())
+
+    @protected_resource('EDIT_JOURNEYS')
+    def put(self, journey_version_id):
+        journey_version = JourneyVersionData.query.get(journey_version_id)
+        request_json = parser.parse_args()
+
+        if request_json['version_number'] is not None:
+            journey_version.version_number = request_json['version_number']
+        if request_json['validator'] is not None:
+            journey_version.validator = request_json['validator']
+        if request_json['extensions'] is not None:
+            journey_version.extensions = request_json['extensions']
+
+        db.session.commit()
+        return jsonify(journey_version.serialize())

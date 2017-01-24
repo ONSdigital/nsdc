@@ -57,7 +57,7 @@
           <td>{{ version.extensions }}</td>
           <td class="options options-large">
             <a class="icon-links glyphicon glyphicon-remove right" (click)="onDeleteClicked(version.id)"></a>
-            <a class="icon-links glyphicon glyphicon-edit right" [routerLink]="['/journeys', version.id]"></a>
+            <a class="icon-links glyphicon glyphicon-edit right" [routerLink]="['/journeys', selectedJourney.id, 'edit-version', version.id]"></a>
           <td>
         </tr>
         </tbody>
