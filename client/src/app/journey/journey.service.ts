@@ -126,6 +126,16 @@ export class JourneyService {
       .catch(this.handleError);
   }
 
+  deleteJourneyVersion(id: number) {
+    this.headers.set('X-TOKEN', this.loginService.getSessionId());
+    let journeyVersionDeleteUrl = this.config.Server + 'nsdc/v1.0/journeys/versions/' + id;
+    return this.http.delete(journeyVersionDeleteUrl, { headers: this.headers } )
+      .map(res => res.json())
+      .catch(res => {
+        return Observable.throw(res.json());
+      });
+  }
+
   getJourneyVersionById(id: number) {
     this.headers.set('X-TOKEN', this.loginService.getSessionId());
     let journeyVersionUrl = this.config.Server + 'nsdc/v1.0/journeys/versions/' + id;
