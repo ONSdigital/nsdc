@@ -3,20 +3,22 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 @Component({
     selector: 'nsdc-month-picker',
     template: `
-    <select
-      class="form-control"
-      required
-      [disabled]="disabled"
-      (change)="onChange($event.target.value)"
-    >
-      <option
-        *ngFor="let month of months; let index = index"
-        [selected]="selectedMonth===index"
-        [value]="index"
+    <span>
+      <select
+        class="form-control"
+        required
+        [disabled]="disabled"
+        (change)="onChange($event.target.value)"
       >
-        {{month}}
-      </option>
-    </select>`
+        <option
+          *ngFor="let month of months; let index = index"
+          [selected]="selectedMonth===index"
+          [value]="index"
+        >
+          {{month}}
+        </option>
+      </select>
+    </span>`
 })
 
 export class MonthPickerComponent {
@@ -26,18 +28,18 @@ export class MonthPickerComponent {
   @Output() selectedMonthChange = new EventEmitter();
 
   months = [
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
+    'January',
+    'February',
+    'March',
+    'April',
     'May',
-    'Jun',
-    'Jul',
-    'Aug',
-    'Sep',
-    'Oct',
-    'Nov',
-    'Dec'
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December'
   ];
 
   onChange(newSelectedMonth) {

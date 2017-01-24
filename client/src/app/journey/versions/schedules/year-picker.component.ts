@@ -4,14 +4,16 @@ import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
     selector: 'nsdc-year-picker',
 
     template: `
-    <select
-      class="form-control"
-      required
-      [disabled]="disabled"
-      (change)="onChange($event.target.value)"
-    >
-      <option *ngFor="let year of years" [selected]="selectedYear===year">{{year}}</option>   
-    </select>`
+    <span>
+      <select
+        class="form-control"
+        required
+        [disabled]="disabled"
+        (change)="onChange($event.target.value)"
+      >
+        <option *ngFor="let year of years" [selected]="selectedYear===year">{{year}}</option>   
+      </select>
+    </span>`
 })
 
 export class YearPickerComponent implements OnInit {

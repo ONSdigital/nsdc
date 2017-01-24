@@ -19,7 +19,6 @@ export class JourneySchedulesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // get the schedueles for the version
     this.route.params.subscribe(params => {
       this.versionId = Number(params['id']);
       this.scheduleService.getSchedulesByVersion(this.versionId)
@@ -35,7 +34,4 @@ export class JourneySchedulesComponent implements OnInit {
     }));
   }
 
-  onSaveClicked() {
-    
-  }
 }

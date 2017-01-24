@@ -1,19 +1,28 @@
 
 .schedule-list {
   list-style-type: none;
+  padding: 0px;
+}
+
+.date-picker {
+  display: inline-flex;
+  flex: 2 0 auto;
+  justify-content: space-around;
 }
 
 .schedule-list-item {
   display: flex;
-  flex-direction: row;
+  justify-content: center;
 }
 
-.schedule-col {
+.schedule-status {
   margin: 15px 10px;
+  flex: 1 0 auto;
 }
 
-.btn-add-schedule {
-  margin: 0px 10px;
+.schedule-delete {
+  margin: 15px 10px;
+  width: 25px;
 }
 
 .btn-row {
