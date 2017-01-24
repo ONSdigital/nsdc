@@ -1,0 +1,22 @@
+
+.schedule-list {
+  list-style-type: none;
+}
+
+.schedule-list-item {
+  display: flex;
+  flex-direction: row;
+}
+
+.schedule-col {
+  margin: 15px 10px;
+}
+
+.btn-add-schedule {
+  margin: 0px 10px;
+}
+
+.btn-row {
+  display: flex;
+  justify-content: space-between;
+}

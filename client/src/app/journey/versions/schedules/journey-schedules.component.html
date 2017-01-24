@@ -1,0 +1,45 @@
+<div>
+  <h2>
+    Thin VAT (V2) Schedules
+  </h2>
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <ul class="schedule-list">
+        <li *ngFor="let schedule of schedules" class="schedule-list-item">
+            <nsdc-date-picker [disabled]="schedule.status==='uploaded'" [(date)]="schedule.date"></nsdc-date-picker>
+            <span class="schedule-col">{{schedule.status}}</span>
+            <span class="schedule-col">
+              <a
+                *ngIf="schedule.status!=='uploaded'"
+                class="icon-links glyphicon glyphicon-remove right"
+                (click)="onDeleteClicked(schedule.id)"
+              ></a>
+            </span>
+        </li>
+        <li>
+          <span>
+            <button
+              class="btn btn-primary btn-add-schedule"
+              (click)="addScheduleClicked()"
+            >
+              Add new Schedule
+            </button>
+          </span>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3 btn-row">
+      <button class="btn btn-primary" (click)="onSaveClicked()">
+        Save
+      </button>
+      <button class="btn btn-primary" (click)="onSaveClicked()">
+        Reset
+      </button>
+      <button class="btn btn-primary" (click)="onSaveClicked()">
+        Cancel
+      </button>
+    </div>
+  </div>
+</div>
