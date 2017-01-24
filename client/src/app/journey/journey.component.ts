@@ -88,7 +88,9 @@ export class JourneyListComponent implements OnInit {
     );
   }
 
-  onVersionDeleteClicked(versionId) {
+  onVersionDeleteClicked(event, versionId) {
+    event.preventDefault();
+    event.stopPropagation();
     const modalConfirmation = this.modalPopup();
     modalConfirmation.then(dialog => dialog.result).then(
       () => {
