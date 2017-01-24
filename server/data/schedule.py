@@ -9,6 +9,11 @@ class ScheduleData(db.Model, Serializer):
     date = db.Column('date', db.DATE, nullable=False)
     journey_version_id = db.Column(db.Integer, db.ForeignKey('journey_version.journey_version_id'))
 
+    def __init__(self, date, status, journey_version_id):
+        self.date = date
+        self.status = status
+        self.journey_version_id = journey_version_id
+
     def serialize(self):
         return {
             'id': self.id,

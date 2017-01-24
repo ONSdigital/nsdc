@@ -81,12 +81,13 @@ api.add_resource(
 
 api.add_resource(
     JourneyVersionSchedule,
-    base_endpoint + 'journeys/versions/<journey_version_id>/schedules/with-version'
+    base_endpoint + 'journeys/versions/<journey_version_id>/schedules'
 )
 
 api.add_resource(
     Schedule,
-    base_endpoint + 'journeys/versions/<journey_version_id>/schedules'
+    base_endpoint + 'schedules/<schedule_id>',
+    base_endpoint + 'schedules'
 )
 
 api.add_resource(

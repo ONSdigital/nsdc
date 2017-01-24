@@ -24,4 +24,8 @@ export class ScheduleListComponent implements OnInit {
       this.loading = false;
     });
   }
+
+  onDeleteClicked(id) {
+    console.log('delete', id);
+  }
 }

@@ -1,4 +1,4 @@
-from flask import jsonify
+from flask import jsonify, request
 from protected_resource import protected_resource
 from flask_restful import Resource
 from data.journey_version import JourneyVersionData
@@ -10,6 +10,13 @@ class JourneyVersionSchedule(Resource):
 
     @protected_resource('VIEW_JOURNEYS')
     def get(self, journey_version_id):
+        if request.args and request.args['with-version'] == 'true':
+            return self.get_with_version(journey_version_id)
+        schedules = ScheduleData.query.filter(journey_version_id == ScheduleData.journey_version_id)
+        return jsonify(ScheduleData.serialize_list(schedules))
+
+
+    def get_with_version(self, journey_version_id):
         journey_version = JourneyVersionData.query.get(journey_version_id)
         journey_version_schedule = ScheduleData.query.filter(journey_version_id == ScheduleData.journey_version_id)\
             .filter(ScheduleData.status == 'pending').order_by(ScheduleData.date.asc()).first()

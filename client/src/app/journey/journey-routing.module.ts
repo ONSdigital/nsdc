@@ -7,11 +7,12 @@ import { EditJourneyComponent } from './edit/edit-journey.component';
 import { EditJourneyResolver } from './edit/edit-journey.resolver';
 import { JourneyStepsComponent } from './versions/steps/journey-steps.component';
 import { JourneySchedulesComponent } from './versions/schedules/journey-schedules.component';
-import { JourneyStepsComponent } from './versions/steps/journey.steps.component';
 import { AddJourneyVersionComponent } from './versions/add/add-journey-version.component';
 import { EditJourneyVersionComponent } from './versions/edit/edit-journey-version.component';
 import { AddJourneyVersionResolver } from './versions/add/add-journey-version.resolver';
 import { EditJourneyVersionResolver } from './versions/edit/edit-journey-version.resolver';
+import { AddJourneyScheduleComponent } from './versions/schedules/add-journey-schedule.component';
+import { EditJourneyScheduleComponent } from './versions/schedules/edit-journey-schedule.component';
 
 const routes: Routes = [
   {
@@ -74,6 +75,22 @@ const routes: Routes = [
   },
   {
     canActivate: [UserPermissionsGuard],
+    path: 'versions/:id/schedules/add',
+    component: AddJourneyScheduleComponent,
+    data: {
+      permission: 'EDIT_JOURNEYS'
+    }
+  },
+  {
+    canActivate: [UserPermissionsGuard],
+    path: 'versions/:id/schedules/:scheduleId',
+    component: EditJourneyScheduleComponent,
+    data: {
+      permission: 'EDIT_JOURNEYS'
+    }
+  },
+  {
+    canActivate: [UserPermissionsGuard],
     path: '',
     component: JourneyListComponent,
     data: {
@@ -95,5 +112,7 @@ export const routedComponents = [
   JourneySchedulesComponent,
   JourneyStepsComponent,
   AddJourneyVersionComponent,
-  EditJourneyVersionComponent
+  EditJourneyVersionComponent,
+  AddJourneyScheduleComponent,
+  EditJourneyScheduleComponent
 ];

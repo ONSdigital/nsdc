@@ -11,9 +11,7 @@ import { AddJourneyVersionResolver } from './versions/add/add-journey-version.re
 import { EditJourneyVersionResolver } from './versions/edit/edit-journey-version.resolver';
 import { DualListModule } from '../dual-list/dual-list.module';
 import { ScheduleModule } from '../schedule/schedule.module';
-import { MonthPickerComponent } from './versions/schedules/month-picker.component';
-import { YearPickerComponent } from './versions/schedules/year-picker.component';
-import { DatePickerComponent } from './versions/schedules/date-picker.component';
+import { DatePickerModule } from '../date-picker';
 
 @NgModule({
   imports: [
@@ -24,13 +22,11 @@ import { DatePickerComponent } from './versions/schedules/date-picker.component'
     ScheduleModule,
     ReactiveFormsModule,
     ModalModule.forRoot(),
-    BootstrapModalModule
+    BootstrapModalModule,
+    DatePickerModule
   ],
   declarations: [
-    routedComponents,
-    MonthPickerComponent,
-    YearPickerComponent,
-    DatePickerComponent
+    routedComponents
   ],
   providers: [
     JourneyService,

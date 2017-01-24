@@ -2,7 +2,6 @@ import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 
 @Component({
     selector: 'nsdc-year-picker',
-
     template: `
     <span>
       <select

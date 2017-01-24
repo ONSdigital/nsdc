@@ -11,7 +11,6 @@ export class DatePickerComponent {
 
   @Input('date')
   set dateString(value: string) {
-    console.log(value);
     this.date = new Date(value);
     this.dateChange.emit(this.date.toUTCString());
   };

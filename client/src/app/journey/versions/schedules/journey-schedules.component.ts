@@ -21,17 +21,10 @@ export class JourneySchedulesComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.versionId = Number(params['id']);
-      this.scheduleService.getSchedulesByVersion(this.versionId)
-      .subscribe(schedules => this.schedules = schedules);
     });
   }
 
   addScheduleClicked() {
-    this.schedules.push(new Schedule({
-      journey_version_id: this.versionId,
-      status: 'pending',
-      date: new Date().toUTCString()
-    }));
   }
 
 }

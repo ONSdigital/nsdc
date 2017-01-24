@@ -27,7 +27,7 @@ export class ScheduleService {
   getNextValidScheduleByVersion(versionId: number): Observable<JourneyVersionSchedule> {
     this.headers.set('X-TOKEN', this.loginService.getSessionId());
     let schedulesUrl = this.config.Server +
-      `nsdc/v1.0/journeys/versions/${versionId}/schedules/with-version`;
+      `nsdc/v1.0/journeys/versions/${versionId}/schedules?with-version=true`;
     return this.http.get(schedulesUrl, {headers: this.headers})
     .map(res => res.json() as JourneyVersionSchedule);
   }
@@ -37,6 +37,20 @@ export class ScheduleService {
     let scheduleUrl = this.config.Server +
       'nsdc/v1.0/schedules/' + id;
     return this.http.get(scheduleUrl, {headers: this.headers})
+    .map(res => res.json());
+  }
+
+  addSchedule(schedule: Schedule) {
+    this.headers.set('X-TOKEN', this.loginService.getSessionId());
+    let scheduleAddUrl = this.config.Server + 'nsdc/v1.0/schedules';
+    return this.http.post(scheduleAddUrl, JSON.stringify(schedule), { headers: this.headers } )
+    .map(res => res.json());
+  }
+
+  updateSchedule(schedule: Schedule) {
+    this.headers.set('X-TOKEN', this.loginService.getSessionId());
+    let scheduleUpdateUrl = this.config.Server + 'nsdc/v1.0/schedules/' + schedule.id;
+    return this.http.put(scheduleUpdateUrl, JSON.stringify(schedule), { headers: this.headers } )
     .map(res => res.json());
   }
 

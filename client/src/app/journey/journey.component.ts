@@ -83,8 +83,28 @@ export class JourneyListComponent implements OnInit {
             this.journeyService.getJourneys().then(journeys => this.journeys = journeys);
           });
       },
+      () => {}
+    );
+  }
+
+  onDeleteVersionClicked(journeyVersionId) {
+    const modalConfirmation = this.modal.confirm()
+      .size('sm')
+      .isBlocking(false)
+      .showClose(true)
+      .keyboard(27)
+      .title('Confirm')
+      .body('Are you sure you want to delete this journey version?')
+      .open();
+
+    modalConfirmation.then(dialog => dialog.result).then(
       () => {
-      }
+        this.journeyService.deleteJourney(journeyVersionId)
+          .subscribe(() => {
+            this.journeyService.getJourneys().then(journeys => this.journeys = journeys);
+          });
+      },
+      () => {}
     );
   }
 

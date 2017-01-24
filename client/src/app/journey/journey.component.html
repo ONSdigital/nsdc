@@ -76,6 +76,9 @@
           </table>
       </div>
       <div class="col-xs-6">
+        <span class="h3">Schedules</span>
+        <a [routerLink]="['/journeys/versions/', selectedVersion.id, 'schedules']">Edit</a>
+        <a [routerLink]="['/journeys/versions/', selectedVersion.id, 'schedules', 'add']">Add</a>
         <nsdc-schedule-list
           [versionId]="selectedVersion.id"
         >

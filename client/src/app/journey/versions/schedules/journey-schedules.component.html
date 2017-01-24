@@ -2,46 +2,12 @@
   <h2>
     Thin VAT (V2) Schedules
   </h2>
-  <div class="row">
-    <div class="col-md-6 ">
-      <ul class="schedule-list">
-        <li *ngFor="let schedule of schedules" class="schedule-list-item">
-            <nsdc-date-picker
-              [disabled]="schedule.status==='uploaded'"
-              [(date)]="schedule.date"
-              class="date-picker"
-            ></nsdc-date-picker>
-            <span class="schedule-status">{{schedule.status}}</span>
-            <span class="schedule-delete">
-              <a
-                *ngIf="schedule.status!=='uploaded'"
-                class="icon-links glyphicon glyphicon-remove right"
-                (click)="onDeleteClicked(index)"
-              ></a>
-            </span>
-        </li>
-        <li class="schedule-list-item">
-          <button
-            class="btn btn-primary btn-add-schedule"
-            (click)="addScheduleClicked()"
-          >
-            Add new Schedule
-          </button>
-        </li>
-      </ul>
-    </div>
+  <div class="manage">
+    <a
+      class="btn btn-primary right"
+      [routerLink]="['/journeys/versions', versionId, 'schedules', 'add']"
+    >Add Schedule</a>
+    <div class="clear"></div>
   </div>
-  <div class="row">
-    <div class="col-md-3">
-      <button class="btn btn-primary" (click)="onSaveClicked()">
-        Save
-      </button>
-      <button class="btn btn-primary" (click)="onSaveClicked()">
-        Reset
-      </button>
-      <button class="btn btn-primary" (click)="onSaveClicked()">
-        Cancel
-      </button>
-    </div>
-  </div>
+  <nsdc-schedule-list [versionId]="versionId"></nsdc-schedule-list>
 </div>
