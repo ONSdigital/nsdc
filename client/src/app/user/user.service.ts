@@ -28,13 +28,12 @@ export class UserService {
     });
   }
 
-  getUsers(showInactive = false) {
+  getUsersByStatus(status: string) {
     this.headers.set('X-TOKEN', this.loginService.getSessionId());
-    let userListUrl = this.config.Server + 'nsdc/v1.0/users' + `?showInactive=${showInactive}`;
-    return this.http.get(userListUrl, { headers: this.headers})
-    .toPromise()
-    .then(response => response.json() as User[])
-    .catch(this.handleError);
+    let userUrl = this.config.Server + 'nsdc/v1.0/users/status/' + status;
+    return this.http.get(userUrl, { headers: this.headers })
+      .toPromise().then(response => response.json() as User[])
+      .catch(this.handleError);
   }
 
   getUserById(id: number) {

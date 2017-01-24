@@ -9,6 +9,10 @@
       Add User
     </button>
   </div>
+  <select class="form-control user-status" (change)="onStatusChange($event.target.value)">
+    <option value="active">active</option>
+    <option value="inactive">inactive</option>
+  </select>
   <table *ngIf="!loading" class="table table-hover">
     <thead>
       <tr>
