@@ -1,4 +1,4 @@
-<table *ngIf="!loading" class="table table-hover">
+<table *ngIf="!loading && schedules.length" class="table table-hover">
   <thead>
     <tr>
       <th>Date</th>
@@ -25,4 +25,7 @@
     </tr>
   </tbody>
 </table>
+<div *ngIf="!loading && !schedules.length">
+  You do not have any schedules for this journey version.
+</div>
 <loading *ngIf="loading"></loading>

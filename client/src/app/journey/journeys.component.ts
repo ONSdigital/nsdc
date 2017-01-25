@@ -19,48 +19,41 @@ export class JourneyListComponent implements OnInit {
   public selectedJourney: Journey;
   public selectedVersion: JourneyVersion;
   loading = false;
+  versionsLoading = false;
   showSteps = false;
 
-  constructor(private http: Http,
-              private journeyService: JourneyService,
-              overlay: Overlay,
-              vcRef: ViewContainerRef,
-              public modal: Modal) {
+  constructor(
+    private http: Http,
+    private journeyService: JourneyService,
+    overlay: Overlay,
+    vcRef: ViewContainerRef,
+    public modal: Modal
+  ) {
     overlay.defaultViewContainer = vcRef;
   }
 
   ngOnInit() {
     this.loading = true;
-    Promise.all([
-      this.journeyService.getJourneys().then(journeys => this.journeys = journeys)
-    ])
-      .then(() => {
-        this.loading = false;
-      });
+    this.journeyService.getJourneys()
+    .then(journeys => this.journeys = journeys)
+    .then(() => {
+      this.loading = false;
+    });
   }
 
   onSelectJourney(journey) {
     this.resetData();
-    this.loading = true;
+    this.versionsLoading = true;
     this.selectedJourney = journey;
-    Promise.all([
-      this.journeyService.getJourneyVersions(journey.id).then(versions => this.versions = versions)
-    ])
-      .then(() => {
-        this.loading = false;
-      });
+    this.journeyService.getJourneyVersions(journey.id)
+    .then(versions => this.versions = versions)
+    .then(() => {
+      this.versionsLoading = false;
+    });
   }
 
   onSelectJourneyVersion(journeyVersion) {
-    this.loading = true;
     this.selectedVersion = journeyVersion;
-    Promise.all([
-      this.journeyService.getStepsByJourneyVersion(journeyVersion.id).then(steps => this.steps = steps)
-    ])
-      .then(() => {
-        this.loading = false;
-        this.showSteps = true;
-      });
   }
 
   modalPopup() {
@@ -94,12 +87,12 @@ export class JourneyListComponent implements OnInit {
     modalConfirmation.then(dialog => dialog.result).then(
       () => {
         this.journeyService.deleteJourneyVersion(versionId)
-          .subscribe(() => {
-            this.journeyService.getJourneyVersions(this.selectedJourney.id).then(versions => this.versions = versions);
-          });
+        .subscribe(() => {
+          this.journeyService.getJourneyVersions(this.selectedJourney.id)
+          .then(versions => this.versions = versions);
+        });
       },
-      () => {
-      }
+      () => {}
     );
   }
 

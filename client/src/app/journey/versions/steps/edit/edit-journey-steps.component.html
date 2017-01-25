@@ -1,0 +1,28 @@
+<div class="col-md-12" *ngIf="journey">
+  <h3>
+    {{journey.name}}
+  </h3>
+</div>
+<div class="col-md-12" *ngIf="allSteps && selectedSteps">
+  <div class="dual-list-header-row">
+    <h5 class="dual-list-header">Other Steps</h5>
+    <h5 class="dual-list-header">Current Steps</h5>
+  </div>
+</div>
+<div class="col-md-12" *ngIf="allSteps && selectedSteps">
+  <dual-list
+    [sort]="keepSorted"
+    [source]="allSteps"
+    [key]="key"
+    [display]="display"
+    [(destination)]="selectedSteps"
+    height="265px"
+  >
+  </dual-list>
+</div>
+<div class="col-md-12" *ngIf="allSteps && selectedSteps">
+  <div class="btn-row">
+    <button class="btn btn-primary" (click)="saveUpdatedJourneyVersionSteps()">Save</button>
+    <button class="btn btn-danger" (click)="cancel()">Cancel</button>
+  </div>
+</div>

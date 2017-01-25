@@ -89,9 +89,7 @@ export class JourneyService {
     this.headers.set('X-TOKEN', this.loginService.getSessionId());
     let stepsUrl = this.config.Server + 'nsdc/v1.0/journeys/versions/' + journeyVersionId + '/steps';
     return this.http.get(stepsUrl, { headers: this.headers })
-    .toPromise()
-    .then(response => response.json() as JourneyStep[])
-    .catch(this.handleError);
+    .map(response => response.json() as JourneyStep[]);
   }
 
   addJourneyVersion(journeyVersion: JourneyVersion) {

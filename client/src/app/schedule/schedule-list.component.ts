@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { ScheduleService } from './schedule.service';
 import { Schedule } from './schedule';
 
@@ -6,9 +6,9 @@ import { Schedule } from './schedule';
   selector: 'nsdc-schedule-list',
   templateUrl: 'schedule-list.component.html'
 })
-export class ScheduleListComponent implements OnInit {
+export class ScheduleListComponent implements OnInit, OnChanges {
 
-  schedules: Schedule[];
+  schedules: Schedule[] = [];
   @Input() versionId: number;
   loading = false;
 
@@ -17,8 +17,19 @@ export class ScheduleListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    if (this.versionId) {
+      this.getSchedules(this.versionId);
+    }
+  }
+
+  ngOnChanges(changes) {
+    const newVersionId = changes.versionId.currentValue;
+    this.getSchedules(newVersionId);
+  }
+
+  getSchedules(versionId) {
     this.loading = true;
-    this.scheduleService.getSchedulesByVersion(this.versionId)
+    this.scheduleService.getSchedulesByVersion(versionId)
     .subscribe(schedules => {
       this.schedules = schedules;
       this.loading = false;

@@ -1,40 +1,40 @@
 <div class="container">
-    <h2>Journey</h2>
-    <br>
-    <form [formGroup]="journeyForm" (ngSubmit)="onSubmit()">
-        <div class="form-group">
-            <label>Supplier:</label>
-            <select class="form-control" #refName formControlName="supplier_id">
-                <option style="display:block" value="null">Choose an option</option>
-                <option *ngFor="let supplier of suppliers" [value]="supplier.id">{{ supplier.name }} </option>
-            </select>
-            <div
-                    *ngIf="journeyForm.controls['supplier_id'].hasError('required') && journeyForm.controls['supplier_id'].touched"
-                    class="alert alert-danger"
-            >
-                Please enter a supplier.
-            </div>
-        </div>
-        <div class="form-group">
-            <label>Name:</label>
-            <input type="text" #refName class="form-control" formControlName="name" placeholder="Journey name">
-            <div *ngIf="journeyForm.controls['name'].hasError('required') && submitAttempt" class="alert alert-danger">
-                Please enter a name.
-            </div>
-            <div *ngIf="journeyForm.controls['name'].hasError('minlength')" class="alert alert-danger">
-                Name needs to be at least 3 characters long.
-            </div>
-            <div *ngIf="journeyForm.controls['name'].hasError('maxlength')" class="alert alert-danger">
-                Name cannot exceed 30 characters.
-            </div>
-        </div>
-        <div class="form-group">
-            <label>Description:</label>
-            <input type="text" #refName class="form-control" formControlName="description" placeholder="Description">
-            <div *ngIf="journeyForm.controls['description'].hasError('required') && submitAttempt" class="alert alert-danger">
-                Please enter a Description.
-            </div>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+  <h2>Journey</h2>
+  <br>
+  <form [formGroup]="journeyForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label>Supplier:</label>
+      <select class="form-control" #refName formControlName="supplier_id">
+        <option style="display:block" value="null">Choose an option</option>
+        <option *ngFor="let supplier of suppliers" [value]="supplier.id">{{ supplier.name }} </option>
+      </select>
+      <div
+        *ngIf="journeyForm.controls['supplier_id'].hasError('required') && journeyForm.controls['supplier_id'].touched"
+        class="alert alert-danger"
+      >
+        Please enter a supplier.
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Name:</label>
+      <input type="text" #refName class="form-control" formControlName="name" placeholder="Journey name">
+      <div *ngIf="journeyForm.controls['name'].hasError('required') && submitAttempt" class="alert alert-danger">
+        Please enter a name.
+      </div>
+      <div *ngIf="journeyForm.controls['name'].hasError('minlength')" class="alert alert-danger">
+        Name needs to be at least 3 characters long.
+      </div>
+      <div *ngIf="journeyForm.controls['name'].hasError('maxlength')" class="alert alert-danger">
+        Name cannot exceed 30 characters.
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Description:</label>
+      <input type="text" #refName class="form-control" formControlName="description" placeholder="Description">
+      <div *ngIf="journeyForm.controls['description'].hasError('required') && submitAttempt" class="alert alert-danger">
+        Please enter a Description.
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
 </div>
