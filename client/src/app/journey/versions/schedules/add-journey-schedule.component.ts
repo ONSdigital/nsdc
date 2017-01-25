@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { Schedule } from '../../../schedule/schedule';
-import { ScheduleService } from '../../../schedule/schedule.service';
+import { Schedule, ScheduleService } from '../../../schedule';
 
 @Component({
   selector: 'nsdc-add-journey-schedule',

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
-import { JourneyService } from '../journey.service';
-import { Journey } from '../journey';
+import { JourneyService } from './journey.service';
+import { Journey } from './journey';
 
 @Injectable()
 export class EditJourneyResolver implements Resolve<Journey> {

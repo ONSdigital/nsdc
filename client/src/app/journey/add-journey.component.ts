@@ -1,16 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Journey } from '../journey';
-import { JourneyService } from '../journey.service';
-import { Supplier } from '../../supplier/supplier';
-import { SupplierService } from '../../supplier/supplier.service';
+import { Router } from '@angular/router';
+import { Journey } from './journey';
+import { JourneyService } from './journey.service';
+import { Supplier, SupplierService } from '../supplier';
 
 @Component({
-  selector: 'edit-journey',
-  templateUrl: '../journey.component.html'
+  selector: 'add-journey',
+  templateUrl: 'journey.component.html'
 })
-export class EditJourneyComponent implements OnInit {
+export class AddJourneyComponent implements OnInit {
 
   journeyForm: FormGroup;
   journey: Journey;
@@ -19,10 +18,9 @@ export class EditJourneyComponent implements OnInit {
   submitFailed = false;
 
   constructor(private _formBuilder: FormBuilder,
-              private journeyService: JourneyService,
               private supplierService: SupplierService,
-              private router: Router,
-              private route: ActivatedRoute) {
+              private journeyService: JourneyService,
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -31,10 +29,7 @@ export class EditJourneyComponent implements OnInit {
       description: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
       supplier_id: [null, [Validators.required, Validators.minLength(1), Validators.maxLength(30)]]
     });
-    this.route.data.subscribe(data => {
-      this.journey = data['journey'];
-      this.journeyForm.patchValue(this.journey);
-    });
+    this.journey = new Journey();
     this.supplierService.getSuppliers().then(suppliers => this.suppliers = suppliers);
   }
 
@@ -42,7 +37,7 @@ export class EditJourneyComponent implements OnInit {
     this.journey.name = this.journeyForm.controls['name'].value;
     this.journey.description = this.journeyForm.controls['description'].value;
     this.journey.supplier_id = this.journeyForm.controls['supplier_id'].value;
-    this.journeyService.updateJourney(this.journey)
+    this.journeyService.addJourney(this.journey)
       .subscribe(
         () => {
           this.submitPending = false;

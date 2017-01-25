@@ -1,12 +1,11 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
-import { ScheduleService } from './schedule.service';
-import { Schedule } from './schedule';
+import { Schedule, ScheduleService } from '../../../schedule';
 
 @Component({
-  selector: 'nsdc-schedule-list',
-  templateUrl: 'schedule-list.component.html'
+  selector: 'nsdc-journey-schedules',
+  templateUrl: 'journey-schedules.component.html'
 })
-export class ScheduleListComponent implements OnInit, OnChanges {
+export class JourneySchedulesComponent implements OnInit, OnChanges {
 
   schedules: Schedule[] = [];
   @Input() versionId: number;

@@ -6,14 +6,15 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ModalModule } from 'angular2-modal';
 import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
 import { JourneyService } from './journey.service';
-import { EditJourneyResolver } from './edit/edit-journey.resolver';
+import { EditJourneyResolver } from './edit-journey.resolver';
 import { AddJourneyVersionResolver } from './versions/add/add-journey-version.resolver';
 import { EditJourneyVersionResolver } from './versions/edit/edit-journey-version.resolver';
 import { DualListModule } from '../dual-list/dual-list.module';
-import { ScheduleModule } from '../schedule/schedule.module';
 import { DatePickerModule } from '../date-picker';
 import { JourneyStepsComponent } from './versions/steps/journey-steps.component';
-import { SupplierService } from '../supplier/supplier.service';
+import { JourneySchedulesComponent } from './versions/schedules/journey-schedules.component';
+import { SupplierService } from '../supplier';
+import { ScheduleService } from '../schedule';
 
 @NgModule({
   imports: [
@@ -21,7 +22,6 @@ import { SupplierService } from '../supplier/supplier.service';
     LoadingModule,
     DualListModule,
     CommonModule,
-    ScheduleModule,
     ReactiveFormsModule,
     ModalModule.forRoot(),
     BootstrapModalModule,
@@ -29,11 +29,13 @@ import { SupplierService } from '../supplier/supplier.service';
   ],
   declarations: [
     routedComponents,
-    JourneyStepsComponent
+    JourneyStepsComponent,
+    JourneySchedulesComponent
   ],
   providers: [
     JourneyService,
     SupplierService,
+    ScheduleService,
     EditJourneyResolver,
     AddJourneyVersionResolver,
     EditJourneyVersionResolver
