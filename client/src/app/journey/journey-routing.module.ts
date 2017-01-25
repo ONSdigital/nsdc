@@ -52,6 +52,14 @@ const routes: Routes = [
   },
   {
     canActivate: [UserPermissionsGuard],
+    path: 'versions/:id/schedules',
+    component: EditJourneyScheduleComponent,
+    data: {
+      permission: 'EDIT_JOURNEYS'
+    }
+  },
+  {
+    canActivate: [UserPermissionsGuard],
     path: ':id/add-version',
     component: AddJourneyVersionComponent,
     data: {

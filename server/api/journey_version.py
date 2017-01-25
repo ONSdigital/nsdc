@@ -3,6 +3,7 @@ from flask import jsonify
 from flask_restful import reqparse, Resource
 from protected_resource import protected_resource
 from data.journey_version import JourneyVersionData
+from data.role import RoleData
 
 parser = reqparse.RequestParser()
 parser.add_argument('journey_id')

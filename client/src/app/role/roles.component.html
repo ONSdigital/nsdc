@@ -27,9 +27,14 @@
             Edit
           </button>
           <button
-            class="btn btn-info btn-extra right "
-            [routerLink]="['/roles/' + role.id + '/permissions']">
+                class="btn btn-info btn-extra right "
+                [routerLink]="['/roles/' + role.id + '/permissions']">
             Permissions
+          </button>
+          <button
+                  class="btn btn-warning btn-extra right "
+                  [routerLink]="['/roles/' + role.id + '/journey-versions']">
+            Journey Versions
           </button>
         <td>
       </tr>

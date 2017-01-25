@@ -1,0 +1,21 @@
+<div>
+    <a [routerLink]="['/roles']">Roles</a> >
+    {{ role.name }}
+</div>
+
+<div class="dashboard-tag">
+    Please use the following to associate a Role to Journey Versions.
+</div>
+
+<div class="col-md-12"
+     *ngIf="allRoleJourneyVersions">
+    <dual-list
+            [sort]="keepSorted"
+            [source]="allRoleJourneyVersions"
+            [key]="key"
+            [display]="display"
+            [(destination)]="selectedRoleJourneyVersions"
+            height="265px"
+    >
+    </dual-list>
+</div>

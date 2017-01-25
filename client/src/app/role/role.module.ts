@@ -7,6 +7,7 @@ import { ModalModule } from 'angular2-modal';
 import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
 import { RoleService } from './role.service';
 import { UserService } from '../user/user.service';
+import { JourneyService } from '../journey/journey.service';
 import { PermissionService } from '../permission/permission.service';
 import { DualListModule } from '../dual-list/dual-list.module';
 import { EditRoleResolver } from './edit/edit-role.resolver';
@@ -27,6 +28,7 @@ import { EditRoleResolver } from './edit/edit-role.resolver';
   providers: [
     UserService,
     RoleService,
+    JourneyService,
     PermissionService,
     EditRoleResolver
   ]

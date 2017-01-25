@@ -12,7 +12,6 @@ import { Permission } from '../../permission/permission';
   styleUrls: ['role-permissions.component.css']
 })
 export class RolePermissionsComponent implements OnInit {
-
   role: Role;
   allPermissions: Permission[];
   originalPermissionIds: number[];
@@ -62,7 +61,6 @@ export class RolePermissionsComponent implements OnInit {
       error => {
         this.submitPending = false;
         this.submitFailed = true;
-        console.log(error);
       }
     );
   }

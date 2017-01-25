@@ -7,10 +7,10 @@ import { Overlay } from 'angular2-modal';
 import { Modal } from 'angular2-modal/plugins/bootstrap';
 
 @Component({
-  selector: 'role-list',
-  templateUrl : './role-list.component.html'
+  selector: 'roles',
+  templateUrl : 'roles.component.html'
 })
-export class RoleListComponent implements OnInit {
+export class RoleComponent implements OnInit {
 
   public roles: Role[];
   loading = false;
