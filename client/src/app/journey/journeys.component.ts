@@ -9,7 +9,7 @@ import { Http } from '@angular/http';
 
 @Component({
   selector: 'journey-list',
-  templateUrl: './journey.component.html'
+  templateUrl: 'journeys.component.html'
 })
 export class JourneyListComponent implements OnInit {
 
@@ -79,27 +79,6 @@ export class JourneyListComponent implements OnInit {
     modalConfirmation.then(dialog => dialog.result).then(
       () => {
         this.journeyService.deleteJourney(journeyId)
-          .subscribe(() => {
-            this.journeyService.getJourneys().then(journeys => this.journeys = journeys);
-          });
-      },
-      () => {}
-    );
-  }
-
-  onDeleteVersionClicked(journeyVersionId) {
-    const modalConfirmation = this.modal.confirm()
-      .size('sm')
-      .isBlocking(false)
-      .showClose(true)
-      .keyboard(27)
-      .title('Confirm')
-      .body('Are you sure you want to delete this journey version?')
-      .open();
-
-    modalConfirmation.then(dialog => dialog.result).then(
-      () => {
-        this.journeyService.deleteJourney(journeyVersionId)
           .subscribe(() => {
             this.journeyService.getJourneys().then(journeys => this.journeys = journeys);
           });

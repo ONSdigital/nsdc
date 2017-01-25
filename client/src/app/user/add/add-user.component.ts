@@ -9,7 +9,7 @@ import { RoleService } from '../../role/role.service';
 
 @Component({
   selector: 'add-user',
-  templateUrl : './add-user.component.html'
+  templateUrl : '../user.component.html'
 })
 export class AddUserComponent implements OnInit {
   userForm: FormGroup;
