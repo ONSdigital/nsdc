@@ -141,3 +141,8 @@ a.disabled {
   font-size: 24px;
   margin: 20px 0 10px 0;
 }
+
+.user-status {
+  width: 200px;
+  margin: 0 0 35px 0;
+}

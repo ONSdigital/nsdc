@@ -22,5 +22,6 @@ class JourneyVersionSchedule(Resource):
             'schedule_id': journey_version_schedule.id,
             'date': journey_version_schedule.date,
             'name': journey.name,
-            'validator': journey_version.validator
+            'validator': journey_version.validator,
+            'extensions': journey_version.extensions
         })
