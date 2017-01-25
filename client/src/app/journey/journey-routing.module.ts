@@ -5,7 +5,7 @@ import { JourneyListComponent } from './journeys.component';
 import { AddJourneyComponent } from './add-journey.component';
 import { EditJourneyComponent } from './edit-journey.component';
 import { EditJourneyResolver } from './edit-journey.resolver';
-import { EditJourneyStepsComponent } from './versions/steps/edit/edit-journey-steps.component';
+import { EditJourneyStepsComponent } from './versions/steps/edit-journey-steps.component';
 import { AddJourneyVersionComponent } from './versions/add/add-journey-version.component';
 import { EditJourneyVersionComponent } from './versions/edit/edit-journey-version.component';
 import { AddJourneyVersionResolver } from './versions/add/add-journey-version.resolver';
