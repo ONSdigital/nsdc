@@ -24,7 +24,7 @@
       <td>{{ journey.description }}</td>
       <td>{{ journey.validator }}</td>
       <td class="options options-large">
-        <a class="icon-links glyphicon glyphicon-remove right" (click)="onDeleteClicked(journey.id)"></a>
+        <a class="icon-links glyphicon glyphicon-remove right" (click)="onDeleteClicked($event, journey.id)"></a>
         <a class="icon-links glyphicon glyphicon-edit right" [routerLink]="['/journeys', journey.id]"></a>
       <td>
     </tr>

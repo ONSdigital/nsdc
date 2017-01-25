@@ -58,33 +58,35 @@ export class JourneyListComponent implements OnInit {
 
   modalPopup() {
     return this.modal.confirm()
-      .size('sm')
-      .isBlocking(false)
-      .showClose(true)
-      .keyboard(27)
-      .title('Confirm')
-      .body('Are you sure you want to delete this?')
-      .open();
+    .size('sm')
+    .isBlocking(false)
+    .showClose(true)
+    .keyboard(27)
+    .title('Confirm')
+    .body('Are you sure you want to delete this?')
+    .open();
   }
 
-  onDeleteClicked(journeyId) {
+  onDeleteClicked(event, journeyId) {
+    event.stopPropagation();
     const modalConfirmation = this.modalPopup();
-    modalConfirmation.then(dialog => dialog.result).then(
+    modalConfirmation.then(dialog => dialog.result)
+    .then(
       () => {
         this.journeyService.deleteJourney(journeyId)
-          .subscribe(() => {
-            this.journeyService.getJourneys().then(journeys => this.journeys = journeys);
-          });
+        .subscribe(() => {
+          this.journeyService.getJourneys().then(journeys => this.journeys = journeys);
+        });
       },
       () => {}
     );
   }
 
   onVersionDeleteClicked(event, versionId) {
-    event.preventDefault();
     event.stopPropagation();
     const modalConfirmation = this.modalPopup();
-    modalConfirmation.then(dialog => dialog.result).then(
+    modalConfirmation.then(dialog => dialog.result)
+    .then(
       () => {
         this.journeyService.deleteJourneyVersion(versionId)
         .subscribe(() => {
