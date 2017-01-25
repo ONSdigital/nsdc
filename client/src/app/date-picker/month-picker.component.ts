@@ -1,26 +1,9 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
-    selector: 'nsdc-month-picker',
-    template: `
-    <span>
-      <select
-        class="form-control"
-        required
-        [disabled]="disabled"
-        (change)="onChange($event.target.value)"
-      >
-        <option
-          *ngFor="let month of months; let index = index"
-          [selected]="selectedMonth===index"
-          [value]="index"
-        >
-          {{month}}
-        </option>
-      </select>
-    </span>`
+  selector: 'nsdc-month-picker',
+  templateUrl: 'month-picker.component.html'
 })
-
 export class MonthPickerComponent {
 
   @Input() selectedMonth: number;
