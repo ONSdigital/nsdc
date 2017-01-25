@@ -7,7 +7,11 @@ import { ModalModule } from 'angular2-modal';
 import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
 import { JourneyService } from './journey.service';
 import { EditJourneyResolver } from './edit/edit-journey.resolver';
+import { AddJourneyVersionResolver } from './versions/add/add-journey-version.resolver';
+import { EditJourneyVersionResolver } from './versions/edit/edit-journey-version.resolver';
 import { DualListModule } from '../dual-list/dual-list.module';
+import { ScheduleModule } from '../schedule/schedule.module';
+import { DatePickerModule } from '../date-picker';
 
 @NgModule({
   imports: [
@@ -15,16 +19,20 @@ import { DualListModule } from '../dual-list/dual-list.module';
     LoadingModule,
     DualListModule,
     CommonModule,
+    ScheduleModule,
     ReactiveFormsModule,
     ModalModule.forRoot(),
-    BootstrapModalModule
+    BootstrapModalModule,
+    DatePickerModule
   ],
   declarations: [
     routedComponents
   ],
   providers: [
     JourneyService,
-    EditJourneyResolver
+    EditJourneyResolver,
+    AddJourneyVersionResolver,
+    EditJourneyVersionResolver
   ],
 })
 export class JourneyModule { }

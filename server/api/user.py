@@ -17,20 +17,18 @@ parser.add_argument("role_id", type=int)
 class User(Resource):
 
     @protected_resource('VIEW_USERS')
-    def get(self, user_id=None, role_id=None):
+    def get(self, user_id=None, role_id=None, status=None):
         if user_id is not None:
             user = UserData.query.get(user_id)
             return jsonify(user.serialize())
         if role_id is not None:
             users = UserData.query.filter(UserData.role_id == role_id)
             return jsonify(UserData.serialize_list(users))
+        elif status is not None:
+            users = UserData.query.filter(UserData.status == status)
+            return jsonify(UserData.serialize_list(users))
         else:
-            show_inactive = request.args.get('showInactive')
-            if show_inactive == 'true':
-                users = UserData.query
-            else:
-                users = UserData.query.filter(UserData.status == 'active')
-            return jsonify(UserData.serialize_list(users.order_by(UserData.username.asc()).all()))
+            return jsonify(UserData.serialize_list(UserData.query.order_by(UserData.username.asc()).all()))
 
     @protected_resource('ADD_USERS')
     def post(self):

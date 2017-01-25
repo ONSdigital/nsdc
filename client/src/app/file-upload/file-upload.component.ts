@@ -1,108 +1,43 @@
-import { Component, NgZone, OnInit, ElementRef } from '@angular/core';
-import { NgUploaderOptions, NgUploaderService } from 'ngx-uploader';
-import { LoginService } from '../login/login.service';
-
-const URL = 'http://localhost:5000/nsdc/v1.0/upload';
+import { Component, OnInit } from '@angular/core';
+import { UserAccountService } from '../user-account.service';
+import { JourneyService } from '../journey/journey.service';
+import { ScheduleService } from '../schedule/schedule.service';
+import { Observable } from 'rxjs/Observable';
+import { JourneyVersionSchedule } from '../schedule/journey-version-schedule';
 
 @Component({
   selector: 'file-upload',
-  templateUrl: 'file-upload.component.html',
-  styleUrls: ['file-upload.component.css']
+  templateUrl: 'file-upload.component.html'
 })
 export class FileUploadComponent implements OnInit {
 
-  private zone: NgZone;
-  invalidFile = false;
-  uploadError = false;
-  uploadComplete = false;
-  uploading = false;
-  uploadingPercentage: number;
-  uploadingSpeedHumanized: string;
-  uploadedFilename: string;
-  uploadErrorMessage: string;
-  hasBaseDropZoneOver: boolean = false;
-  options: NgUploaderOptions;
-
-  private allowedExtensions: string[] = ['txt', 'xml', 'csv', 'zip'];
+  journeyVersionSchedules: JourneyVersionSchedule[];
+  loading = false;
 
   constructor(
-    public el: ElementRef,
-    public uploader: NgUploaderService,
-    public loginService: LoginService
+    private userAccountService: UserAccountService,
+    private journeyService: JourneyService,
+    private scheduleService: ScheduleService
   ) { }
 
   ngOnInit() {
-    this.zone = new NgZone({ enableLongStackTrace: false });
-    this.options = new NgUploaderOptions({
-      url: URL,
-      multiple: false,
-      autoUpload: false,
-      customHeaders: {
-        'X-TOKEN': this.loginService.getSessionId()
-      }
+    this.loading = true;
+    this.userAccountService.getUser()
+    .mergeMap(user => {
+      return this.journeyService.getVersionsByRole(user.role.id);
+    })
+    .mergeMap(journeyVersions => {
+      const journeyVersionScheduleRequests = journeyVersions
+      .map(journeyVersion => {
+        return this.scheduleService
+        .getNextValidScheduleByVersion(journeyVersion.id);
+      });
+      return Observable.forkJoin(journeyVersionScheduleRequests)
+      .map(JourneyVersionSchedules => JourneyVersionSchedules.filter(JourneyVersionSchedule => JourneyVersionSchedule !== null));
+    })
+    .subscribe((journeyVersionSchedules: JourneyVersionSchedule[]) => {
+      this.loading = false;
+      this.journeyVersionSchedules = journeyVersionSchedules;
     });
-  }
-
-  startUpload() {
-    // only upload the file that the user can see (Fixes bug with dnd and multiple files)
-    if (this.uploader._queue.length) {
-      const fileToUpload = this.uploader._queue[0];
-      const isInvalidFile = !this.validateFileExtension(fileToUpload.name);
-
-      this.invalidFile = isInvalidFile;
-      if (fileToUpload.uploading || isInvalidFile) {
-        return;
-      }
-
-      this.uploader.uploadFile(fileToUpload);
-    }
-  }
-
-  validateFileExtension(filename) {
-    return this.allowedExtensions.indexOf(filename && filename.split('.').pop()) !== -1;
-  }
-
-  handleUpload(data): void {
-    this.zone.run(() => {
-      if (data.error) {
-        this.uploadError = true;
-        this.uploading = false;
-        this.uploadErrorMessage = 'Upload Failed';
-      } else if (data && data.done) {
-        if (data.status !== 200) {
-          let responseData;
-          try {
-            responseData = JSON.parse(data.response);
-          } catch (e) {
-            responseData = {};
-          }
-          this.uploadErrorMessage = responseData.message || 'Upload Failed';
-          this.uploadError = true;
-          this.uploading = false;
-        } else {
-          this.uploadComplete = true;
-          this.uploading = false;
-          this.uploadedFilename = data.response;
-        }
-      } else {
-        this.uploading = true;
-        this.uploadingPercentage = data.progress.percent;
-        this.uploadingSpeedHumanized = data.progress.speedHumanized;
-      }
-    });
-  }
-
-  fileOverBase(e) {
-    this.hasBaseDropZoneOver = e;
-  }
-
-  uploadAnother() {
-    this.uploader.clearQueue();
-    const fileInputs = this.el.nativeElement.getElementsByClassName('file-input');
-    if (fileInputs && fileInputs.length > 0) {
-      fileInputs[0].value = '';
-    }
-    this.uploadComplete = false;
-    this.uploadError = false;
   }
 }

@@ -1,0 +1,13 @@
+<nsdc-month-picker
+  [disabled]="disabled"
+  class="date-picker-month"
+  [selectedMonth]="date.getMonth()"
+  (selectedMonthChange)="handleMonthChange($event)"
+></nsdc-month-picker>
+<nsdc-year-picker
+  [disabled]="disabled"
+  class="date-picker-year"
+  [selectedYear]="date.getFullYear()"
+  (selectedYearChange)="handleYearChange($event)"
+>
+</nsdc-year-picker>

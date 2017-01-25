@@ -1,0 +1,13 @@
+<div>
+  <h2>
+    Thin VAT (V2) Schedules
+  </h2>
+  <div class="manage">
+    <a
+      class="btn btn-primary right"
+      [routerLink]="['/journeys/versions', versionId, 'schedules', 'add']"
+    >Add Schedule</a>
+    <div class="clear"></div>
+  </div>
+  <nsdc-schedule-list [versionId]="versionId"></nsdc-schedule-list>
+</div>

@@ -1,14 +1,24 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgUploaderModule } from 'ngx-uploader';
+import { LoadingModule } from '../loading/loading.module';
+import { FileUploaderModule } from '../file-uploader/file-uploader.module';
+import { JourneyService } from '../journey/journey.service';
+import { ScheduleService } from '../schedule/schedule.service';
 import { FileUploadRoutingModule, routedComponents } from './file-upload-routing.module';
 
 @NgModule({
   imports: [
+    LoadingModule,
     FileUploadRoutingModule,
-    NgUploaderModule,
+    FileUploaderModule,
     CommonModule
   ],
-  declarations: [routedComponents]
+  declarations: [
+    routedComponents
+  ],
+  providers: [
+    JourneyService,
+    ScheduleService
+  ]
 })
 export class FileUploadModule { }

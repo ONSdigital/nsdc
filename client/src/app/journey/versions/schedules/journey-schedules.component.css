@@ -1,0 +1,31 @@
+
+.schedule-list {
+  list-style-type: none;
+  padding: 0px;
+}
+
+.date-picker {
+  display: inline-flex;
+  flex: 2 0 auto;
+  justify-content: space-around;
+}
+
+.schedule-list-item {
+  display: flex;
+  justify-content: center;
+}
+
+.schedule-status {
+  margin: 15px 10px;
+  flex: 1 0 auto;
+}
+
+.schedule-delete {
+  margin: 15px 10px;
+  width: 25px;
+}
+
+.btn-row {
+  display: flex;
+  justify-content: space-between;
+}

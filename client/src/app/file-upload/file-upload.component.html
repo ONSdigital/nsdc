@@ -1,105 +1,32 @@
-<div class="row">
-  <div class="col-md-12">
-    <h2>File Upload</h2>
-  </div>
-</div>
-<div [hidden]="uploading || uploadComplete || uploadError">
-  <p>
-    Drag and drop a file into the area or browse a file via button.
-  </p>
-  <div class="alert alert-danger" role="alert" *ngIf="invalidFile">
-    <span class="glyphicon glyphicon-exclamation-sign"></span>
-    <span class="sr-only">Error:</span>
-    File Extension is Not Allowed.
-  </div>
-  <div class="row">
-    <div class="col-md-12">
-      <div
-        class="dnd-container"
-        ngFileDrop
-        [options]="options"
-        (onUpload)="handleUpload($event)"
-        [ngClass]="{'file-over': hasBaseDropZoneOver}"
-        (onFileOver)="fileOverBase($event)"
-      >
-        <h2 class="dnd">
-          Drag & Drop
-        </h2>
-        <label class="btn btn-danger btn-upload">
-          <input
-            class="hidden file-input"
-            type="file"
-            ngFileSelect
-            [options]="options"
-            (onUpload)="handleUpload($event)"
-          >
-          Browse
-        </label>
-        <div class="upload-filename" *ngIf="uploader._queue.length">
-          File Name: {{uploader._queue[0].name}}
-        </div>
-      </div>
+<div>
+  <h2>File Upload</h2>
+  <br />
+  <div  *ngIf="!loading">
+    <table class="table" *ngIf="journeyVersionSchedules && journeyVersionSchedules.length">
+      <thead>
+      <tr>
+        <th>Journey</th>
+        <th>Version</th>
+        <th>Schedule Date</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let journeyVersionSchedule of journeyVersionSchedules">
+        <td>{{ journeyVersionSchedule.name }}</td>
+        <td>{{ journeyVersionSchedule.version_number }}</td>
+        <td>{{ journeyVersionSchedule.date | date:"MMMM y" }}</td>
+        <td class="options options-large">
+          <button class="btn btn-primary right" [routerLink]="['/upload', journeyVersionSchedule.id]">
+            Upload
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <div *ngIf="!journeyVersionSchedules.length">
+      You do not have any scheduled uploads at the moment.
     </div>
   </div>
-  <div class="row">
-    <div class="col-md-12">
-      <button
-        type="submit"
-        class="btn btn-primary btn-upload-submit"
-        (click)="startUpload()"
-        [disabled]="!uploader._queue.length"
-      >
-        Submit
-      </button>
-    </div>
-  </div>
-</div>
-<div *ngIf="uploading">
-  Uploading
-  <div class="progress">
-    <div
-      class="progress-bar progress-bar-success progress-bar-striped"
-      role="progressbar"
-      [attr.aria-valuenow]="uploadingPercentage"
-      aria-valuemin="0"
-      aria-valuemax ="100"
-      style="min-width: 2em;"
-      [style.width]="uploadingPercentage + '%'"
-    >
-      {{uploadingPercentage}}%
-    </div>
-  </div>
-  {{uploadingSpeedHumanized}}
-</div>
-<div *ngIf="uploadError">
-  <p>
-    Error
-  </p>
-  <p>
-    There was a problem uploading this file.
-  </p>
-  <p>
-    {{uploadErrorMessage}}
-  </p>
-  <div>
-    <button
-      class="btn btn-primary btn-upload-another"
-      (click)="uploadAnother()"
-    >
-      Try Again
-    </button>
-  </div>
-</div>
-<div *ngIf="uploadComplete">
-  <p>File Upload Complete.</p>
-  <p>You can track the file on the audit screen if you have permission or upload another.</p>
-  <p>File name on server: {{uploadedFilename}}</p>
-  <div>
-    <button
-      class="btn btn-primary btn-upload-another"
-      (click)="uploadAnother()"
-    >
-      Upload Another
-    </button>
-  </div>
+  <loading *ngIf="loading"></loading>
 </div>

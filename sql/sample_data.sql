@@ -1,16 +1,14 @@
 
-BEGIN;
-
 INSERT INTO public.role (name, description)
-VALUES 	('Data Director', 'Role with overall corporate responsibility across the data holding. Senior political figure to provide assurance and ultimately resolve any/all reputational issues. Unlikely to have permissions to the data'),
+VALUES 	('Data Director', 'Role with overall corporate responsibility across the data holding. Unlikely to have permissions to the data'),
 	('Data Owner/Supplier', 'Supplier and owner of the data. Both external and internal sources'),
-	('Data Manager', 'Manager responsible for receiving the data from the Data Owner/Supplier. Responsible for ensuring that the ‘correct/relevant’ data journey is applied. Does not carry out the steps involved, but is the manager overseeing. Covers Data lifecycle management.'),
+	('Data Manager', 'Manager responsible for receiving the data from the Data Owner/Supplier. Covers Data lifecycle management.'),
 	('Data User', 'Very general and high level view of anyone or anything that may want to access/have permissions to access data'),
 	('Auditor', 'Audits the data/usage and roles.'),
 	('Output Checker', 'Responsible for checking all outputs. Makes a decision from results if can be made ‘public’, either for general use or as an output.'),
 	('Data Preparation', 'Responsible for Cleaning/Standardising/Applying basic business rules'),
 	('Data Importer', 'Imports the data into reception area. Checks/assesses for Malware.'),
-	('Access Control Manager', 'Agrees and sets role/data and functionality permissions. Responsible for governance process. Works in agreement with Data Manager and Risk Profile Manager to ensure access to data is approved correctly.');
+	('Access Control Manager', 'Agrees and sets role/data and functionality permissions. Responsible for governance process.');
 
 INSERT INTO public.permission (name, description, short_name)
 VALUES ('View Users', 'The user can view a list of the users', 'VIEW_USERS'),
@@ -97,4 +95,3 @@ VALUES ('Upload to Server', 'Upload the file to the server', 'UPLOAD_TO_SERVER')
 INSERT INTO public.journey_version (journey_id, version_number, validator)
 VALUES ((SELECT journey.journey_id FROM journey WHERE journey.name = 'VAT'), 1, 'vat_*');
 
-COMMIT;

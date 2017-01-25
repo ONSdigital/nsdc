@@ -1,0 +1,28 @@
+<table *ngIf="!loading" class="table table-hover">
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Status</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let schedule of schedules">
+      <td>{{schedule.date | date:"MMMM y" }}</td>
+      <td>{{schedule.status}}</td>
+      <td class="options options-large">
+        <template [ngIf]="schedule.status==='pending'">
+          <a
+            class="icon-links glyphicon glyphicon-remove right"
+            (click)="onDeleteClicked(schedule.id)"
+          ></a>
+          <a
+            class="icon-links glyphicon glyphicon-edit right"
+            [routerLink]="['/journeys/versions', versionId, 'schedules', schedule.id]"
+          ></a>
+        </template>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<loading *ngIf="loading"></loading>

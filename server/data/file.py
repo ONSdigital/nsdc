@@ -6,15 +6,15 @@ class FileData(db.Model, Serializer):
     __tablename__ = 'file'
     id = db.Column('file_id', db.Integer, primary_key=True)
     name = db.Column('name', db.String(50), nullable=False, server_default=u'')
-    journey_id = db.Column(db.Integer, db.ForeignKey('journey.journey_id'))
+    schedule_id = db.Column(db.Integer, db.ForeignKey('schedule.schedule_id'))
 
-    def __init__(self, name, journey_id):
+    def __init__(self, name, schedule_id):
         self.name = name
-        self.journey_id = journey_id
+        self.schedule_id = schedule_id
 
     def serialize(self):
         return {
             'id': self.id,
             'name': self.name,
-            'journey_id': self.journey_id
+            'schedule_id': self.schedule_id
         }

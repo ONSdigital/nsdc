@@ -15,7 +15,10 @@ from api.file_journey_audit import FileJourneyAudit
 from api.journey_version_step import JourneyVersionStep
 from api.journey_step import JourneyStep
 from api.supplier import Supplier
+from api.schedule import Schedule
 from api.journey_version import JourneyVersion
+from api.journey_version_role import JourneyVersionRole
+from api.journey_version_schedule import JourneyVersionSchedule
 
 base_endpoint = '/nsdc/v1.0/'
 
@@ -23,7 +26,7 @@ api = Api(app)
 
 api.add_resource(
     User,
-    base_endpoint + 'users',
+    base_endpoint + 'users/status/<status>',
     base_endpoint + 'users/<user_id>',
     base_endpoint + 'users/role/<role_id>',
 )
@@ -39,6 +42,11 @@ api.add_resource(
 api.add_resource(
     RolePermission,
     base_endpoint + 'roles/<role_id>/permissions'
+)
+
+api.add_resource(
+    JourneyVersionRole,
+    base_endpoint + 'journeys/versions/roles/<role_id>'
 )
 
 api.add_resource(
@@ -69,6 +77,17 @@ api.add_resource(
 api.add_resource(
     JourneyVersionStep,
     base_endpoint + 'journeys/versions/<journey_version_id>/updatesteps'
+)
+
+api.add_resource(
+    JourneyVersionSchedule,
+    base_endpoint + 'journeys/versions/<journey_version_id>/schedules'
+)
+
+api.add_resource(
+    Schedule,
+    base_endpoint + 'schedules/<schedule_id>',
+    base_endpoint + 'schedules'
 )
 
 api.add_resource(

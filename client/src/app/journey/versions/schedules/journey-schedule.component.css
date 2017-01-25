@@ -1,0 +1,8 @@
+
+.date-picker {
+  display: inline-flex;
+}
+
+.status {
+  text-transform: capitalize;
+}

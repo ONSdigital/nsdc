@@ -47,6 +47,20 @@ export class JourneyService {
     });
   }
 
+  getVersionsByRole(roleId) {
+    this.headers.set('X-TOKEN', this.loginService.getSessionId());
+    let url = this.config.Server + 'nsdc/v1.0/journeys/versions/roles/' + roleId;
+    return this.http.get(url, { headers: this.headers })
+    .map(response => response.json());
+  }
+
+  getVersionById(id) {
+    this.headers.set('X-TOKEN', this.loginService.getSessionId());
+    let url = this.config.Server + 'nsdc/v1.0/journeys/versions/' + id;
+    return this.http.get(url, { headers: this.headers })
+    .map(response => response.json());
+  }
+
   getJourneyById(id: number) {
     this.headers.set('X-TOKEN', this.loginService.getSessionId());
     let journeyUrl = this.config.Server + 'nsdc/v1.0/journeys/' + id;
@@ -60,10 +74,7 @@ export class JourneyService {
     this.headers.set('X-TOKEN', this.loginService.getSessionId());
     let journeyDeleteUrl = this.config.Server + 'nsdc/v1.0/journeys/' + id;
     return this.http.delete(journeyDeleteUrl, { headers: this.headers } )
-    .map(res => res.json())
-    .catch(res => {
-      return Observable.throw(res.json());
-    });
+    .map(res => res.json());
   }
 
   getSteps() {
@@ -81,6 +92,26 @@ export class JourneyService {
     .toPromise()
     .then(response => response.json() as JourneyStep[])
     .catch(this.handleError);
+  }
+
+  addJourneyVersion(journeyVersion: JourneyVersion) {
+    this.headers.set('X-TOKEN', this.loginService.getSessionId());
+    let journeyVersionUrl = this.config.Server + 'nsdc/v1.0/journeys/versions';
+    return this.http.post(journeyVersionUrl, JSON.stringify(journeyVersion), { headers: this.headers } )
+      .map(res => res.json())
+      .catch(res => {
+        return Observable.throw(res.json());
+      });
+  }
+
+  updateJourneyVersion(journeyVersion: JourneyVersion) {
+    this.headers.set('X-TOKEN', this.loginService.getSessionId());
+    let journeyVersionEditUrl = this.config.Server + 'nsdc/v1.0/journeys/versions/' + journeyVersion.id;
+    return this.http.put(journeyVersionEditUrl, JSON.stringify(journeyVersion), { headers: this.headers } )
+      .map(res => res.json())
+      .catch(res => {
+        return Observable.throw(res.json());
+      });
   }
 
   getJourneyVersions(journeyId) {
@@ -111,6 +142,13 @@ export class JourneyService {
     .catch(res => {
       return Observable.throw(res.json());
     });
+  }
+
+  deleteJourneyVersion(id: number) {
+    this.headers.set('X-TOKEN', this.loginService.getSessionId());
+    let journeyVersionDeleteUrl = this.config.Server + 'nsdc/v1.0/journeys/versions/' + id;
+    return this.http.delete(journeyVersionDeleteUrl, { headers: this.headers } )
+    .map(res => res.json());
   }
 
   private handleError(error: any): Promise<any> {
