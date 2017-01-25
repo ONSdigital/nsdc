@@ -6,7 +6,7 @@ import { SupplierService } from '../supplier.service';
 
 @Component({
   selector: 'add-supplier',
-  templateUrl: 'add-supplier.component.html'
+  templateUrl: '../supplier.component.html'
 })
 export class AddSupplierComponent implements OnInit {
 

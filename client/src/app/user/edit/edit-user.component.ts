@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../user.service';
@@ -9,7 +9,7 @@ import { RoleService } from '../../role/role.service';
 
 @Component({
   selector: 'update-user',
-  templateUrl : './edit-user.component.html'
+  templateUrl : '../user.component.html'
 })
 export class EditUserComponent implements OnInit {
 

@@ -41,5 +41,4 @@ export class DashboardComponent implements OnInit {
           .subscribe(self => this.self = self);
     }
   }
-
 }
