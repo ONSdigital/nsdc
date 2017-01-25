@@ -9,7 +9,7 @@ import { Http } from '@angular/http';
 
 @Component({
   selector: 'journey-list',
-  templateUrl: './journey.component.html'
+  templateUrl: 'journeys.component.html'
 })
 export class JourneyListComponent implements OnInit {
 

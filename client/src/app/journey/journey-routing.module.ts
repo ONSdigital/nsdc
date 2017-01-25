@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { UserPermissionsGuard } from '../user-permissions.guard';
-import { JourneyListComponent } from './journey.component';
+import { JourneyListComponent } from './journeys.component';
 import { AddJourneyComponent } from './add/add-journey.component';
 import { EditJourneyComponent } from './edit/edit-journey.component';
 import { EditJourneyResolver } from './edit/edit-journey.resolver';

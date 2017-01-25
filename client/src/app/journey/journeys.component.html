@@ -1,0 +1,90 @@
+<h2>Journeys</h2>
+<div class="manage">
+  <button
+    class="btn btn-primary right"
+    [routerLink]="['/journeys/add']"
+  >
+    Add Journey
+  </button>
+</div>
+<br />
+<div>
+  <table class="journey-table table table-hover" *ngIf="!loading">
+    <thead>
+    <tr>
+      <th>Journey Name</th>
+      <th>Description</th>
+      <th></th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let journey of journeys" [ngClass]="{'row-selected': selectedJourney?.id == journey.id }" (click)="onSelectJourney(journey)">
+      <td>{{ journey.name }}</td>
+      <td>{{ journey.description }}</td>
+      <td>{{ journey.validator }}</td>
+      <td class="options options-large">
+        <a class="icon-links glyphicon glyphicon-remove right" (click)="onDeleteClicked(journey.id)"></a>
+        <a class="icon-links glyphicon glyphicon-edit right" [routerLink]="['/journeys', journey.id]"></a>
+      <td>
+    </tr>
+    </tbody>
+  </table>
+  <div class="journey-section" *ngIf="!loading && versions">
+    <h3>Versions</h3>
+    <div class="manage">
+      <button
+        class="btn btn-primary right"
+        [routerLink]="['/journeys/', selectedJourney.id, 'add-version']"
+      >
+        Add Version
+      </button>
+    </div>
+    <table class="journey-table table table-hover">
+      <thead>
+      <tr>
+        <th>Version Number</th>
+        <th>File Validator</th>
+        <th>Valid Extensions</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let version of versions" [ngClass]="{'row-selected': selectedVersion?.id == version.id }" (click)="onSelectJourneyVersion(version)">
+        <td>{{ version.version_number }}</td>
+        <td>{{ version.validator }}</td>
+        <td>{{ version.extensions }}</td>
+        <td class="options options-large">
+          <a class="icon-links glyphicon glyphicon-remove right" (click)="onVersionDeleteClicked($event, version.id)"></a>
+          <a class="icon-links glyphicon glyphicon-edit right" [routerLink]="['/journeys', selectedJourney.id, 'edit-version', version.id]"></a>
+        <td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="journey-section" *ngIf="!loading && versions && showSteps">
+    <div class="row">
+      <div class="col-xs-6">
+        <span class="h3">Steps</span>
+        <a [routerLink]="['/journeys/versions/', selectedVersion.id, 'steps']">Edit</a>
+        <table class="journey-table journey-section-table table table-hover">
+            <tbody>
+              <tr *ngFor="let step of steps">
+                <td>{{ step.short_name }}</td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+      <div class="col-xs-6">
+        <span class="h3">Schedules</span>
+        <a [routerLink]="['/journeys/versions/', selectedVersion.id, 'schedules']">Edit</a>
+        <a [routerLink]="['/journeys/versions/', selectedVersion.id, 'schedules', 'add']">Add</a>
+        <nsdc-schedule-list
+          [versionId]="selectedVersion.id"
+        >
+        </nsdc-schedule-list>
+      </div>
+    </div>
+  </div>
+</div>
+<loading *ngIf="loading"></loading>

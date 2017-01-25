@@ -12,6 +12,7 @@ import { EditJourneyVersionResolver } from './versions/edit/edit-journey-version
 import { DualListModule } from '../dual-list/dual-list.module';
 import { ScheduleModule } from '../schedule/schedule.module';
 import { DatePickerModule } from '../date-picker';
+import { SupplierService } from '../supplier/supplier.service';
 
 @NgModule({
   imports: [
@@ -30,6 +31,7 @@ import { DatePickerModule } from '../date-picker';
   ],
   providers: [
     JourneyService,
+    SupplierService,
     EditJourneyResolver,
     AddJourneyVersionResolver,
     EditJourneyVersionResolver
