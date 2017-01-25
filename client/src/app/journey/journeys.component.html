@@ -1,4 +1,12 @@
 <h2>Journey</h2>
+<div class="manage">
+  <button
+    class="btn btn-primary right"
+    [routerLink]="['/journeys/add']"
+  >
+    Add Journey
+  </button>
+</div>
 <br/>
 <div>
   <table class="journey-table table table-hover" *ngIf="!loading">

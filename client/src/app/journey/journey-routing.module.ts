@@ -6,10 +6,10 @@ import { AddJourneyComponent } from './add-journey.component';
 import { EditJourneyComponent } from './edit-journey.component';
 import { EditJourneyResolver } from './edit-journey.resolver';
 import { EditJourneyStepsComponent } from './versions/steps/edit-journey-steps.component';
-import { AddJourneyVersionComponent } from './versions/add/add-journey-version.component';
-import { EditJourneyVersionComponent } from './versions/edit/edit-journey-version.component';
-import { AddJourneyVersionResolver } from './versions/add/add-journey-version.resolver';
-import { EditJourneyVersionResolver } from './versions/edit/edit-journey-version.resolver';
+import { AddJourneyVersionComponent } from './versions/add-journey-version.component';
+import { EditJourneyVersionComponent } from './versions/edit-journey-version.component';
+import { AddJourneyVersionResolver } from './versions/add-journey-version.resolver';
+import { EditJourneyVersionResolver } from './versions/edit-journey-version.resolver';
 import { AddJourneyScheduleComponent } from './versions/schedules/add-journey-schedule.component';
 import { EditJourneyScheduleComponent } from './versions/schedules/edit-journey-schedule.component';
 

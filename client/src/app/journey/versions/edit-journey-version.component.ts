@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Journey } from '../../Journey'
-import { JourneyVersion } from '../journey-version';
-import { JourneyService } from '../../journey.service';
+import { Journey } from '../Journey';
+import { JourneyVersion } from './journey-version';
+import { JourneyService } from '../journey.service';
 
 @Component({
   selector: 'add-journey',
-  templateUrl: 'add-journey-version.component.html'
+  templateUrl: 'journey-version.component.html'
 })
-export class AddJourneyVersionComponent implements OnInit {
+export class EditJourneyVersionComponent implements OnInit {
 
   journey: Journey;
   journeyVersionForm: FormGroup;
@@ -32,6 +32,8 @@ export class AddJourneyVersionComponent implements OnInit {
     this.journeyVersion = new JourneyVersion();
     this.route.data.subscribe(data => {
       this.journey = data['journey'];
+      this.journeyVersion = data['journeyVersion'];
+      this.journeyVersionForm.patchValue(this.journeyVersion);
     });
   }
 
@@ -40,7 +42,7 @@ export class AddJourneyVersionComponent implements OnInit {
     this.journeyVersion.version_number = this.journeyVersionForm.controls['version_number'].value;
     this.journeyVersion.validator = this.journeyVersionForm.controls['validator'].value;
     this.journeyVersion.extensions = this.journeyVersionForm.controls['extensions'].value;
-    this.journeyService.addJourneyVersion(this.journeyVersion)
+    this.journeyService.updateJourneyVersion(this.journeyVersion)
       .subscribe(
         () => {
           this.submitPending = false;
