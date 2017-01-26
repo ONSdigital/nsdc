@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Overlay } from 'angular2-modal';
 import { Modal } from 'angular2-modal/plugins/bootstrap';
 import { Journey } from './journey';
@@ -8,21 +9,23 @@ import { JourneyStep } from './versions/steps/journey-step';
 import { Http } from '@angular/http';
 
 @Component({
-  selector: 'journey-list',
+  selector: 'nsdc-journeys',
   templateUrl: 'journeys.component.html'
 })
-export class JourneyListComponent implements OnInit {
+export class JourneysComponent implements OnInit {
 
   public journeys: Journey[];
   public versions: JourneyVersion[];
   public steps: JourneyStep[];
-  public selectedJourney: Journey;
+  public selectedJourneyId: number;
   public selectedVersion: JourneyVersion;
   loading = false;
   versionsLoading = false;
   showSteps = false;
 
   constructor(
+    private router: Router,
+    private route: ActivatedRoute,
     private http: Http,
     private journeyService: JourneyService,
     overlay: Overlay,
@@ -39,17 +42,22 @@ export class JourneyListComponent implements OnInit {
     .then(() => {
       this.loading = false;
     });
+
+    this.route.params.subscribe(
+      params => console.log(params)
+    );
   }
 
-  onSelectJourney(journey) {
-    this.resetData();
-    this.versionsLoading = true;
-    this.selectedJourney = journey;
-    this.journeyService.getJourneyVersions(journey.id)
-    .then(versions => this.versions = versions)
-    .then(() => {
-      this.versionsLoading = false;
-    });
+  onSelectJourney(journeyId) {
+    this.router.navigate([journeyId]);
+    // this.resetData();
+    // this.versionsLoading = true;
+    // this.selectedJourneyId = journeyId;
+    // this.journeyService.getJourneyVersions(journeyId)
+    // .then(versions => this.versions = versions)
+    // .then(() => {
+    //   this.versionsLoading = false;
+    // });
   }
 
   onSelectJourneyVersion(journeyVersion) {
@@ -90,7 +98,7 @@ export class JourneyListComponent implements OnInit {
       () => {
         this.journeyService.deleteJourneyVersion(versionId)
         .subscribe(() => {
-          this.journeyService.getJourneyVersions(this.selectedJourney.id)
+          this.journeyService.getJourneyVersions(this.selectedJourneyId)
           .then(versions => this.versions = versions);
         });
       },

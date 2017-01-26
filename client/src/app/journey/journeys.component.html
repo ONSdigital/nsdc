@@ -1,4 +1,4 @@
-<h2>Journey</h2>
+<h2>Journeys</h2>
 <div class="manage">
   <button
     class="btn btn-primary right"
@@ -19,13 +19,17 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let journey of journeys" [ngClass]="{'row-selected': selectedJourney?.id == journey.id }" (click)="onSelectJourney(journey)">
+    <tr
+      *ngFor="let journey of journeys"
+      [ngClass]="{'row-selected': selectedJourneyId == journey.id }"
+      (click)="onSelectJourney(journey.id)"
+    >
       <td>{{ journey.name }}</td>
       <td>{{ journey.description }}</td>
       <td>{{ journey.validator }}</td>
       <td class="options options-large">
         <a class="icon-links glyphicon glyphicon-remove right" (click)="onDeleteClicked($event, journey.id)"></a>
-        <a class="icon-links glyphicon glyphicon-edit right" [routerLink]="['/journeys', journey.id]"></a>
+        <a class="icon-links glyphicon glyphicon-edit right" [routerLink]="['/journeys/edit', journey.id]"></a>
       <td>
     </tr>
     </tbody>
@@ -35,7 +39,7 @@
     <div class="manage">
       <button
         class="btn btn-primary right"
-        [routerLink]="['/journeys/', selectedJourney.id, 'add-version']"
+        [routerLink]="['/journeys/', selectedJourneyId, 'add-version']"
       >
         Add Version
       </button>
@@ -56,7 +60,7 @@
         <td>{{ version.extensions }}</td>
         <td class="options options-large">
           <a class="icon-links glyphicon glyphicon-remove right" (click)="onVersionDeleteClicked($event, version.id)"></a>
-          <a class="icon-links glyphicon glyphicon-edit right" [routerLink]="['/journeys', selectedJourney.id, 'edit-version', version.id]"></a>
+          <a class="icon-links glyphicon glyphicon-edit right" [routerLink]="['/journeys', selectedJourneyId, 'edit-version', version.id]"></a>
         <td>
       </tr>
       </tbody>

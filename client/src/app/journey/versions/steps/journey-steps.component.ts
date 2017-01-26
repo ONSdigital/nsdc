@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { JourneyStep } from './journey-step';
 import { JourneyService } from '../../journey.service';
 
@@ -6,7 +6,7 @@ import { JourneyService } from '../../journey.service';
   selector: 'nsdc-journey-steps',
   templateUrl: 'journey-steps.component.html'
 })
-export class JourneyStepsComponent implements OnInit, OnChanges {
+export class JourneyStepsComponent implements OnChanges {
 
   steps: JourneyStep[] = [];
 
@@ -15,12 +15,6 @@ export class JourneyStepsComponent implements OnInit, OnChanges {
   loading = false;
 
   constructor(private journeyService: JourneyService) { }
-
-  ngOnInit() {
-    if (this.versionId) {
-      this.getSteps(this.versionId);
-    }
-  }
 
   ngOnChanges(changes) {
     const newVersionId = changes.versionId.currentValue;

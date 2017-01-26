@@ -15,6 +15,8 @@ import { JourneyStepsComponent } from './versions/steps/journey-steps.component'
 import { JourneySchedulesComponent } from './versions/schedules/journey-schedules.component';
 import { SupplierService } from '../supplier';
 import { ScheduleService } from '../schedule';
+import { ManageJourneyGuard } from './manage/manage-journey.guard';
+import { ManageJourneyVersionGuard } from './manage/manage-journey-version.guard';
 
 @NgModule({
   imports: [
@@ -36,9 +38,14 @@ import { ScheduleService } from '../schedule';
     JourneyService,
     SupplierService,
     ScheduleService,
+    // the guards/resolvers can be moved to xxx-routing.module.ts
+    // after this issue fixed:
+    // https://github.com/angular/angular/issues/12275
     EditJourneyResolver,
     AddJourneyVersionResolver,
-    EditJourneyVersionResolver
+    EditJourneyVersionResolver,
+    ManageJourneyGuard,
+    ManageJourneyVersionGuard
   ],
 })
 export class JourneyModule { }

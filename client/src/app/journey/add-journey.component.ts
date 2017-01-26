@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 import { Journey } from './journey';
 import { JourneyService } from './journey.service';
 import { Supplier, SupplierService } from '../supplier';
@@ -17,11 +17,12 @@ export class AddJourneyComponent implements OnInit {
   submitPending = false;
   submitFailed = false;
 
-  constructor(private _formBuilder: FormBuilder,
-              private supplierService: SupplierService,
-              private journeyService: JourneyService,
-              private router: Router) {
-  }
+  constructor(
+    private _formBuilder: FormBuilder,
+    private supplierService: SupplierService,
+    private location: Location,
+    private journeyService: JourneyService
+  ) { }
 
   ngOnInit() {
     this.journeyForm = this._formBuilder.group({
@@ -38,15 +39,15 @@ export class AddJourneyComponent implements OnInit {
     this.journey.description = this.journeyForm.controls['description'].value;
     this.journey.supplier_id = this.journeyForm.controls['supplier_id'].value;
     this.journeyService.addJourney(this.journey)
-      .subscribe(
-        () => {
-          this.submitPending = false;
-          this.router.navigate(['/journeys']);
-        },
-        error => {
-          this.submitPending = false;
-          this.submitFailed = true;
-        }
-      );
+    .subscribe(
+      () => {
+        this.submitPending = false;
+        this.location.back();
+      },
+      error => {
+        this.submitPending = false;
+        this.submitFailed = true;
+      }
+    );
   }
 }
