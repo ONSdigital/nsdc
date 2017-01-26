@@ -1,13 +1,31 @@
-<div>
-  <h2>
-    Thin VAT (V2) Schedules
-  </h2>
-  <div class="manage">
-    <a
-      class="btn btn-primary right"
-      [routerLink]="['/journeys/versions', versionId, 'schedules', 'add']"
-    >Add Schedule</a>
-    <div class="clear"></div>
-  </div>
-  <nsdc-schedule-list [versionId]="versionId"></nsdc-schedule-list>
+<table *ngIf="!loading && schedules.length" class="table table-hover">
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Status</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let schedule of schedules">
+      <td>{{schedule.date | date:"MMMM y" }}</td>
+      <td>{{schedule.status}}</td>
+      <td class="options options-large">
+        <template [ngIf]="schedule.status==='pending'">
+          <a
+            class="icon-links glyphicon glyphicon-remove right"
+            (click)="onDeleteClicked(schedule.id)"
+          ></a>
+          <a
+            class="icon-links glyphicon glyphicon-edit right"
+            [routerLink]="['/journeys/versions', versionId, 'schedules', schedule.id]"
+          ></a>
+        </template>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<div *ngIf="!loading && !schedules.length">
+  You do not have any schedules for this journey version.
 </div>
+<loading *ngIf="loading"></loading>

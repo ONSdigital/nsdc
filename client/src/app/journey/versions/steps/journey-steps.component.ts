@@ -1,70 +1,38 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { JourneyService } from '../../journey.service';
-import { PermissionService } from '../../permission/permission.service';
-import { UserPermissionsService } from '../../../user-permissions.service';
-import { JourneyVersion } from '../journey-version';
+import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { JourneyStep } from './journey-step';
-import { Permission } from '../../permission/permission';
+import { JourneyService } from '../../journey.service';
 
 @Component({
-  selector: 'journey-steps',
-  templateUrl: 'journey-steps.component.html',
-  styleUrls: ['journey-steps.component.css']
+  selector: 'nsdc-journey-steps',
+  templateUrl: 'journey-steps.component.html'
 })
-export class JourneyStepsComponent implements OnInit {
+export class JourneyStepsComponent implements OnInit, OnChanges {
 
-  version: JourneyVersion;
-  allSteps: JourneyStep[];
-  originalStepIds: number[];
-  selectedSteps: JourneyStep[];
-  keepSorted: boolean = true;
-  key = 'id';
-  display = 'name';
-  submitPending = false;
-  submitFailed = false;
+  steps: JourneyStep[] = [];
 
-  constructor(private route: ActivatedRoute,
-              private router: Router,
-              private journeyService: JourneyService,
-              private userPermissionsService: UserPermissionsService) {
-  }
+  @Input() versionId: number;
+
+  loading = false;
+
+  constructor(private journeyService: JourneyService) { }
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
-      const id = Number.parseInt(params['id']);
-      this.journeyService.getJourneyVersionById(id)
-        .then(version => this.version = version);
-      this.journeyService.getSteps()
-        .then(steps => this.allSteps = steps);
-      this.journeyService.getStepsByJourneyVersion(id)
-        .then(steps => {
-          this.originalStepIds = steps.map(step => step.id);
-          this.selectedSteps = steps;
-        });
+    if (this.versionId) {
+      this.getSteps(this.versionId);
+    }
+  }
+
+  ngOnChanges(changes) {
+    const newVersionId = changes.versionId.currentValue;
+    this.getSteps(newVersionId);
+  }
+
+  getSteps(versionId) {
+    this.loading = true;
+    this.journeyService.getStepsByJourneyVersion(versionId)
+    .subscribe(steps => {
+      this.steps = steps;
+      this.loading = false;
     });
-  }
-
-  saveUpdatedJourneyVersionSteps() {
-    this.submitPending = true;
-    this.submitFailed = false;
-    const selectedStepIds = this.selectedSteps.map(step => step.id);
-    this.journeyService.updateJourneyVersionSteps(this.version.id, selectedStepIds)
-      .subscribe(
-        () => {
-          this.submitPending = false;
-          this.userPermissionsService.clearPermissionsCache();
-          this.router.navigate(['/journeys']);
-        },
-        error => {
-          this.submitPending = false;
-          this.submitFailed = true;
-          console.log(error);
-        }
-      );
-  }
-
-  cancel() {
-    this.router.navigate(['/journeys']);
   }
 }

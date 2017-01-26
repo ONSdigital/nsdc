@@ -2,15 +2,14 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { UserPermissionsGuard } from '../user-permissions.guard';
 import { JourneyListComponent } from './journeys.component';
-import { AddJourneyComponent } from './add/add-journey.component';
-import { EditJourneyComponent } from './edit/edit-journey.component';
-import { EditJourneyResolver } from './edit/edit-journey.resolver';
-import { JourneyStepsComponent } from './versions/steps/journey-steps.component';
-import { JourneySchedulesComponent } from './versions/schedules/journey-schedules.component';
-import { AddJourneyVersionComponent } from './versions/add/add-journey-version.component';
-import { EditJourneyVersionComponent } from './versions/edit/edit-journey-version.component';
-import { AddJourneyVersionResolver } from './versions/add/add-journey-version.resolver';
-import { EditJourneyVersionResolver } from './versions/edit/edit-journey-version.resolver';
+import { AddJourneyComponent } from './add-journey.component';
+import { EditJourneyComponent } from './edit-journey.component';
+import { EditJourneyResolver } from './edit-journey.resolver';
+import { EditJourneyStepsComponent } from './versions/steps/edit-journey-steps.component';
+import { AddJourneyVersionComponent } from './versions/add-journey-version.component';
+import { EditJourneyVersionComponent } from './versions/edit-journey-version.component';
+import { AddJourneyVersionResolver } from './versions/add-journey-version.resolver';
+import { EditJourneyVersionResolver } from './versions/edit-journey-version.resolver';
 import { AddJourneyScheduleComponent } from './versions/schedules/add-journey-schedule.component';
 import { EditJourneyScheduleComponent } from './versions/schedules/edit-journey-schedule.component';
 
@@ -37,15 +36,7 @@ const routes: Routes = [
   {
     canActivate: [UserPermissionsGuard],
     path: 'versions/:id/steps',
-    component: JourneyStepsComponent,
-    data: {
-      permission: 'EDIT_JOURNEYS'
-    }
-  },
-  {
-    canActivate: [UserPermissionsGuard],
-    path: 'versions/:id/schedules',
-    component: JourneySchedulesComponent,
+    component: EditJourneyStepsComponent,
     data: {
       permission: 'EDIT_JOURNEYS'
     }
@@ -109,8 +100,7 @@ export const routedComponents = [
   AddJourneyComponent,
   EditJourneyComponent,
   JourneyListComponent,
-  JourneySchedulesComponent,
-  JourneyStepsComponent,
+  EditJourneyStepsComponent,
   AddJourneyVersionComponent,
   EditJourneyVersionComponent,
   AddJourneyScheduleComponent,
