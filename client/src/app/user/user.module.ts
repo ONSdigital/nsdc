@@ -8,6 +8,7 @@ import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
 import { UserService } from './user.service';
 import { RoleService } from '../role/role.service';
 import { EditUserResolver } from './edit/edit-user.resolver';
+import { ConfirmModalDirective } from '../confirm-modal/confirm-modal.directive';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { EditUserResolver } from './edit/edit-user.resolver';
     BootstrapModalModule
   ],
   declarations: [
-    routedComponents
+    routedComponents,
+    ConfirmModalDirective
   ],
   providers: [
     UserService,
