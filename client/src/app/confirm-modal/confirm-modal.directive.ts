@@ -33,6 +33,7 @@ export class ConfirmModalDirective {
 
   @HostListener('click', ['$event'])
   onClick(e) {
+    e.stopPropagation();
     const modalConfirmation = this.modal.confirm()
     .size('sm')
     .isBlocking(false)

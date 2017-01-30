@@ -22,21 +22,17 @@ export class JourneyVersionsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log('on init jv');
     this.route.parent.params.subscribe(params => {
-      console.log('on parent change jv');
       this.loading = true;
       const journeyId = Number(params['id']);
       this.selectedJourneyId = journeyId;
       this.journeyService.getJourneyVersions(journeyId)
       .then(journeyVersions => {
-        console.log('on versions got jv');
         this.versions = journeyVersions;
         this.loading = false;
       });
     });
     this.route.params.subscribe(params => {
-      console.log('on route change jv');
       this.selectedVersionId = Number(params['versionId']);
     });
   }
@@ -46,9 +42,12 @@ export class JourneyVersionsComponent implements OnInit {
     this.router.navigate(['journeys', this.selectedJourneyId, 'version', versionId]);
   }
 
-  onDeleteClicked(event, versionId) {
-    event.stopPropagation();
-    console.log(versionId);
+  onDeleteClicked(versionId) {
+    this.journeyService.deleteJourneyVersion(versionId)
+      .subscribe(() => {
+        this.journeyService.getJourneyVersions(this.selectedJourneyId)
+          .then(versions => this.versions = versions);
+      });
   }
 
   onEditClicked(event, versionId) {

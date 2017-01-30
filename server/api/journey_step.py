@@ -13,4 +13,4 @@ class JourneyStep(Resource):
         else:
             steps = JourneyStepData.query
 
-        return jsonify(JourneyStepData.serialize_list(steps.order_by(JourneyStepData.name.asc()).all()))
+        return jsonify(JourneyStepData.serialize_list(steps.order_by(JourneyStepData.id.asc()).all()))

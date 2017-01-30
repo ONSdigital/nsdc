@@ -1,7 +1,7 @@
-<div class="col-md-12" *ngIf="journey">
-  <h3>
-    {{journey.name}}
-  </h3>
+<div *ngIf="version">
+  <a [routerLink]="['/journeys', version.journey_id, 'version', version.id]">
+    Version {{ version.version_number }}</a> >
+  Edit Steps
 </div>
 <div class="col-md-12" *ngIf="allSteps && selectedSteps">
   <div class="dual-list-header-row">

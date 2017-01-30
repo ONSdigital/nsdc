@@ -17,6 +17,7 @@ import { SupplierService } from '../supplier';
 import { ScheduleService } from '../schedule';
 import { ManageJourneyGuard } from './manage/manage-journey.guard';
 import { ManageJourneyVersionGuard } from './manage/manage-journey-version.guard';
+import { ConfirmModalDirective } from '../confirm-modal/confirm-modal.directive';
 
 @NgModule({
   imports: [
@@ -32,7 +33,8 @@ import { ManageJourneyVersionGuard } from './manage/manage-journey-version.guard
   declarations: [
     routedComponents,
     JourneyStepsComponent,
-    JourneySchedulesComponent
+    JourneySchedulesComponent,
+    ConfirmModalDirective
   ],
   providers: [
     JourneyService,
