@@ -5,6 +5,7 @@ import { PermissionService } from '../../permission/permission.service';
 import { UserPermissionsService } from '../../user-permissions.service';
 import { Role } from '../role';
 import { Permission } from '../../permission/permission';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'role-permissions',
@@ -33,7 +34,7 @@ export class RolePermissionsComponent implements OnInit {
     this.route.params.subscribe(params => {
       const id = Number.parseInt(params['id']);
       this.loading = true;
-      Promise.all([
+      Observable.forkJoin([
         this.roleService.getRoleById(id)
         .then(role => this.role = role),
         this.permissionService.getPermissions()
@@ -45,7 +46,7 @@ export class RolePermissionsComponent implements OnInit {
           this.selectedPermissions = permissions;
         })
       ])
-      .then(() => this.loading = false);
+      .subscribe(() => this.loading = false);
     });
   }
 

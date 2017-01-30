@@ -1,28 +1,26 @@
-<div *ngIf="version">
-  <a [routerLink]="['/journeys', version.journey_id, 'version', version.id]">
-    Version {{ version.version_number }}</a> >
-  Edit Steps
-</div>
-<div class="col-md-12" *ngIf="allSteps && selectedSteps">
-  <div class="dual-list-header-row">
-    <h5 class="dual-list-header">Other Steps</h5>
-    <h5 class="dual-list-header">Current Steps</h5>
+<div *ngIf="!loading">
+  <div *ngIf="version">
+    <a [routerLink]="['/journeys', version.journey_id, 'version', version.id]">
+      Version {{ version.version_number }}</a> >
+    Edit Steps
   </div>
-</div>
-<div class="col-md-12" *ngIf="allSteps && selectedSteps">
-  <dual-list
-    [sort]="keepSorted"
-    [source]="allSteps"
-    [key]="key"
-    [display]="display"
-    [(destination)]="selectedSteps"
-    height="265px"
+  <nsdc-dual-list-container
+    otherTitle="Other Steps"
+    currentTitle="Current Steps"
+    (saveClicked)="saveUpdatedJourneyVersionSteps()"
+    (cancelClicked)="cancel()"
+    [saveDisabled]="submitPending"
+    [cancelDisabled]="submitPending"
   >
-  </dual-list>
+    <dual-list
+      [sort]="keepSorted"
+      [source]="allSteps"
+      [key]="key"
+      [display]="display"
+      [(destination)]="selectedSteps"
+      height="265px"
+    >
+    </dual-list>
+  </nsdc-dual-list-container>
 </div>
-<div class="col-md-12" *ngIf="allSteps && selectedSteps">
-  <div class="btn-row">
-    <button class="btn btn-primary" (click)="saveUpdatedJourneyVersionSteps()">Save</button>
-    <button class="btn btn-danger" (click)="cancel()">Cancel</button>
-  </div>
-</div>
+<loading *ngIf="loading"></loading>
