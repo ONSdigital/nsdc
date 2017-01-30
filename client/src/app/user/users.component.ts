@@ -7,10 +7,10 @@ import { Http } from '@angular/http';
 import { Configuration } from '../app.constants';
 
 @Component({
-  selector: 'user-list',
-  templateUrl : 'user-list.component.html'
+  selector: 'nsdc-users',
+  templateUrl : 'users.component.html'
 })
-export class UserListComponent implements OnInit {
+export class UsersComponent implements OnInit {
 
   public users: User[];
   permissionShortNames: string[];
