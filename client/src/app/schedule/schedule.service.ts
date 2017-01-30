@@ -54,4 +54,14 @@ export class ScheduleService {
     .map(res => res.json());
   }
 
+  deleteSchedule(id: number) {
+    this.headers.set('X-TOKEN', this.loginService.getSessionId());
+    let scheduleDeleteUrl = this.config.Server + 'nsdc/v1.0/schedules/' + id;
+    return this.http.delete(scheduleDeleteUrl, { headers: this.headers } )
+      .map(res => res.json())
+      .catch(res => {
+        return Observable.throw(res.json());
+      });
+  }
+
 }

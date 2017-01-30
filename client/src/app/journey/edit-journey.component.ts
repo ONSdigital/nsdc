@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 import { Journey } from './journey';
 import { JourneyService } from './journey.service';
 import { Supplier, SupplierService } from '../supplier';
@@ -21,7 +22,7 @@ export class EditJourneyComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private journeyService: JourneyService,
     private supplierService: SupplierService,
-    private router: Router,
+    private location: Location,
     private route: ActivatedRoute
   ) { }
 
@@ -46,7 +47,7 @@ export class EditJourneyComponent implements OnInit {
     .subscribe(
       () => {
         this.submitPending = false;
-        this.router.navigate(['/journeys']);
+        this.location.back();
       },
       error => {
         this.submitPending = false;

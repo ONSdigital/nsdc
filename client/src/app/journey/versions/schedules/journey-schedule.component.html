@@ -1,5 +1,9 @@
 <div class="container">
-  <h2>Journey Schedule</h2>
+  <div *ngIf="version">
+    <a [routerLink]="['/journeys', version.journey_id, 'version', version.id]">
+      Version {{ version.version_number }}</a> >
+    Journey Schedule
+  </div>
   <br>
   <div *ngIf="!loading">
     <div class="form-group">

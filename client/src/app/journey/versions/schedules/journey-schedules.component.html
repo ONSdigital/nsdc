@@ -13,8 +13,9 @@
       <td class="options options-large">
         <template [ngIf]="schedule.status==='pending'">
           <a
+            [nsdcConfirmModal]="'Are you sure you want to delete this schedule?'"
             class="icon-links glyphicon glyphicon-remove right"
-            (click)="onDeleteClicked(schedule.id)"
+            (confirmed)="onDeleteClicked(schedule.id)"
           ></a>
           <a
             class="icon-links glyphicon glyphicon-edit right"

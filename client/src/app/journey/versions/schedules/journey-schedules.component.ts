@@ -1,11 +1,11 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { Schedule, ScheduleService } from '../../../schedule';
 
 @Component({
   selector: 'nsdc-journey-schedules',
   templateUrl: 'journey-schedules.component.html'
 })
-export class JourneySchedulesComponent implements OnInit, OnChanges {
+export class JourneySchedulesComponent implements OnChanges {
 
   schedules: Schedule[] = [];
   @Input() versionId: number;
@@ -14,12 +14,6 @@ export class JourneySchedulesComponent implements OnInit, OnChanges {
   constructor(
     private scheduleService: ScheduleService
   ) { }
-
-  ngOnInit() {
-    if (this.versionId) {
-      this.getSchedules(this.versionId);
-    }
-  }
 
   ngOnChanges(changes) {
     const newVersionId = changes.versionId.currentValue;
@@ -35,7 +29,13 @@ export class JourneySchedulesComponent implements OnInit, OnChanges {
     });
   }
 
-  onDeleteClicked(id) {
-    console.log('delete', id);
+  onDeleteClicked(scheduleId) {
+    this.scheduleService.deleteSchedule(scheduleId)
+      .subscribe(() => {
+        this.scheduleService.getSchedulesByVersion(this.versionId)
+          .subscribe(schedules =>
+            this.schedules = schedules
+          );
+      });
   }
 }

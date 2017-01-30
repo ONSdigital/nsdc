@@ -16,7 +16,7 @@
   <table *ngIf="!loading" class="table table-hover">
     <thead>
       <tr>
-        <th>UserName</th>
+        <th>Username</th>
         <th>Firstname</th>
         <th>Lastname</th>
         <th>Email</th>
@@ -40,18 +40,21 @@
         <td>{{user.email}}</td> 
         <td>{{user.status}}</td>
         <td class="options options-large">
-          <button
-            class="btn btn-danger right"
-            [disabled]="!canEdit()"
-            (click)="onDeactivateClicked(user.id)">
-            Deactivate
-          </button>
-          <button
-            [disabled]="!canEdit()"
-            class="btn btn-primary btn-extra right"
-            [routerLink]="['/users', user.id]">
-            Edit
-          </button>
+          <template [ngIf]="user.status!=='inactive'">
+            <button
+              [nsdcConfirmModal]="'Are you sure you want to deactivate this user?'"
+              (confirmed)="onDeactivate(user.id)"
+              class="btn btn-danger right"
+              [disabled]="!canEdit()">
+              Deactivate
+            </button>
+            <button
+              [disabled]="!canEdit()"
+              class="btn btn-primary btn-extra right"
+              [routerLink]="['/users', user.id]">
+              Edit
+            </button>
+          </template>
         <td>
       </tr>
     </tbody>

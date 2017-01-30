@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { UserPermissionsGuard } from '../user-permissions.guard';
-import { JourneyListComponent } from './journeys.component';
 import { AddJourneyComponent } from './add-journey.component';
 import { EditJourneyComponent } from './edit-journey.component';
 import { EditJourneyResolver } from './edit-journey.resolver';
@@ -12,6 +11,16 @@ import { AddJourneyVersionResolver } from './versions/add-journey-version.resolv
 import { EditJourneyVersionResolver } from './versions/edit-journey-version.resolver';
 import { AddJourneyScheduleComponent } from './versions/schedules/add-journey-schedule.component';
 import { EditJourneyScheduleComponent } from './versions/schedules/edit-journey-schedule.component';
+
+import { ManageJourneysComponent } from './manage/manage-journeys.component';
+import { NoJourneysComponent } from './manage/no-journeys.component';
+import { JourneysComponent } from './manage/journeys.component';
+import { NoJourneyVersionsComponent } from './manage/no-journey-versions.component';
+import { JourneyVersionsComponent } from './manage/journey-versions.component';
+
+import { ManageJourneyGuard } from './manage/manage-journey.guard';
+import { ManageJourneyVersionGuard } from './manage/manage-journey-version.guard';
+
 
 const routes: Routes = [
   {
@@ -24,7 +33,7 @@ const routes: Routes = [
   },
   {
     canActivate: [UserPermissionsGuard],
-    path: ':id',
+    path: 'edit/:id',
     component: EditJourneyComponent,
     data: {
       permission: 'EDIT_JOURNEYS'
@@ -82,24 +91,50 @@ const routes: Routes = [
   },
   {
     canActivate: [UserPermissionsGuard],
+    component: ManageJourneysComponent,
     path: '',
-    component: JourneyListComponent,
     data: {
       permission: 'VIEW_JOURNEYS'
-    }
+    },
+    children: [
+      {
+        canActivate: [ManageJourneyGuard],
+        path: '',
+        component: NoJourneysComponent
+      },
+      {
+        path: ':id',
+        component: JourneysComponent,
+        children: [
+          {
+            canActivate: [ManageJourneyVersionGuard],
+            path: '',
+            component: NoJourneyVersionsComponent
+          },
+          {
+            path: 'version/:versionId',
+            component: JourneyVersionsComponent
+          },
+        ]
+      }
+    ]
   },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
 export class JourneyRoutingModule { }
 
 export const routedComponents = [
   AddJourneyComponent,
   EditJourneyComponent,
-  JourneyListComponent,
+  JourneysComponent,
+  NoJourneysComponent,
+  NoJourneyVersionsComponent,
+  JourneyVersionsComponent,
+  ManageJourneysComponent,
   EditJourneyStepsComponent,
   AddJourneyVersionComponent,
   EditJourneyVersionComponent,

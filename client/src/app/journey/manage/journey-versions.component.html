@@ -1,0 +1,51 @@
+<div class="journey-section" *ngIf="!loading && versions">
+  <table class="journey-table table table-hover">
+    <thead>
+    <tr>
+      <th>Version Number</th>
+      <th>File Validator</th>
+      <th>Valid Extensions</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let version of versions" [ngClass]="{'row-selected': selectedVersionId == version.id }" (click)="onSelectJourneyVersion(version.id)">
+      <td>{{ version.version_number }}</td>
+      <td>{{ version.validator }}</td>
+      <td>{{ version.extensions }}</td>
+      <td class="options options-large">
+        <a
+          [nsdcConfirmModal]="'Are you sure you want to delete this Journey Version?'"
+          class="icon-links glyphicon glyphicon-remove right"
+          (confirmed)="onDeleteClicked(version.id)"
+        ></a>
+        <a
+          class="icon-links glyphicon glyphicon-edit right"
+          (click)="onEditClicked($event, version.id)"
+        ></a>
+      <td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<div class="journey-section" *ngIf="!loading && versions && selectedVersionId">
+  <div class="row">
+    <div class="col-xs-6">
+      <span class="h3">Steps</span>
+      <a [routerLink]="['/journeys/versions/', selectedVersionId, 'steps']">Edit</a>
+      <nsdc-journey-steps
+        [versionId]="selectedVersionId"
+      >
+      </nsdc-journey-steps>
+    </div>
+    <div class="col-xs-6">
+      <span class="h3">Schedules</span>
+      <a [routerLink]="['/journeys/versions/', selectedVersionId, 'schedules', 'add']">Add</a>
+      <nsdc-journey-schedules
+        [versionId]="selectedVersionId"
+      >
+      </nsdc-journey-schedules>
+    </div>
+  </div>
+</div>
+<loading *ngIf="loading"></loading>
