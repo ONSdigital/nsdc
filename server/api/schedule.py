@@ -39,3 +39,9 @@ class Schedule(Resource):
 
         db.session.commit()
         return jsonify(schedule.serialize())
+
+    @protected_resource('DELETE_JOURNEYS')
+    def delete(self, schedule_id):
+        ScheduleData.query.filter_by(id=schedule_id).delete()
+        db.session.commit()
+        return '', 204

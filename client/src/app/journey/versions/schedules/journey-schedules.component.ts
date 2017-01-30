@@ -29,7 +29,13 @@ export class JourneySchedulesComponent implements OnChanges {
     });
   }
 
-  onDeleteClicked(id) {
-    console.log('delete', id);
+  onDeleteClicked(scheduleId) {
+    this.scheduleService.deleteSchedule(scheduleId)
+      .subscribe(() => {
+        this.scheduleService.getSchedulesByVersion(this.versionId)
+          .subscribe(schedules =>
+            this.schedules = schedules
+          );
+      });
   }
 }
