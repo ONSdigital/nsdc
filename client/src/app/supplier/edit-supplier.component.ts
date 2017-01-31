@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Supplier } from '../supplier';
-import { SupplierService } from '../supplier.service';
+import { Supplier } from './supplier';
+import { SupplierService } from './supplier.service';
 
 @Component({
-  selector: 'edit-supplier',
-  templateUrl: '../supplier.component.html'
+  selector: 'nsdc-edit-supplier',
+  templateUrl: 'supplier.component.html'
 })
 export class EditSupplierComponent implements OnInit {
 

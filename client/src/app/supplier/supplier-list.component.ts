@@ -33,25 +33,12 @@ export class SupplierListComponent implements OnInit {
     });
   }
 
-  onDeleteClicked(supplierId) {
-    const modalConfirmation = this.modal.confirm()
-    .size('sm')
-    .isBlocking(false)
-    .showClose(true)
-    .keyboard(27)
-    .title('Confirm')
-    .body('Are you sure you want to delete this supplier?')
-    .open();
-
-    modalConfirmation.then(dialog => dialog.result).then(
-      () => {
-        this.supplierService.deleteSupplier(supplierId)
-        .subscribe(() => {
-          this.supplierService.getSuppliers().then(suppliers => this.suppliers = suppliers);
-        });
-      },
-      () => {}
-    );
+  onDelete(supplierId) {
+    this.supplierService.deleteSupplier(supplierId)
+    .subscribe(() => {
+      this.supplierService.getSuppliers()
+      .then(suppliers => this.suppliers = suppliers);
+    });
   }
 
 }

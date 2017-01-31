@@ -6,7 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ModalModule } from 'angular2-modal';
 import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
 import { SupplierService } from './supplier.service';
-import { EditSupplierResolver } from './edit/edit-supplier.resolver';
+import { ConfirmModalModule } from '../confirm-modal';
 
 @NgModule({
   imports: [
@@ -15,14 +15,14 @@ import { EditSupplierResolver } from './edit/edit-supplier.resolver';
     CommonModule,
     ReactiveFormsModule,
     ModalModule.forRoot(),
-    BootstrapModalModule
+    BootstrapModalModule,
+    ConfirmModalModule
   ],
   declarations: [
     routedComponents
   ],
   providers: [
-    SupplierService,
-    EditSupplierResolver
+    SupplierService
   ],
 })
 export class SupplierModule { }

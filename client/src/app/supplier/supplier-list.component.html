@@ -15,16 +15,17 @@
       <tr *ngFor="let supplier of suppliers">
         <td>{{supplier.name}}</td>
         <td>{{supplier.description}}</td>
-        <td class="options">
-          <button class="btn btn-danger right" (click)="onDeleteClicked(supplier.id)">
-            Delete
-          </button>
-          <button
-            class="btn btn-primary btn-extra right"
-            [routerLink]="['/suppliers', supplier.id]">
-            Edit
-          </button>
         <td>
+          <a
+            [nsdcConfirmModal]="'Are you sure you want to delete this supplier?'"
+            class="icon-links glyphicon glyphicon-remove right"
+            (confirmed)="onDelete(supplier.id)"
+          ></a>
+          <a
+            class="icon-links glyphicon glyphicon-edit right"
+            [routerLink]="['/suppliers', supplier.id]"
+          ></a>
+        </td>
       </tr>
     </tbody>
   </table>

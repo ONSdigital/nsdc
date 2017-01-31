@@ -10,7 +10,7 @@
     <tr *ngFor="let schedule of schedules">
       <td>{{schedule.date | date:"MMMM y" }}</td>
       <td>{{schedule.status}}</td>
-      <td class="options options-large">
+      <td class="options">
         <template [ngIf]="schedule.status==='pending'">
           <a
             [nsdcConfirmModal]="'Are you sure you want to delete this schedule?'"

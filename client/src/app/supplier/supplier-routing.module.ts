@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { UserPermissionsGuard } from '../user-permissions.guard';
-import { AddSupplierComponent } from './add/add-supplier.component';
+import { AddSupplierComponent } from './add-supplier.component';
 import { SupplierListComponent } from './supplier-list.component';
-import { EditSupplierComponent } from './edit/edit-supplier.component';
-import { EditSupplierResolver } from './edit/edit-supplier.resolver';
+import { EditSupplierComponent } from './edit-supplier.component';
+import { SupplierResolver } from './supplier.resolver';
 
 const routes: Routes = [
   {
@@ -23,7 +23,7 @@ const routes: Routes = [
       permission: 'EDIT_SUPPLIERS'
     },
     resolve: {
-      supplier: EditSupplierResolver
+      supplier: SupplierResolver
     }
   },
   {
@@ -39,6 +39,7 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
+  providers: [SupplierResolver]
 })
 export class SupplierRoutingModule { }
 
