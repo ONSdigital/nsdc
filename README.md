@@ -11,7 +11,9 @@ Once this has been installed, run the following commands:
 * `npm install`
 * `npm start`
 
-Navigate to a browser and the application will be served on localhost:8080
+Navigate to a browser and the application will be served on `localhost:3000`
+
+To run the prod build and create the bundle you will need to run `npm run build:prod`
 
 ## Server
 
@@ -42,6 +44,8 @@ You will not be able to use the UI unless you have appropriate users/roles and p
 There are sample users for each role/permission in the following script.  Running this will seed your database accordingly
 
 `sql\sample_data.sql`
+
+You could run the setup sql commands on cmd using `psql -d nsdc -U postgres -f file_name_here.sql`
 
 Now you can run the server using the following command:
 
