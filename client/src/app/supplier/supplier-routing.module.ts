@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { UserPermissionsGuard } from '../user-permissions.guard';
 import { AddSupplierComponent } from './add-supplier.component';
-import { SupplierListComponent } from './supplier-list.component';
+import { SuppliersComponent } from './suppliers.component';
 import { EditSupplierComponent } from './edit-supplier.component';
 import { SupplierResolver } from './supplier.resolver';
 
@@ -29,7 +29,7 @@ const routes: Routes = [
   {
     canActivate: [UserPermissionsGuard],
     path: '',
-    component: SupplierListComponent,
+    component: SuppliersComponent,
     data: {
       permission: 'VIEW_SUPPLIERS'
     }
@@ -44,7 +44,7 @@ const routes: Routes = [
 export class SupplierRoutingModule { }
 
 export const routedComponents = [
-  SupplierListComponent,
+  SuppliersComponent,
   AddSupplierComponent,
   EditSupplierComponent
 ];

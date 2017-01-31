@@ -7,10 +7,10 @@ import { Router } from '@angular/router';
 import { Http } from '@angular/http';
 
 @Component({
-  selector: 'supplier-list',
-  templateUrl : 'supplier-list.component.html'
+  selector: 'nsdc-suppliers',
+  templateUrl : 'suppliers.component.html'
 })
-export class SupplierListComponent implements OnInit {
+export class SuppliersComponent implements OnInit {
 
   public suppliers: Supplier[];
   loading = false;
