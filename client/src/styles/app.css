@@ -121,12 +121,6 @@ a.disabled {
   cursor: pointer;
 }
 
-.journey-table tr td:last-child {
-  width: 0;
-  padding: 8px 0 8px 0;
-  margin: 0;
-}
-
 .journey-section {
   margin: 0;
 }

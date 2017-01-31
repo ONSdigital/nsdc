@@ -7,10 +7,10 @@ import { Router } from '@angular/router';
 import { Http } from '@angular/http';
 
 @Component({
-  selector: 'supplier-list',
-  templateUrl : 'supplier-list.component.html'
+  selector: 'nsdc-suppliers',
+  templateUrl : 'suppliers.component.html'
 })
-export class SupplierListComponent implements OnInit {
+export class SuppliersComponent implements OnInit {
 
   public suppliers: Supplier[];
   loading = false;
@@ -33,25 +33,12 @@ export class SupplierListComponent implements OnInit {
     });
   }
 
-  onDeleteClicked(supplierId) {
-    const modalConfirmation = this.modal.confirm()
-    .size('sm')
-    .isBlocking(false)
-    .showClose(true)
-    .keyboard(27)
-    .title('Confirm')
-    .body('Are you sure you want to delete this supplier?')
-    .open();
-
-    modalConfirmation.then(dialog => dialog.result).then(
-      () => {
-        this.supplierService.deleteSupplier(supplierId)
-        .subscribe(() => {
-          this.supplierService.getSuppliers().then(suppliers => this.suppliers = suppliers);
-        });
-      },
-      () => {}
-    );
+  onDelete(supplierId) {
+    this.supplierService.deleteSupplier(supplierId)
+    .subscribe(() => {
+      this.supplierService.getSuppliers()
+      .then(suppliers => this.suppliers = suppliers);
+    });
   }
 
 }

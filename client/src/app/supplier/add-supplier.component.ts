@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Supplier } from '../supplier';
-import { SupplierService } from '../supplier.service';
+import { Supplier } from './supplier';
+import { SupplierService } from './supplier.service';
 
 @Component({
-  selector: 'add-supplier',
-  templateUrl: '../supplier.component.html'
+  selector: 'nsdc-add-supplier',
+  templateUrl: 'supplier.component.html'
 })
 export class AddSupplierComponent implements OnInit {
 
