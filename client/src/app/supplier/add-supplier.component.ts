@@ -9,7 +9,6 @@ import { SupplierService } from './supplier.service';
   templateUrl: 'supplier.component.html'
 })
 export class AddSupplierComponent implements OnInit {
-
   supplierForm: FormGroup;
   supplier: Supplier;
   submitPending = false;
@@ -23,25 +22,27 @@ export class AddSupplierComponent implements OnInit {
 
   ngOnInit() {
     this.supplierForm = this._formBuilder.group({
-      name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
-      description: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]]
+      name: ['', [Validators.required]],
+      description: ['', [Validators.required]]
     });
     this.supplier = new Supplier();
   }
 
   onSubmit() {
-    this.supplier.name = this.supplierForm.controls['name'].value;
-    this.supplier.description = this.supplierForm.controls['description'].value;
-    this.supplierService.addSupplier(this.supplier)
-    .subscribe(
-      () => {
-        this.submitPending = false;
-        this.router.navigate(['/suppliers']);
-      },
-      error => {
-        this.submitPending = false;
-        this.submitFailed = true;
-      }
+    Object.keys(this.supplierForm.controls).forEach(key =>
+      this.supplier[key] = this.supplierForm.controls[key].value
     );
+
+    this.supplierService.addSupplier(this.supplier)
+      .subscribe(
+        () => {
+          this.submitPending = false;
+          this.router.navigate(['/suppliers']);
+        },
+        error => {
+          this.submitPending = false;
+          this.submitFailed = true;
+        }
+      );
   }
 }
