@@ -1,19 +1,20 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { UserPermissionsGuard } from '../user-permissions.guard';
-import { RoleListComponent } from './role-list.component';
+import { RoleComponent } from './roles.component';
 import { AddRoleComponent } from './add/add-role.component';
 import { EditRoleComponent } from './edit/edit-role.component';
 import { RoleManageComponent } from './manage/role-manage.component';
 import { RolePermissionsComponent } from './permissions/role-permissions.component';
 import { EditRoleResolver } from './edit/edit-role.resolver';
+import { RoleJourneyVersionsComponent } from './journey-versions/role-journey-versions.component';
 
 
 const routes: Routes = [
   {
     canActivate: [UserPermissionsGuard],
     path: '',
-    component: RoleListComponent,
+    component: RoleComponent,
     data: {
       permission: 'VIEW_ROLES'
     }
@@ -51,7 +52,18 @@ const routes: Routes = [
     },
     resolve: {
       role: EditRoleResolver
-    }
+    },
+  },
+  {
+    canActivate: [UserPermissionsGuard],
+    path: ':id/journey-versions',
+    component: RoleJourneyVersionsComponent,
+    data: {
+      permission: 'VIEW_ROLES'
+    },
+    resolve: {
+      role: EditRoleResolver
+    },
   }
 ];
 
@@ -62,9 +74,10 @@ const routes: Routes = [
 export class RoleRoutingModule { }
 
 export const routedComponents = [
-  RoleListComponent,
+  RoleComponent,
   AddRoleComponent,
   EditRoleComponent,
   RoleManageComponent,
-  RolePermissionsComponent
+  RolePermissionsComponent,
+  RoleJourneyVersionsComponent
 ];

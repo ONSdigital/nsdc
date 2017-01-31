@@ -25,8 +25,8 @@ export class JourneysComponent implements OnInit {
       this.selectedJourneyId = Number(params['id']);
     });
     this.journeyService.getJourneys()
-    .then(journeys => this.journeys = journeys)
-    .then(() => {
+    .subscribe(journeys => {
+      this.journeys = journeys;
       this.loading = false;
     });
   }

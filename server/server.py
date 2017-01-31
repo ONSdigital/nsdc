@@ -5,6 +5,7 @@ from api.journey import Journey
 from api.login import Login
 from api.role import Role
 from api.role_permission import RolePermission
+from api.role_journey_version import RoleJourneyVersion
 from api.file_upload import FileUpload
 from api.permission import Permission
 from api.user import User
@@ -40,11 +41,6 @@ api.add_resource(
 )
 
 api.add_resource(
-    RolePermission,
-    base_endpoint + 'roles/<role_id>/permissions'
-)
-
-api.add_resource(
     JourneyVersionRole,
     base_endpoint + 'journeys/versions/roles/<role_id>'
 )
@@ -53,6 +49,16 @@ api.add_resource(
     Role,
     base_endpoint + 'roles',
     base_endpoint + 'roles/<role_id>'
+)
+
+api.add_resource(
+    RolePermission,
+    base_endpoint + 'roles/<role_id>/permissions'
+)
+
+api.add_resource(
+    RoleJourneyVersion,
+    base_endpoint + 'roles/<role_id>/journey/versions'
 )
 
 api.add_resource(
@@ -65,6 +71,7 @@ api.add_resource(
     JourneyVersion,
     base_endpoint + 'journeys/versions',
     base_endpoint + 'journeys/versions/<journey_version_id>',
+    base_endpoint + 'journeys/versions/roles/<role_id>',
     base_endpoint + 'journeys/<journey_id>/versions'
 )
 

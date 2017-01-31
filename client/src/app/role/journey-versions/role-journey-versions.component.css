@@ -1,0 +1,14 @@
+
+.btn-row {
+  width: 100%;
+  margin: 15px 0;
+}
+
+.dual-list-header-row {
+  display: flex
+}
+
+.dual-list-header {
+  flex: 1 0 auto;
+  text-align: center;
+}

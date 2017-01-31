@@ -5,21 +5,20 @@ import { PermissionService } from '../../permission/permission.service';
 import { UserPermissionsService } from '../../user-permissions.service';
 import { Role } from '../role';
 import { Permission } from '../../permission/permission';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'role-permissions',
-  templateUrl: 'role-permissions.component.html',
-  styleUrls: ['role-permissions.component.css']
+  templateUrl: 'role-permissions.component.html'
 })
 export class RolePermissionsComponent implements OnInit {
-
   role: Role;
   allPermissions: Permission[];
-  originalPermissionIds: number[];
   selectedPermissions: Permission[];
   keepSorted: boolean = true;
   key = 'id';
   display = 'name';
+  loading = false;
   submitPending = false;
   submitFailed = false;
 
@@ -34,17 +33,20 @@ export class RolePermissionsComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(params => {
       const id = Number.parseInt(params['id']);
-      this.roleService.getRoleById(id)
-      .then(role => this.role = role);
-      this.permissionService.getPermissions()
-      .then(permissions => {
-        this.allPermissions = permissions;
-      });
-      this.permissionService.getPermissionByRole(id)
-      .then(permissions => {
-        this.originalPermissionIds = permissions.map(permission => permission.id);
-        this.selectedPermissions = permissions;
-      });
+      this.loading = true;
+      Observable.forkJoin([
+        this.roleService.getRoleById(id)
+        .then(role => this.role = role),
+        this.permissionService.getPermissions()
+        .then(permissions => {
+          this.allPermissions = permissions;
+        }),
+        this.permissionService.getPermissionByRole(id)
+        .then(permissions => {
+          this.selectedPermissions = permissions;
+        })
+      ])
+      .subscribe(() => this.loading = false);
     });
   }
 
@@ -62,7 +64,6 @@ export class RolePermissionsComponent implements OnInit {
       error => {
         this.submitPending = false;
         this.submitFailed = true;
-        console.log(error);
       }
     );
   }

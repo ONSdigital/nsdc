@@ -12,7 +12,7 @@ export class ManageJourneyGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot) {
     return this.journeyService.getJourneys()
-    .then(journeys => {
+    .map(journeys => {
       if (journeys.length) {
         this.router.navigate(['/journeys', journeys[0].id]);
         return false;

@@ -32,9 +32,7 @@ export class JourneyService {
   getJourneys() {
     this.headers.set('X-TOKEN', this.loginService.getSessionId());
     return this.http.get(this.actionUrl, { headers: this.headers })
-    .toPromise()
-    .then(response => response.json() as Journey[])
-    .catch(this.handleError);
+    .map(res => res.json())
   }
 
   updateJourney(journey: Journey) {
@@ -47,16 +45,15 @@ export class JourneyService {
     });
   }
 
+  getAllJourneyVersions() {
+    this.headers.set('X-TOKEN', this.loginService.getSessionId());
+    return this.http.get(this.config.Server + 'nsdc/v1.0/journeys/versions', { headers: this.headers })
+    .map(res => res.json() as JourneyVersion[]);
+  }
+
   getVersionsByRole(roleId) {
     this.headers.set('X-TOKEN', this.loginService.getSessionId());
     let url = this.config.Server + 'nsdc/v1.0/journeys/versions/roles/' + roleId;
-    return this.http.get(url, { headers: this.headers })
-    .map(response => response.json());
-  }
-
-  getVersionById(id) {
-    this.headers.set('X-TOKEN', this.loginService.getSessionId());
-    let url = this.config.Server + 'nsdc/v1.0/journeys/versions/' + id;
     return this.http.get(url, { headers: this.headers })
     .map(response => response.json());
   }

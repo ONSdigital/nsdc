@@ -75,6 +75,18 @@ export class RoleService {
     });
   }
 
+  updateRoleJourneyVersions(id: number, journeyVersionIds: number[]) {
+    this.headers.set('X-TOKEN', this.loginService.getSessionId());
+    const rolejourneyVersionsUrl = this.config.Server + 'nsdc/v1.0/roles/' + id + '/journey/versions';
+    return this.http.post(rolejourneyVersionsUrl, JSON.stringify({
+      versions: journeyVersionIds
+    }), {headers: this.headers})
+    .map(res => res.json())
+    .catch(res => {
+      return Observable.throw(res.json());
+    });
+  }
+
   private handleError(error: any): Promise<any> {
     return Promise.reject(error.message || error);
   }

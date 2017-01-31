@@ -17,7 +17,7 @@ import { SupplierService } from '../supplier';
 import { ScheduleService } from '../schedule';
 import { ManageJourneyGuard } from './manage/manage-journey.guard';
 import { ManageJourneyVersionGuard } from './manage/manage-journey-version.guard';
-import { ConfirmModalDirective } from '../confirm-modal/confirm-modal.directive';
+import { ConfirmModalModule } from '../confirm-modal';
 
 @NgModule({
   imports: [
@@ -28,13 +28,13 @@ import { ConfirmModalDirective } from '../confirm-modal/confirm-modal.directive'
     ReactiveFormsModule,
     ModalModule.forRoot(),
     BootstrapModalModule,
-    DatePickerModule
+    DatePickerModule,
+    ConfirmModalModule
   ],
   declarations: [
     routedComponents,
     JourneyStepsComponent,
-    JourneySchedulesComponent,
-    ConfirmModalDirective
+    JourneySchedulesComponent
   ],
   providers: [
     JourneyService,

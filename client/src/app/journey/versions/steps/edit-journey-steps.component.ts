@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { JourneyService } from '../../journey.service';
 import { PermissionService } from '../../permission/permission.service';
-import { UserPermissionsService } from '../../../user-permissions.service';
 import { JourneyVersion } from '../journey-version';
 import { JourneyStep } from './journey-step';
 import { Permission } from '../../permission/permission';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'nsdc-edit-journey-steps',
@@ -16,33 +16,35 @@ export class EditJourneyStepsComponent implements OnInit {
 
   version: JourneyVersion;
   allSteps: JourneyStep[];
-  originalStepIds: number[];
   selectedSteps: JourneyStep[];
   keepSorted: boolean = true;
   key = 'id';
   display = 'name';
+  loading = false;
   submitPending = false;
   submitFailed = false;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private journeyService: JourneyService,
-    private userPermissionsService: UserPermissionsService
+    private journeyService: JourneyService
   ) { }
 
   ngOnInit() {
+    this.loading = true;
     this.route.params.subscribe(params => {
       const id = Number.parseInt(params['id']);
-      this.journeyService.getJourneyVersionById(id)
-      .then(version => this.version = version);
-      this.journeyService.getSteps()
-      .then(steps => this.allSteps = steps);
-      this.journeyService.getStepsByJourneyVersion(id)
-      .subscribe(steps => {
-        this.originalStepIds = steps.map(step => step.id);
-        this.selectedSteps = steps;
-      });
+      Observable.forkJoin([
+        this.journeyService.getJourneyVersionById(id)
+        .then(version => this.version = version),
+        this.journeyService.getSteps()
+        .then(steps => this.allSteps = steps),
+        this.journeyService.getStepsByJourneyVersion(id)
+        .map(steps => {
+          this.selectedSteps = steps;
+        })
+      ])
+      .subscribe(() => this.loading = false);
     });
   }
 
@@ -54,7 +56,6 @@ export class EditJourneyStepsComponent implements OnInit {
     .subscribe(
       () => {
         this.submitPending = false;
-        this.userPermissionsService.clearPermissionsCache();
         this.router.navigate(['/journeys']);
       },
       error => {

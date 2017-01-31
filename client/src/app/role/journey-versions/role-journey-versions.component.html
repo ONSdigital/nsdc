@@ -7,19 +7,19 @@
     Please use the following to associate a Role to Journey Versions.
   </div>
   <nsdc-dual-list-container
-    otherTitle="Other Permissions"
-    currentTitle="Current Permissions"
-    (saveClicked)="saveUpdatedRolePermissions()"
+    otherTitle="Other Journey Versions"
+    currentTitle="Current Journey Versions"
+    (saveClicked)="saveUpdatedRoleJourneyVersions()"
     (cancelClicked)="cancel()"
     [saveDisabled]="submitPending"
     [cancelDisabled]="submitPending"
   >
     <dual-list
       [sort]="keepSorted"
-      [source]="allPermissions"
+      [source]="allRoleJourneyVersions"
       [key]="key"
       [display]="display"
-      [(destination)]="selectedPermissions"
+      [(destination)]="selectedRoleJourneyVersions"
       height="265px"
     >
     </dual-list>

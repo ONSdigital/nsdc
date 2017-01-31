@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserService } from '../user.service';
-import { User } from '../user';
-import { Configuration } from '../../app.constants';
-import { Role } from '../../role/role';
-import { RoleService } from '../../role/role.service';
+import { UserService } from './user.service';
+import { User } from './user';
+import { Configuration } from '../app.constants';
+import { Role } from '../role/role';
+import { RoleService } from '../role/role.service';
 
 @Component({
-  selector: 'update-user',
-  templateUrl : '../user.component.html'
+  selector: 'nsdc-edit-user',
+  templateUrl : 'user.component.html'
 })
 export class EditUserComponent implements OnInit {
 
@@ -17,8 +17,9 @@ export class EditUserComponent implements OnInit {
   user: User;
   users: User [];
   roles: Role[];
-  public showDetail = false;
-  public errorMsg: string;
+  submitPending = false;
+  submitFailed = false;
+  errorMessages;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -39,7 +40,8 @@ export class EditUserComponent implements OnInit {
       status: []
     });
 
-    this.roleService.getRoles().then(roles => {
+    this.roleService.getRoles()
+    .then(roles => {
       this.roles = roles;
     });
 
@@ -59,18 +61,24 @@ export class EditUserComponent implements OnInit {
   }
 
   onSubmit() {
+    this.submitFailed = false;
+    this.submitPending = true;
     this.user.username = this.userForm.controls['username'].value;
     this.user.firstname = this.userForm.controls['firstname'].value;
     this.user.lastname = this.userForm.controls['lastname'].value;
     this.user.password = this.userForm.controls['password'].value;
     this.user.email = this.userForm.controls['email'].value;
     this.user.role_id = this.userForm.controls['role_id'].value;
-    this.userService.updateUser(this.user).then(
+    this.userService.updateUser(this.user)
+    .then(
       () => {
+        this.submitPending = false;
         this.router.navigate(['/users']);
       },
       error => {
-        console.log(error);
+        this.errorMessages = error.message;
+        this.submitPending = false;
+        this.submitFailed = true;
       }
     );
   }

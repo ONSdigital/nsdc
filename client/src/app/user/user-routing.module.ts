@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { UserPermissionsGuard } from '../user-permissions.guard';
-import { UserListComponent } from './user-list.component';
-import { AddUserComponent } from './add/add-user.component';
-import { EditUserComponent } from './edit/edit-user.component';
-import { EditUserResolver } from './edit/edit-user.resolver';
+import { UsersComponent } from './users.component';
+import { AddUserComponent } from './add-user.component';
+import { EditUserComponent } from './edit-user.component';
+import { UserResolver } from './user.resolver';
 
 const routes: Routes = [
   {
     canActivate: [UserPermissionsGuard],
     path: '',
-    component: UserListComponent,
+    component: UsersComponent,
     data: {
       permission: 'VIEW_USERS'
     }
@@ -31,7 +31,7 @@ const routes: Routes = [
       permission: 'EDIT_USERS'
     },
     resolve: {
-      user: EditUserResolver
+      user: UserResolver
     }
   },
 ];
@@ -39,7 +39,8 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
+  providers: [UserResolver]
 })
 export class UserRoutingModule { }
 
-export const routedComponents = [UserListComponent, AddUserComponent, EditUserComponent];
+export const routedComponents = [UsersComponent, AddUserComponent, EditUserComponent];
