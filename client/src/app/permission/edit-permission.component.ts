@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Permission } from '../permission';
-import { PermissionService } from '../permission.service';
+import { Permission } from './permission';
+import { PermissionService } from './permission.service';
 
 @Component({
   selector: 'edit-permission',
-  templateUrl: '../permission.component.html'
+  templateUrl: 'permission.component.html'
 })
 export class EditPermissionComponent implements OnInit {
-
   permissionForm: FormGroup;
   permission: Permission;
   submitPending = false;
@@ -24,9 +23,9 @@ export class EditPermissionComponent implements OnInit {
 
   ngOnInit() {
     this.permissionForm = this._formBuilder.group({
-      name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
-      short_name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
-      description: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]]
+      name: ['', [Validators.required]],
+      short_name: ['', [Validators.required]],
+      description: ['', [Validators.required]]
     });
     this.route.data.subscribe(data => {
       this.permission = data['permission'];
@@ -35,9 +34,7 @@ export class EditPermissionComponent implements OnInit {
   }
 
   onSubmit() {
-    this.permission.name = this.permissionForm.controls['name'].value;
-    this.permission.short_name = this.permissionForm.controls['short_name'].value;
-    this.permission.description = this.permissionForm.controls['description'].value;
+    Object.keys(this.permissionForm.controls).forEach(key => this.permission[key] = this.permissionForm.controls[key].value);
     this.permissionService.updatePermission(this.permission)
     .subscribe(
       () => {

@@ -6,7 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ModalModule } from 'angular2-modal';
 import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
 import { JourneyService } from './journey.service';
-import { EditJourneyResolver } from './edit-journey.resolver';
+import { JourneyResolver } from './journey.resolver';
 import { AddJourneyVersionResolver } from './versions/add-journey-version.resolver';
 import { EditJourneyVersionResolver } from './versions/edit-journey-version.resolver';
 import { DualListModule } from '../dual-list/dual-list.module';
@@ -18,6 +18,7 @@ import { ScheduleService } from '../schedule';
 import { ManageJourneyGuard } from './manage/manage-journey.guard';
 import { ManageJourneyVersionGuard } from './manage/manage-journey-version.guard';
 import { ConfirmModalModule } from '../confirm-modal';
+import { ValidatorModule } from '../validator/validator.module';
 
 @NgModule({
   imports: [
@@ -29,7 +30,8 @@ import { ConfirmModalModule } from '../confirm-modal';
     ModalModule.forRoot(),
     BootstrapModalModule,
     DatePickerModule,
-    ConfirmModalModule
+    ConfirmModalModule,
+    ValidatorModule
   ],
   declarations: [
     routedComponents,
@@ -43,7 +45,7 @@ import { ConfirmModalModule } from '../confirm-modal';
     // the guards/resolvers can be moved to xxx-routing.module.ts
     // after this issue fixed:
     // https://github.com/angular/angular/issues/12275
-    EditJourneyResolver,
+    JourneyResolver,
     AddJourneyVersionResolver,
     EditJourneyVersionResolver,
     ManageJourneyGuard,

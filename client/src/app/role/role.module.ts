@@ -10,7 +10,8 @@ import { UserService } from '../user/user.service';
 import { JourneyService } from '../journey/journey.service';
 import { PermissionService } from '../permission/permission.service';
 import { DualListModule } from '../dual-list/dual-list.module';
-import { EditRoleResolver } from './edit/edit-role.resolver';
+import { RoleResolver } from './role.resolver';
+import { ValidatorModule } from '../validator/validator.module';
 
 @NgModule({
   imports: [
@@ -20,7 +21,8 @@ import { EditRoleResolver } from './edit/edit-role.resolver';
     ReactiveFormsModule,
     DualListModule,
     ModalModule.forRoot(),
-    BootstrapModalModule
+    BootstrapModalModule,
+    ValidatorModule
   ],
   declarations: [
     routedComponents
@@ -30,7 +32,7 @@ import { EditRoleResolver } from './edit/edit-role.resolver';
     RoleService,
     JourneyService,
     PermissionService,
-    EditRoleResolver
+    RoleResolver
   ]
 })
 export class RoleModule { }

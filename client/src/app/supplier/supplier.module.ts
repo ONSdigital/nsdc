@@ -7,6 +7,7 @@ import { ModalModule } from 'angular2-modal';
 import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
 import { SupplierService } from './supplier.service';
 import { ConfirmModalModule } from '../confirm-modal';
+import { ValidatorModule } from '../validator/validator.module';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { ConfirmModalModule } from '../confirm-modal';
     ReactiveFormsModule,
     ModalModule.forRoot(),
     BootstrapModalModule,
-    ConfirmModalModule
+    ConfirmModalModule,
+    ValidatorModule
   ],
   declarations: [
     routedComponents

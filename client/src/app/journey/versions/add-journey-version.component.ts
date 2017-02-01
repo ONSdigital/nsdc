@@ -11,7 +11,6 @@ import { JourneyService } from '../journey.service';
   templateUrl: 'journey-version.component.html'
 })
 export class AddJourneyVersionComponent implements OnInit {
-
   journey: Journey;
   journeyVersionForm: FormGroup;
   journeyVersion: JourneyVersion;
@@ -27,21 +26,18 @@ export class AddJourneyVersionComponent implements OnInit {
 
   ngOnInit() {
     this.journeyVersionForm = this._formBuilder.group({
-      version_number: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(3)]],
-      validator: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
-      extensions: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]]
+      version_number: ['', [Validators.required]],
+      validator: ['', [Validators.required]],
+      extensions: ['', [Validators.required]],
+      protocol: ['', [Validators.required]]
     });
     this.journeyVersion = new JourneyVersion();
-    this.route.data.subscribe(data => {
-      this.journey = data['journey'];
-    });
+    this.route.data.subscribe(data => this.journey = data['journey']);
   }
 
   onSubmit() {
     this.journeyVersion.journey_id = this.journey && this.journey.id;
-    this.journeyVersion.version_number = this.journeyVersionForm.controls['version_number'].value;
-    this.journeyVersion.validator = this.journeyVersionForm.controls['validator'].value;
-    this.journeyVersion.extensions = this.journeyVersionForm.controls['extensions'].value;
+    Object.keys(this.journeyVersionForm.controls).forEach(key => this.journeyVersion[key] = this.journeyVersionForm.controls[key].value);
     this.journeyService.addJourneyVersion(this.journeyVersion)
     .subscribe(
       () => {

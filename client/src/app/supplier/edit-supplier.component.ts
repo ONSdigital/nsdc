@@ -24,8 +24,8 @@ export class EditSupplierComponent implements OnInit {
 
   ngOnInit() {
     this.supplierForm = this._formBuilder.group({
-      name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
-      description: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]]
+      name: ['', [Validators.required]],
+      description: ['', [Validators.required]]
     });
     this.route.data.subscribe(data => {
       this.supplier = data['supplier'];
@@ -34,8 +34,9 @@ export class EditSupplierComponent implements OnInit {
   }
 
   onSubmit() {
-    this.supplier.name = this.supplierForm.controls['name'].value;
-    this.supplier.description = this.supplierForm.controls['description'].value;
+    Object.keys(this.supplierForm.controls).forEach(key =>
+      this.supplier[key] = this.supplierForm.controls[key].value
+    );
     this.supplierService.updateSupplier(this.supplier)
     .subscribe(
       () => {

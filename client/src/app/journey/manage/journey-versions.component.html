@@ -5,6 +5,7 @@
       <th>Version Number</th>
       <th>File Validator</th>
       <th>Valid Extensions</th>
+      <th>Type</th>
       <th></th>
     </tr>
     </thead>
@@ -13,6 +14,7 @@
       <td>{{ version.version_number }}</td>
       <td>{{ version.validator }}</td>
       <td>{{ version.extensions }}</td>
+      <td>{{ version.protocol }}</td>
       <td class="options options-large">
         <a
           [nsdcConfirmModal]="'Are you sure you want to delete this Journey Version?'"

@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { UserPermissionsGuard } from '../user-permissions.guard';
 import { AddJourneyComponent } from './add-journey.component';
 import { EditJourneyComponent } from './edit-journey.component';
-import { EditJourneyResolver } from './edit-journey.resolver';
+import { JourneyResolver } from './journey.resolver';
 import { EditJourneyStepsComponent } from './versions/steps/edit-journey-steps.component';
 import { AddJourneyVersionComponent } from './versions/add-journey-version.component';
 import { EditJourneyVersionComponent } from './versions/edit-journey-version.component';
@@ -39,7 +39,7 @@ const routes: Routes = [
       permission: 'EDIT_JOURNEYS'
     },
     resolve: {
-      journey: EditJourneyResolver
+      journey: JourneyResolver
     }
   },
   {

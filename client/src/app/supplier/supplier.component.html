@@ -1,27 +1,17 @@
 <div class="container">
     <h2>Supplier</h2>
-    <br>
+    <br />
     <form [formGroup]="supplierForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
             <label>Name:</label>
             <input type="text" #refName class="form-control" formControlName="name" placeholder="Supplier name">
-            <div *ngIf="supplierForm.controls['name'].hasError('required') && submitAttempt" class="alert alert-danger">
-                Please enter a name.
-            </div>
-            <div *ngIf="supplierForm.controls['name'].hasError('minlength')" class="alert alert-danger">
-                Name needs to be at least 3 characters long.
-            </div>
-            <div *ngIf="supplierForm.controls['name'].hasError('maxlength')" class="alert alert-danger">
-                Name cannot exceed 30 characters.
-            </div>
+            <nsdc-validator [control]="supplierForm.controls['name']"></nsdc-validator>
         </div>
         <div class="form-group">
             <label>Description:</label>
-            <input type="text" #refName class="form-control" formControlName="description" placeholder="Description">                       
-            <div *ngIf="supplierForm.controls['description'].hasError('required') && submitAttempt" class="alert alert-danger">
-                Please enter a Description.
-            </div>
+            <input type="text" #refName class="form-control" formControlName="description" placeholder="Description">
+            <nsdc-validator [control]="supplierForm.controls['description']"></nsdc-validator>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>    
+        <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>

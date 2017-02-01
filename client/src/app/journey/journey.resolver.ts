@@ -4,9 +4,8 @@ import { JourneyService } from './journey.service';
 import { Journey } from './journey';
 
 @Injectable()
-export class EditJourneyResolver implements Resolve<Journey> {
-  constructor(private journeyService: JourneyService) {
-  }
+export class JourneyResolver implements Resolve<Journey> {
+  constructor(private journeyService: JourneyService) { }
 
   resolve(route: ActivatedRouteSnapshot, state): Promise<Journey> {
     return this.journeyService.getJourneyById(route.params['id']);

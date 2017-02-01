@@ -6,7 +6,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ModalModule } from 'angular2-modal';
 import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
 import { PermissionService } from './permission.service';
-import { EditPermissionResolver } from './edit/edit-permission.resolver';
+import { PermissionResolver } from './permission.resolver';
+import { ValidatorModule } from '../validator/validator.module';
 
 @NgModule({
   imports: [
@@ -15,14 +16,15 @@ import { EditPermissionResolver } from './edit/edit-permission.resolver';
     CommonModule,
     ReactiveFormsModule,
     ModalModule.forRoot(),
-    BootstrapModalModule
+    BootstrapModalModule,
+    ValidatorModule
   ],
   declarations: [
     routedComponents
   ],
   providers: [
     PermissionService,
-    EditPermissionResolver
+    PermissionResolver
   ],
 })
 export class PermissionModule { }

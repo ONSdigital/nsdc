@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, Response } from '@angular/http';
-
+import { Http, Headers } from '@angular/http';
 import { LoginService } from '../login/login.service';
 import { Observable } from 'rxjs/Observable';
 import { Permission } from './permission';
 import { Configuration } from '../app.constants';
-
 
 @Injectable()
 export class PermissionService {
@@ -29,7 +27,6 @@ export class PermissionService {
     });
   }
 
-
   updatePermission(permission: Permission) {
     this.headers.set('X-TOKEN', this.loginService.getSessionId());
     let permissionEditUrl = this.config.Server + 'nsdc/v1.0/permissions/' + permission.id;
@@ -40,7 +37,6 @@ export class PermissionService {
     });
   }
 
-
   deletePermission(id: number) {
     this.headers.set('X-TOKEN', this.loginService.getSessionId());
     let permissionDeleteUrl = this.config.Server + 'nsdc/v1.0/permissions/' + id;
@@ -50,7 +46,6 @@ export class PermissionService {
       return Observable.throw(res.json());
     });
   }
-
 
   getPermissions() {
     this.headers.set('X-TOKEN', this.loginService.getSessionId());

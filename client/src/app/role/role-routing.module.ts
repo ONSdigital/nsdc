@@ -2,11 +2,11 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { UserPermissionsGuard } from '../user-permissions.guard';
 import { RoleComponent } from './roles.component';
-import { AddRoleComponent } from './add/add-role.component';
-import { EditRoleComponent } from './edit/edit-role.component';
+import { AddRoleComponent } from './add-role.component';
+import { EditRoleComponent } from './edit-role.component';
 import { RoleManageComponent } from './manage/role-manage.component';
 import { RolePermissionsComponent } from './permissions/role-permissions.component';
-import { EditRoleResolver } from './edit/edit-role.resolver';
+import { RoleResolver } from './role.resolver';
 import { RoleJourneyVersionsComponent } from './journey-versions/role-journey-versions.component';
 
 
@@ -51,7 +51,7 @@ const routes: Routes = [
       permission: 'EDIT_ROLES'
     },
     resolve: {
-      role: EditRoleResolver
+      role: RoleResolver
     },
   },
   {
@@ -62,7 +62,7 @@ const routes: Routes = [
       permission: 'VIEW_ROLES'
     },
     resolve: {
-      role: EditRoleResolver
+      role: RoleResolver
     },
   }
 ];

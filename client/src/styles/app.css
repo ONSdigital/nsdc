@@ -1,5 +1,9 @@
 @import '~bootstrap/dist/css/bootstrap.css';
 
+html {
+  overflow-y: scroll;
+}
+
 body {
     background: #fff;
 }
