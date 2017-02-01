@@ -12,7 +12,7 @@ const routes: Routes = [
     path: 'add',
     component: AddSupplierComponent,
     data: {
-      permission: 'ADD_SUPPLIERS'
+      permission: 'EDIT_JOURNEYS'
     }
   },
   {
@@ -20,7 +20,7 @@ const routes: Routes = [
     path: ':id',
     component: EditSupplierComponent,
     data: {
-      permission: 'EDIT_SUPPLIERS'
+      permission: 'EDIT_JOURNEYS'
     },
     resolve: {
       supplier: SupplierResolver
@@ -31,7 +31,7 @@ const routes: Routes = [
     path: '',
     component: SuppliersComponent,
     data: {
-      permission: 'VIEW_SUPPLIERS'
+      permission: 'VIEW_JOURNEYS'
     }
   },
 ];

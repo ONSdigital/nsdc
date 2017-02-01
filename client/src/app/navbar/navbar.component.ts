@@ -41,10 +41,9 @@ export class NavbarComponent {
       this.userPermissionsService.getUserPermissions()
       .subscribe(permissions => {
         const permissionShortNames = permissions.map(permission => permission.short_name);
+        this.userMenuOptions = [];
         MenuItems.forEach(item => {
-          if (permissionShortNames.includes(item.permission) &&
-            this.userMenuOptions.filter(i => i.permission === item.permission).length === 0
-          ) {
+          if (permissionShortNames.includes(item.permission)) {
             this.userMenuOptions.push(item);
           }
         });

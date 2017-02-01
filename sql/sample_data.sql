@@ -83,7 +83,19 @@ INSERT INTO public.supplier (name, description)
 VALUES ('HMRC', 'HMRC description');
 
 INSERT INTO public.journey (name, description, supplier_id)
-VALUES ('VAT', 'VAT File Journey', (SELECT supplier.supplier_id FROM supplier WHERE supplier.name = 'HMRC'));
+VALUES ('Thin VAT', 'Thin VAT File Journey', (SELECT supplier.supplier_id FROM supplier WHERE supplier.name = 'HMRC')),
+('Fat VAT', 'Fat VAT File Journey', (SELECT supplier.supplier_id FROM supplier WHERE supplier.name = 'HMRC'));
+
+INSERT INTO public.journey_version (journey_id, version_number, validator, extensions)
+VALUES ((SELECT journey.journey_id FROM journey WHERE journey.name = 'Thin VAT'), 1, 'vat_*', 'csv,txt'),
+	((SELECT journey.journey_id FROM journey WHERE journey.name = 'Fat VAT'), 1, 'fat_vat_*', 'zip,rar');
+
+INSERT INTO public.journey_version_role (journey_version_id, role_id) (
+	SELECT journey_version.journey_version_id, role.role_id FROM role CROSS JOIN journey_version
+	WHERE journey_version.validator in ('vat_*', 'fat_vat_*') AND role.name
+	in ('Access Control Manager', 'Data Director', 'Auditor', 'Data Importer')
+);
+
 
 INSERT INTO public.journey_step (name, description, short_name)
 VALUES ('Upload to Server', 'Upload the file to the server', 'UPLOAD_TO_SERVER'),
@@ -92,6 +104,13 @@ VALUES ('Upload to Server', 'Upload the file to the server', 'UPLOAD_TO_SERVER')
 ('Antivirus Check', 'Perform the Antivirus check on the uploaded file', 'ANTIVIRUS_CHECK'),
 ('File Level Check', 'Perform the File Level check on the uploaded file', 'FILE_LEVEL_CHECK');
 
-INSERT INTO public.journey_version (journey_id, version_number, validator)
-VALUES ((SELECT journey.journey_id FROM journey WHERE journey.name = 'VAT'), 1, 'vat_*');
+INSERT INTO public.journey_version_step (journey_version_id, journey_step_id) (
+	SELECT journey_version.journey_version_id, journey_step.journey_step_id FROM journey_version CROSS JOIN journey_step
+	WHERE journey_version.validator in ('vat_*', 'fat_vat_*')
+);
 
+INSERT INTO public.schedule (date, journey_version_id)
+VALUES ('2017-01-01', (SELECT journey_version.journey_version_id from journey_version WHERE journey_version.validator = 'vat_*' )),
+	('2017-02-01', (SELECT journey_version.journey_version_id from journey_version WHERE journey_version.validator = 'fat_vat_*' )),
+	('2017-02-01', (SELECT journey_version.journey_version_id from journey_version WHERE journey_version.validator = 'vat_*' )),
+	('2017-03-01', (SELECT journey_version.journey_version_id from journey_version WHERE journey_version.validator = 'vat_*' ));

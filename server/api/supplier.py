@@ -10,7 +10,7 @@ parser.add_argument('description')
 
 
 class Supplier(Resource):
-    @protected_resource('VIEW_SUPPLIERS')
+    @protected_resource('VIEW_JOURNEYS')
     def get(self, supplier_id=None):
 
         if supplier_id is not None:
@@ -19,7 +19,7 @@ class Supplier(Resource):
         else:
             return jsonify(SupplierData.serialize_list(SupplierData.query.order_by(SupplierData.name.asc()).all()))
 
-    @protected_resource('ADD_SUPPLIERS')
+    @protected_resource('EDIT_JOURNEYS')
     def post(self):
         request_json = parser.parse_args()
         supplier = SupplierData(
@@ -31,7 +31,7 @@ class Supplier(Resource):
         db.session.commit()
         return jsonify(supplier.serialize())
 
-    @protected_resource('EDIT_SUPPLIERS')
+    @protected_resource('EDIT_JOURNEYS')
     def put(self, supplier_id):
         supplier = SupplierData.query.get(supplier_id)
         request_json = parser.parse_args()
@@ -44,7 +44,7 @@ class Supplier(Resource):
         db.session.commit()
         return jsonify(supplier.serialize())
 
-    @protected_resource('DELETE_SUPPLIERS')
+    @protected_resource('EDIT_JOURNEYS')
     def delete(self, supplier_id):
         SupplierData.query.filter_by(id=supplier_id).delete()
         db.session.commit()
