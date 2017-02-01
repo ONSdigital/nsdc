@@ -29,7 +29,7 @@ import '../styles/app.css';
   declarations: [
     AppComponent,
     NavbarComponent,
-    routedComponents,
+    routedComponents
   ],
   providers: [
     UserAccountService,

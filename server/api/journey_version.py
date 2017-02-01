@@ -3,13 +3,13 @@ from flask import jsonify
 from flask_restful import reqparse, Resource
 from protected_resource import protected_resource
 from data.journey_version import JourneyVersionData
-from data.role import RoleData
 
 parser = reqparse.RequestParser()
 parser.add_argument('journey_id')
 parser.add_argument('version_number')
 parser.add_argument('validator')
 parser.add_argument('extensions')
+parser.add_argument('protocol')
 
 
 class JourneyVersion(Resource):
@@ -33,7 +33,8 @@ class JourneyVersion(Resource):
             request_json['journey_id'],
             request_json['version_number'],
             request_json['validator'],
-            request_json['extensions']
+            request_json['extensions'],
+            request_json['protocol']
         )
 
         db.session.add(journey_version)
@@ -51,6 +52,8 @@ class JourneyVersion(Resource):
             journey_version.validator = request_json['validator']
         if request_json['extensions'] is not None:
             journey_version.extensions = request_json['extensions']
+        if request_json['protocol'] is not None:
+            journey_version.extensions = request_json['protocol']
 
         db.session.commit()
         return jsonify(journey_version.serialize())
