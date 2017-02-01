@@ -1,8 +1,0 @@
-<h2>Welcome to the NSDC Dashboard, {{ self?.user.firstname }}</h2>
-<p class="dashboard-tag">Please select from the following options that you have available.</p>
-<div class="btn-container" *ngFor="let userMenuOption of userMenuOptions">
-  <a class="btn btn-default btn-lg" [routerLink]="['/' + userMenuOption.path]">
-    <span class="glyphicon {{ userMenuOption.icon }}"></span>
-    {{ userMenuOption.title }}
-  </a>
-</div>
