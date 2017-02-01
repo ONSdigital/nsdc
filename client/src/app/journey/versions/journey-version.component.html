@@ -21,6 +21,14 @@
       <input type="text" #refName class="form-control" formControlName="extensions" placeholder="Valid Extensions e.g. txt,rar,zip">
       <nsdc-validator [control]="journeyVersionForm.controls['extensions']"></nsdc-validator>
     </div>
+    <div class="form-group">
+      <label>Protocol:</label>
+      <select class="form-control" formControlName="protocol">
+        <option value="default">Default</option>
+        <option value="secure">Secure</option>
+      </select>
+      <nsdc-validator [control]="journeyVersionForm.controls['protocol']"></nsdc-validator>
+    </div>
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
 </div>

@@ -28,7 +28,8 @@ export class AddJourneyVersionComponent implements OnInit {
     this.journeyVersionForm = this._formBuilder.group({
       version_number: ['', [Validators.required]],
       validator: ['', [Validators.required]],
-      extensions: ['', [Validators.required]]
+      extensions: ['', [Validators.required]],
+      protocol: ['', [Validators.required]]
     });
     this.journeyVersion = new JourneyVersion();
     this.route.data.subscribe(data => this.journey = data['journey']);
