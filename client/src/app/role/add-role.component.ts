@@ -1,17 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Role } from '../role';
-import { RoleService } from '../role.service';
+import { Role } from './role';
+import { RoleService } from './role.service';
 
 @Component({
   selector: 'add-role',
-  templateUrl : '../role.component.html'
+  templateUrl : 'role.component.html'
 })
 export class AddRoleComponent implements OnInit {
   roleForm: FormGroup;
   role: Role;
-  errorMsg: string;
 
   public submitAttempt: boolean = false;
 
@@ -23,16 +22,15 @@ export class AddRoleComponent implements OnInit {
 
   ngOnInit() {
     this.roleForm = this._formBuilder.group({
-      name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
-      description: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]]
+      name: ['', [Validators.required]],
+      description: ['', [Validators.required]]
     });
     this.role = new Role();
   }
 
 
   onSubmit() {
-    this.role.name = this.roleForm.controls['name'].value;
-    this.role.description = this.roleForm.controls['description'].value;
+    Object.keys(this.roleForm.controls).forEach(key => this.role[key] = this.roleForm.controls[key].value);
     this.roleService.addRole(this.role)
     .then(
       () => {
