@@ -9,7 +9,6 @@ import { LoginService } from '../login/login.service';
 
 @Injectable()
 export class JourneyService {
-
   private actionUrl: string;
   public headers: Headers;
 

@@ -10,7 +10,6 @@ import { Supplier, SupplierService } from '../supplier';
   templateUrl: 'journey.component.html'
 })
 export class AddJourneyComponent implements OnInit {
-
   journeyForm: FormGroup;
   journey: Journey;
   suppliers: Supplier[];
@@ -26,18 +25,16 @@ export class AddJourneyComponent implements OnInit {
 
   ngOnInit() {
     this.journeyForm = this._formBuilder.group({
-      name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
-      description: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
-      supplier_id: [null, [Validators.required, Validators.minLength(1), Validators.maxLength(30)]]
+      name: ['', [Validators.required]],
+      description: ['', [Validators.required]],
+      supplier_id: [null, [Validators.required]]
     });
     this.journey = new Journey();
     this.supplierService.getSuppliers().then(suppliers => this.suppliers = suppliers);
   }
 
   onSubmit() {
-    this.journey.name = this.journeyForm.controls['name'].value;
-    this.journey.description = this.journeyForm.controls['description'].value;
-    this.journey.supplier_id = this.journeyForm.controls['supplier_id'].value;
+    Object.keys(this.journeyForm.controls).forEach(key => this.journey[key] = this.journeyForm.controls[key].value);
     this.journeyService.addJourney(this.journey)
     .subscribe(
       () => {

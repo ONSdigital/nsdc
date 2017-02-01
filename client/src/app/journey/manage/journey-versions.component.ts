@@ -9,7 +9,6 @@ import { JourneyVersion } from '../versions/journey-version';
   templateUrl: 'journey-versions.component.html'
 })
 export class JourneyVersionsComponent implements OnInit {
-
   versions: JourneyVersion[];
   selectedJourneyId: number;
   selectedVersionId: number;

@@ -21,9 +21,7 @@ export class JourneysComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true;
-    this.route.params.subscribe(params => {
-      this.selectedJourneyId = Number(params['id']);
-    });
+    this.route.params.subscribe(params => this.selectedJourneyId = Number(params['id']));
     this.journeyService.getJourneys()
     .subscribe(journeys => {
       this.journeys = journeys;
@@ -36,9 +34,12 @@ export class JourneysComponent implements OnInit {
     this.router.navigate(['journeys', journeyId]);
   }
 
-  onDeleteClicked(event, journeyId) {
-    event.stopPropagation();
-    console.log(journeyId);
+  onDeleteClicked(journeyId) {
+    this.journeyService.deleteJourney(journeyId)
+      .subscribe(() => {
+        this.journeyService.getJourneys()
+          .subscribe(journeys => this.journeys = journeys);
+      });
   }
 
   onEditClicked(event, journeyId) {
