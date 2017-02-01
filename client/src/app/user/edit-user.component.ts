@@ -3,9 +3,9 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from './user.service';
 import { User } from './user';
-import { Configuration } from '../app.constants';
 import { Role } from '../role/role';
 import { RoleService } from '../role/role.service';
+import { ValidatorService } from '../validator/validator.service';
 
 @Component({
   selector: 'nsdc-edit-user',
@@ -33,7 +33,7 @@ export class EditUserComponent implements OnInit {
       firstname: [null, [Validators.required]],
       lastname: [ null, [Validators.required]],
       role_id: [null, [Validators.required]],
-      email: [null, [Validators.pattern('^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,63}$')]],
+      email: ['', [Validators.required, ValidatorService.emailValidator]],
       username: [null, [Validators.required]],
       password: [null, [Validators.required]],
       status: []

@@ -4,19 +4,13 @@
     <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
             <label>Firstname:</label>
-            <input type="text" #refName class="form-control" formControlName="firstname" placeholder="Your firstname">                       
-            <div *ngIf="userForm.controls['firstname'].hasError('required') && userForm.controls['firstname'].touched"
-                 class="alert alert-danger">
-                Please enter a name.
-            </div>
+            <input type="text" #refName class="form-control" formControlName="firstname" placeholder="Your firstname">
+	          <nsdc-validator [control]="userForm.controls['firstname']"></nsdc-validator>
         </div>
         <div class="form-group">
             <label>Lastname:</label>
-            <input type="text" #refName class="form-control" formControlName="lastname" placeholder="Your lastname">                       
-            <div *ngIf="userForm.controls['lastname'].hasError('required') && userForm.controls['lastname'].touched"
-                 class="alert alert-danger">
-                Please enter a name.
-            </div>
+            <input type="text" #refName class="form-control" formControlName="lastname" placeholder="Your lastname">
+	          <nsdc-validator [control]="userForm.controls['lastname']"></nsdc-validator>
         </div>
 
         <div class="form-group">
@@ -25,36 +19,24 @@
                 <option style="display:block" value="null">Choose an option</option>
                 <option *ngFor="let role of roles" [value]="role.id">{{ role.name }} </option>
             </select>
-            <div *ngIf="userForm.controls['role_id'].hasError('required') && userForm.controls['role_id'].touched"
-                class="alert alert-danger">
-                Please enter role.
-            </div>            
+	          <nsdc-validator [control]="userForm.controls['role_id']"></nsdc-validator>
         </div>
 
         <div class="form-group">
             <label>Username:</label>
             <input type="text" #refName class="form-control" formControlName="username" placeholder="Your username">                       
-            <div *ngIf="userForm.controls['username'].hasError('required') && userForm.controls['username'].touched"
-                 class="alert alert-danger">
-                Please enter a username.
-            </div>
+            <nsdc-validator [control]="userForm.controls['username']"></nsdc-validator>
         </div>
 
         <div class="form-group">
             <label>Password:</label>
-            <input type="password" #refName class="form-control" formControlName="password" placeholder="Your password">                       
-            <div *ngIf="userForm.controls['password'].hasError('required') && userForm.controls['password'].touched"
-                 class="alert alert-danger">
-                Please enter a password.
-            </div>
+            <input type="password" #refName class="form-control" formControlName="password" placeholder="Your password">
+	          <nsdc-validator [control]="userForm.controls['password']"></nsdc-validator>
         </div>
         <div class="form-group">
             <label>Email:</label>
             <input type="text" class="form-control" formControlName="email" placeholder="Your email">
-            <div *ngIf="userForm.controls['email'].hasError('required') && userForm.controls['email'].touched"
-                 class="alert alert-danger">
-                Please enter email address.
-            </div>            
+	          <nsdc-validator [control]="userForm.controls['email']"></nsdc-validator>
         </div>
         <div *ngIf="submitFailed" class="alert alert-danger">
             Add user failed

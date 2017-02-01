@@ -5,6 +5,7 @@ import { UserService } from './user.service';
 import { User } from './user';
 import { Role } from '../role/role';
 import { RoleService } from '../role/role.service';
+import { ValidatorService } from '../validator/validator.service';
 
 @Component({
   selector: 'nsdc-add-user',
@@ -29,11 +30,11 @@ export class AddUserComponent implements OnInit {
     this.userForm = this._formBuilder.group({
       firstname: ['', [Validators.required]],
       lastname: ['', [Validators.required]],
-      email: [null, [Validators.required]],
+      email: ['', [Validators.required, ValidatorService.emailValidator]],
       username: [null, [Validators.required]],
       password: [null, [Validators.required]],
       status: [],
-      role_id: [null, [Validators.required,]]
+      role_id: [null, [Validators.required]]
     });
 
     this.user = new User();

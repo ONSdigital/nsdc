@@ -8,6 +8,7 @@ import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
 import { UserService } from './user.service';
 import { RoleService } from '../role/role.service';
 import { ConfirmModalModule } from '../confirm-modal';
+import { ValidatorModule } from '../validator/validator.module';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { ConfirmModalModule } from '../confirm-modal';
     ReactiveFormsModule,
     ModalModule.forRoot(),
     BootstrapModalModule,
-    ConfirmModalModule
+    ConfirmModalModule,
+    ValidatorModule
   ],
   declarations: [
     routedComponents
