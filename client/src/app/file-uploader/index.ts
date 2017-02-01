@@ -1,1 +1,1 @@
-export { FileUploaderModule } from 'file-uploader.module';
+export { FileUploaderModule } from './file-uploader.module';

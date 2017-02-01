@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 import { JourneyService } from '../../journey.service';
 import { PermissionService } from '../../permission/permission.service';
 import { JourneyVersion } from '../journey-version';
@@ -26,7 +27,7 @@ export class EditJourneyStepsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
+    private location: Location,
     private journeyService: JourneyService
   ) { }
 
@@ -56,7 +57,7 @@ export class EditJourneyStepsComponent implements OnInit {
     .subscribe(
       () => {
         this.submitPending = false;
-        this.router.navigate(['/journeys']);
+        this.location.back();
       },
       error => {
         this.submitPending = false;
@@ -66,6 +67,6 @@ export class EditJourneyStepsComponent implements OnInit {
   }
 
   cancel() {
-    this.router.navigate(['/journeys']);
+    this.location.back();
   }
 }
