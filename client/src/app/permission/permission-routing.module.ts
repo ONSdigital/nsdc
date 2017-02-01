@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { UserPermissionsGuard } from '../user-permissions.guard';
 import { PermissionListComponent } from './permission-list.component';
-import { AddPermissionComponent } from './add/add-permission.component';
-import { EditPermissionComponent } from './edit/edit-permission.component';
-import { EditPermissionResolver } from './edit/edit-permission.resolver';
+import { AddPermissionComponent } from './add-permission.component';
+import { EditPermissionComponent } from './edit-permission.component';
+import { PermissionResolver } from './permission.resolver';
 
 const routes: Routes = [
   {
@@ -23,7 +23,7 @@ const routes: Routes = [
       permission: 'EDIT_PERMISSIONS'
     },
     resolve: {
-      permission: EditPermissionResolver
+      permission: PermissionResolver
     }
   },
   {

@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
-import { Observable } from 'rxjs/Rx';
-import { PermissionService } from '../permission.service';
-import { Permission } from '../permission';
+import { PermissionService } from './permission.service';
+import { Permission } from './permission';
 
 @Injectable()
-export class EditPermissionResolver implements Resolve<Permission> {
+export class PermissionResolver implements Resolve<Permission> {
   constructor(
     private PermissionService: PermissionService
   ) {}

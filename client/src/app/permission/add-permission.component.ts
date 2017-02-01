@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Permission } from '../permission';
-import { PermissionService } from '../permission.service';
+import { Permission } from './permission';
+import { PermissionService } from './permission.service';
 
 @Component({
   selector: 'add-permission',
-  templateUrl: '../permission.component.html'
+  templateUrl: 'permission.component.html'
 })
 export class AddPermissionComponent implements OnInit {
-
   permissionForm: FormGroup;
   permission: Permission;
   submitPending = false;
@@ -23,9 +22,9 @@ export class AddPermissionComponent implements OnInit {
 
   ngOnInit() {
     this.permissionForm = this._formBuilder.group({
-      name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
-      short_name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
-      description: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]]
+      name: ['', [Validators.required]],
+      short_name: ['', [Validators.required]],
+      description: ['', [Validators.required]]
     });
     this.permission = new Permission();
   }
