@@ -53,7 +53,7 @@ class JourneyVersion(Resource):
         if request_json['extensions'] is not None:
             journey_version.extensions = request_json['extensions']
         if request_json['protocol'] is not None:
-            journey_version.extensions = request_json['protocol']
+            journey_version.protocol = request_json['protocol']
 
         db.session.commit()
         return jsonify(journey_version.serialize())
