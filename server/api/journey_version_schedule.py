@@ -8,14 +8,12 @@ from data.schedule import ScheduleData
 
 class JourneyVersionSchedule(Resource):
 
-    @protected_resource('VIEW_JOURNEYS')
     def get(self, journey_version_id):
         if request.args and request.args['with-version'] == 'true':
             return self.get_with_version(journey_version_id)
         schedules = ScheduleData.query.filter(journey_version_id == ScheduleData.journey_version_id)\
             .order_by(ScheduleData.date.asc())
         return jsonify(ScheduleData.serialize_list(schedules))
-
 
     def get_with_version(self, journey_version_id):
         journey_version = JourneyVersionData.query.get(journey_version_id)
