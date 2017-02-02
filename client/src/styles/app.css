@@ -148,3 +148,11 @@ a.disabled {
   width: 200px;
   margin: 0 0 35px 0;
 }
+
+.error-msg {
+  margin-top: 20px;
+}
+
+.nav-tabs li a {
+  cursor: pointer !important;
+}

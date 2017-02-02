@@ -13,6 +13,7 @@ from api.self import Self
 from api.self_permission import SelfPermissions
 from api.file import File
 from api.file_journey_audit import FileJourneyAudit
+from api.file_journey_audit_chart import FileJourneyAuditChart
 from api.journey_version_step import JourneyVersionStep
 from api.journey_step import JourneyStep
 from api.supplier import Supplier
@@ -127,6 +128,12 @@ api.add_resource(
     FileJourneyAudit,
     base_endpoint + 'files/audit/<id>'
 )
+
+api.add_resource(
+    FileJourneyAuditChart,
+    base_endpoint + 'files/audit/chart/<id>'
+)
+
 
 api.add_resource(
     FileUpload,

@@ -3,6 +3,7 @@ import { Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { File } from './file';
 import { FileAudit } from './file-audit';
+import { FileAuditChart } from './file-audit-chart';
 import { Configuration } from '../app.constants';
 import { LoginService } from '../login/login.service';
 
@@ -26,12 +27,12 @@ export class FileAuditService {
     .catch(this.handleError);
   }
 
-  getFileAudits(id) {
+  getFileAuditChartData(id) {
     this.headers.set('X-TOKEN', this.loginService.getSessionId());
-    return this.http.get(this.actionUrl + '/audit/' + id, { headers: this.headers })
-    .toPromise()
-    .then(response => response.json() as FileAudit[])
-    .catch(this.handleError);
+    return this.http.get(this.actionUrl + '/audit/chart/' + id, { headers: this.headers })
+      .toPromise()
+      .then(response => response.json() as FileAuditChart)
+      .catch(this.handleError);
   }
 
   pollForFileAudits(id, interval): Observable<FileAudit[]> {
