@@ -4,9 +4,7 @@ import { JourneyService } from '../../journey/journey.service';
 import { ScheduleService } from '../../schedule/schedule.service';
 import { NgUploaderOptions } from 'ngx-uploader';
 import { LoginService } from '../../login/login.service';
-
-
-const URL = 'http://localhost:5000/nsdc/v1.0/upload';
+import { Configuration } from '../../app.constants';
 
 @Component({
   selector: 'journey-file-upload',
@@ -19,14 +17,18 @@ export class JourneyFileUploadComponent implements OnInit {
   validator: RegExp;
   loading = false;
   options: NgUploaderOptions;
+  URL: string;
 
   constructor(
     private route: ActivatedRoute,
     private scheduleService: ScheduleService,
     private journeyService: JourneyService,
     public loginService: LoginService,
-    private router: Router
-  ) { }
+    private router: Router,
+    private config: Configuration
+  ) {
+    this.URL = config.Server + '/nsdc/v1.0/upload';
+  }
 
   ngOnInit() {
     this.loading = true;
@@ -36,7 +38,7 @@ export class JourneyFileUploadComponent implements OnInit {
       .subscribe(journeyVersionSchedule => {
         this.journeyVersionSchedule = journeyVersionSchedule;
         this.options = new NgUploaderOptions({
-          url: URL,
+          url: this.URL,
           multiple: false,
           autoUpload: false,
           customHeaders: {
