@@ -11,6 +11,9 @@ Once this has been installed, run the following commands:
 * `npm install`
 * `npm start`
 
+To run in prod `npm run start:prod` then navigate to localhost:8080
+
+
 Navigate to a browser and the application will be served on `localhost:3000`
 
 To run the prod build and create the bundle you will need to run `npm run build:prod`
