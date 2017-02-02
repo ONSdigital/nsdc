@@ -1,5 +1,5 @@
 
-INSERT INTO public.role (name, description)
+INSERT INTO role (name, description)
 VALUES 	('Data Director', 'Role with overall corporate responsibility across the data holding. Unlikely to have permissions to the data'),
 	('Data Owner/Supplier', 'Supplier and owner of the data. Both external and internal sources'),
 	('Data Manager', 'Manager responsible for receiving the data from the Data Owner/Supplier. Covers Data lifecycle management.'),
@@ -10,7 +10,7 @@ VALUES 	('Data Director', 'Role with overall corporate responsibility across the
 	('Data Importer', 'Imports the data into reception area. Checks/assesses for Malware.'),
 	('Access Control Manager', 'Agrees and sets role/data and functionality permissions. Responsible for governance process.');
 
-INSERT INTO public.permission (name, description, short_name)
+INSERT INTO permission (name, description, short_name)
 VALUES ('View Users', 'The user can view a list of the users', 'VIEW_USERS'),
 	('Edit Users', 'The user can edit a user', 'EDIT_USERS'),
 	('Add Users', 'The user can add a user', 'ADD_USERS'),
@@ -29,22 +29,22 @@ VALUES ('View Users', 'The user can view a list of the users', 'VIEW_USERS'),
 	('Data Importer', 'The user can import data', 'DATA_IMPORT'),
 	('Data Auditer', 'The user can audit a file', 'DATA_AUDIT');
 	
-INSERT into public.role_permission (role_id, permission_id) ( 
+INSERT into role_permission (role_id, permission_id) ( 
   SELECT role.role_id, permission.permission_id FROM role CROSS JOIN permission 
     WHERE role.name = 'Data User' AND permission.short_name in ('VIEW_USERS', 'VIEW_ROLES')
 );
 
-INSERT into public.role_permission (role_id, permission_id) ( 
+INSERT into role_permission (role_id, permission_id) ( 
   SELECT role.role_id, permission.permission_id FROM role CROSS JOIN permission 
 		WHERE role.name in ('Data Manager', 'Data Importer', 'Data Owner/Supplier') AND permission.short_name in ('DATA_IMPORT')
 );
 
-INSERT into public.role_permission (role_id, permission_id) ( 
+INSERT into role_permission (role_id, permission_id) ( 
   SELECT role.role_id, permission.permission_id FROM role CROSS JOIN permission 
 		WHERE role.name in ('Output Checker', 'Data Preparation') AND permission.short_name in ('DATA_AUDIT')
 );
 
-INSERT into public.role_permission (role_id, permission_id) ( 
+INSERT into role_permission (role_id, permission_id) ( 
   SELECT role.role_id, permission.permission_id FROM role CROSS JOIN permission 
 		WHERE role.name in ('Access Control Manager', 'Data Director', 'Auditor') AND permission.short_name
 		in (
@@ -68,7 +68,7 @@ INSERT into public.role_permission (role_id, permission_id) (
 		)
 );
 
-INSERT INTO public.user (firstname, lastname, email, username, password, status, role_id)
+INSERT INTO user (firstname, lastname, email, username, password, status, role_id)
 VALUES 	('Test', 'Test', 'test_dd@test.com', 'test_dd', 'test', 'active', (SELECT role.role_id FROM role WHERE role.name = 'Data Director')),
   ('Test', 'Test', 'test_do@test.com', 'test_do', 'test', 'active', (SELECT role.role_id FROM role WHERE role.name = 'Data Owner/Supplier')),
   ('Test', 'Test', 'test_dm@test.com', 'test_dm', 'test', 'active', (SELECT role.role_id FROM role WHERE role.name = 'Data Manager')),
@@ -79,37 +79,37 @@ VALUES 	('Test', 'Test', 'test_dd@test.com', 'test_dd', 'test', 'active', (SELEC
  	('Test', 'Test', 'test_di@test.com', 'test_di', 'test', 'active', (SELECT role.role_id FROM role WHERE role.name = 'Data Importer')),
 	('Test', 'Test', 'test_acm@test.com', 'test_acm', 'test', 'active', (SELECT role.role_id FROM role WHERE role.name = 'Access Control Manager'));
 
-INSERT INTO public.supplier (name, description)
+INSERT INTO supplier (name, description)
 VALUES ('HMRC', 'HMRC description');
 
-INSERT INTO public.journey (name, description, supplier_id)
+INSERT INTO journey (name, description, supplier_id)
 VALUES ('Thin VAT', 'Thin VAT File Journey', (SELECT supplier.supplier_id FROM supplier WHERE supplier.name = 'HMRC')),
 ('Fat VAT', 'Fat VAT File Journey', (SELECT supplier.supplier_id FROM supplier WHERE supplier.name = 'HMRC'));
 
-INSERT INTO public.journey_version (journey_id, version_number, validator, extensions)
+INSERT INTO journey_version (journey_id, version_number, validator, extensions)
 VALUES ((SELECT journey.journey_id FROM journey WHERE journey.name = 'Thin VAT'), 1, 'vat_*', 'csv,txt'),
 	((SELECT journey.journey_id FROM journey WHERE journey.name = 'Fat VAT'), 1, 'fat_vat_*', 'zip,rar');
 
-INSERT INTO public.journey_version_role (journey_version_id, role_id) (
+INSERT INTO journey_version_role (journey_version_id, role_id) (
 	SELECT journey_version.journey_version_id, role.role_id FROM role CROSS JOIN journey_version
 	WHERE journey_version.validator in ('vat_*', 'fat_vat_*') AND role.name
 	in ('Access Control Manager', 'Data Director', 'Auditor', 'Data Importer')
 );
 
 
-INSERT INTO public.journey_step (name, description, short_name)
+INSERT INTO journey_step (name, description, short_name)
 VALUES ('Upload to Server', 'Upload the file to the server', 'UPLOAD_TO_SERVER'),
 ('Upload to Move It', 'Upload the file to the move it server', 'UPLOAD_TO_MOVEIT'),
 ('Upload to Sandbox VM', 'Upload the file to the Sandbox VM', 'UPLOAD_TO_SANDBOX'),
 ('Antivirus Check', 'Perform the Antivirus check on the uploaded file', 'ANTIVIRUS_CHECK'),
 ('File Level Check', 'Perform the File Level check on the uploaded file', 'FILE_LEVEL_CHECK');
 
-INSERT INTO public.journey_version_step (journey_version_id, journey_step_id) (
+INSERT INTO journey_version_step (journey_version_id, journey_step_id) (
 	SELECT journey_version.journey_version_id, journey_step.journey_step_id FROM journey_version CROSS JOIN journey_step
 	WHERE journey_version.validator in ('vat_*', 'fat_vat_*')
 );
 
-INSERT INTO public.schedule (date, journey_version_id)
+INSERT INTO schedule (date, journey_version_id)
 VALUES ('2017-01-01', (SELECT journey_version.journey_version_id from journey_version WHERE journey_version.validator = 'vat_*' )),
 	('2017-02-01', (SELECT journey_version.journey_version_id from journey_version WHERE journey_version.validator = 'fat_vat_*' )),
 	('2017-02-01', (SELECT journey_version.journey_version_id from journey_version WHERE journey_version.validator = 'vat_*' )),
