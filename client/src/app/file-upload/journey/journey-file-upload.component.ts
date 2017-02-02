@@ -27,7 +27,7 @@ export class JourneyFileUploadComponent implements OnInit {
     private router: Router,
     private config: Configuration
   ) {
-    this.URL = config.Server + '/nsdc/v1.0/upload';
+    this.URL = config.Server + 'nsdc/v1.0/upload';
   }
 
   ngOnInit() {
