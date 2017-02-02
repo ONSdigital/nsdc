@@ -15,25 +15,33 @@
       </option>
     </select>
   </div>
-  <table *ngIf="selectedFileId && !loading" class="table">
-    <thead>
-    <tr>
-      <th>Journey Step</th>
-      <th>Status</th>
-      <th>Description</th>
-      <th>Start Time</th>
-      <th>End Time</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let audit of audits">
-      <td>{{ audit.step }}</td>
-      <td>{{ audit.status }}</td>
-      <td>{{ audit.description }}</td>
-      <td>{{ audit.start_time }}</td>
-      <td>{{ audit.end_time }}</td>
-    </tr>
-    </tbody>
-  </table>
   <loading *ngIf="loading"></loading>
 </div>
+
+<nsdc-tabs *ngIf="selectedFileId && !loading">
+  <nsdc-tab [title]="'Audit'">
+    <table class="table">
+      <thead>
+      <tr>
+        <th>Journey Step</th>
+        <th>Status</th>
+        <th>Description</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let audit of audits">
+        <td>{{ audit.step }}</td>
+        <td>{{ audit.status }}</td>
+        <td>{{ audit.description }}</td>
+        <td>{{ audit.start_time }}</td>
+        <td>{{ audit.end_time }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </nsdc-tab>
+  <nsdc-tab *ngIf="chartData" [title]="'Results'">
+    <nsdc-bar-chart [data]="chartData"></nsdc-bar-chart>
+  </nsdc-tab>
+</nsdc-tabs>

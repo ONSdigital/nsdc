@@ -11,7 +11,7 @@ import { Configuration } from '../app.constants';
 })
 
 export class FileAuditComponent implements OnInit, OnDestroy {
-
+  private chartData = [];
   public files: File[];
   public audits: FileAudit[];
   loading = false;
@@ -30,6 +30,7 @@ export class FileAuditComponent implements OnInit, OnDestroy {
       this.loading = false;
       this.dropdownLoading = false;
     });
+    // this.generateData(1);
   }
 
   ngOnDestroy() {
@@ -50,6 +51,15 @@ export class FileAuditComponent implements OnInit, OnDestroy {
         this.audits = audits;
         this.loading = false;
       });
+
+      this.fileAuditService.getFileAuditChartData(id)
+        .then(data => this.generateData(data))
     }
+  }
+
+  generateData(data) {
+    delete data[0].filename;
+    this.chartData = Object.keys(data[0]).map(key => [key, data[0][key]]);
+    this.chartData.push(['total', data[0].processed + data[0].error]);
   }
 }
