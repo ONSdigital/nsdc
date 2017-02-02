@@ -13,7 +13,7 @@ export class BarChartComponent implements OnInit, OnChanges {
   @Input()
   private data: Array<any>;
 
-  private margin: any = { top: 20, bottom: 20, left: 20, right: 20};
+  private margin: any = { top: 20, bottom: 20, left: 30, right: 20};
   private chart: any;
   private width: number;
   private height: number;
@@ -47,26 +47,26 @@ export class BarChartComponent implements OnInit, OnChanges {
       .attr('height', element.offsetHeight);
     this.chart = svg.append('g')
       .attr('class', 'bars')
-      .attr('transform', `translate(${this.margin.left + 10}, ${this.margin.top})`);
+      .attr('transform', `translate(${this.margin.left}, ${this.margin.top})`);
     let xDomain = this.data.map(d => d[0]);
     let yDomain = [0, d3.max(this.data, d => d[1])];
     this.xScale = d3.scaleBand().padding(0.1).domain(xDomain).rangeRound([0, this.width]);
     this.yScale = d3.scaleLinear().domain(yDomain).range([this.height, 0]);
-    this.colors = d3.scaleLinear().domain([0, this.data.length]).range(<any[]>['red', 'blue']);
+    this.colors = d3.scaleOrdinal().domain([0, this.data.length]);
     this.xAxis = svg.append('g')
       .attr('class', 'axis axis-x')
-      .attr('transform', `translate(${this.margin.left + 10}, ${this.margin.top + this.height})`)
+      .attr('transform', `translate(${this.margin.left}, ${this.margin.top + this.height})`)
       .call(d3.axisBottom(this.xScale));
     this.yAxis = svg.append('g')
       .attr('class', 'axis axis-y')
-      .attr('transform', `translate(${this.margin.left + 10}, ${this.margin.top})`)
+      .attr('transform', `translate(${this.margin.left}, ${this.margin.top})`)
       .call(d3.axisLeft(this.yScale));
   }
 
   updateChart() {
     this.xScale.domain(this.data.map(d => d[0]));
     this.yScale.domain([0, d3.max(this.data, d => d[1])]);
-    this.colors.domain([0, this.data.length]);
+    this.colors.domain([0, 2]).range(['red', '#00709f', '#66CD00']);
     this.xAxis.transition().call(d3.axisBottom(this.xScale));
     this.yAxis.transition().call(d3.axisLeft(this.yScale));
 
@@ -75,10 +75,11 @@ export class BarChartComponent implements OnInit, OnChanges {
 
     update.exit().remove();
 
+    const barOffset = this.margin.left * 4;
     this.chart.selectAll('.bar').transition()
-      .attr('x', d => this.xScale(d[0]))
-      .attr('y', d => this.yScale(d[1]))
-      .attr('width', d => this.xScale.bandwidth())
+      .attr('x', d => this.xScale(d[0]) + barOffset / 2)
+      .attr('y', d => this.yScale(d[1]) + barOffset/ 2)
+      .attr('width', d => this.xScale.bandwidth() - barOffset)
       .attr('height', d => this.height - this.yScale(d[1]))
       .style('fill', (d, i) => this.colors(i));
 
@@ -86,9 +87,9 @@ export class BarChartComponent implements OnInit, OnChanges {
       .enter()
       .append('rect')
       .attr('class', 'bar')
-      .attr('x', d => this.xScale(d[0]))
-      .attr('y', d => this.yScale(0))
-      .attr('width', this.xScale.bandwidth())
+      .attr('x', d => this.xScale(d[0]) + barOffset / 2)
+      .attr('y', d => this.yScale(0) + barOffset / 2)
+      .attr('width', this.xScale.bandwidth() - barOffset)
       .attr('height', 0)
       .style('fill', (d, i) => this.colors(i))
       .transition()

@@ -41,7 +41,8 @@
       </tbody>
     </table>
   </nsdc-tab>
-  <nsdc-tab *ngIf="chartData" [title]="'Results'">
-    <nsdc-bar-chart [data]="chartData"></nsdc-bar-chart>
+  <nsdc-tab [title]="'Results'">
+    <nsdc-bar-chart [hidden]="!chartData.length > 0" [data]="chartData"></nsdc-bar-chart>
+    <div *ngIf="chartData.length === 0" class="error-msg alert alert-danger">No Data Processed</div>
   </nsdc-tab>
 </nsdc-tabs>
