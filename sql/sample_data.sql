@@ -86,9 +86,9 @@ INSERT INTO journey (name, description, supplier_id)
 VALUES ('Thin VAT', 'Thin VAT File Journey', (SELECT supplier.supplier_id FROM supplier WHERE supplier.name = 'HMRC')),
 ('Fat VAT', 'Fat VAT File Journey', (SELECT supplier.supplier_id FROM supplier WHERE supplier.name = 'HMRC'));
 
-INSERT INTO journey_version (journey_id, version_number, validator, extensions)
-VALUES ((SELECT journey.journey_id FROM journey WHERE journey.name = 'Thin VAT'), 1, 'vat_*', 'csv,txt'),
-	((SELECT journey.journey_id FROM journey WHERE journey.name = 'Fat VAT'), 1, 'fat_vat_*', 'zip,rar');
+INSERT INTO journey_version (journey_id, version_number, validator, extensions, protocol)
+VALUES ((SELECT journey.journey_id FROM journey WHERE journey.name = 'Thin VAT'), 1, 'vat_*', 'csv,txt', 'default'),
+	((SELECT journey.journey_id FROM journey WHERE journey.name = 'Fat VAT'), 1, 'fat_vat_*', 'zip,rar', 'default');
 
 INSERT INTO journey_version_role (journey_version_id, role_id) (
 	SELECT journey_version.journey_version_id, role.role_id FROM role CROSS JOIN journey_version
