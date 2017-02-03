@@ -17,6 +17,9 @@ export class ConfirmModalDirective {
   @Input('nsdcConfirmModal')
   public messageBody = 'Are you sure you want to do this?';
 
+  @Input()
+  public confirm: boolean = false;
+
   @Output()
   public confirmed = new EventEmitter();
 
@@ -34,20 +37,24 @@ export class ConfirmModalDirective {
   @HostListener('click', ['$event'])
   onClick(e) {
     e.stopPropagation();
-    const modalConfirmation = this.modal.confirm()
-    .size('sm')
-    .isBlocking(false)
-    .showClose(true)
-    .keyboard(27)
-    .title('Confirm')
-    .body(this.messageBody)
-    .open();
-    modalConfirmation
-    .then(dialog => dialog.result)
-    .then(
-      () => this.confirmed.emit(),
-      () => this.canceled.emit()
-    );
+    if (!this.confirm) {
+      this.confirmed.emit();
+    } else {
+      const modalConfirmation = this.modal.confirm()
+      .size('sm')
+      .isBlocking(false)
+      .showClose(true)
+      .keyboard(27)
+      .title('Confirm')
+      .body(this.messageBody)
+      .open();
+      modalConfirmation
+      .then(dialog => dialog.result)
+      .then(
+        () => this.confirmed.emit(),
+        () => this.canceled.emit()
+      );
+    }
   }
 
 }

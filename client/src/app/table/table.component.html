@@ -1,0 +1,43 @@
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th *ngFor="let column of columns" class="table-header">
+          {{column.name || column.prop}}
+        </th>
+        <th *ngIf="options && options.length">
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of rows">
+        <td *ngFor="let column of columns">
+          <template [ngIf]="row[column.prop]">
+            {{row[column.prop]}}
+          </template>
+        </td>
+        <td *ngIf="options && options.length">
+          <template [ngIf]="showOptions(row)">
+            <template ngFor let-option [ngForOf]="options | reverse">
+              <button
+                *ngIf="option.type === 'button'"
+                class="btn btn-extra btn-{{option.style}} right"
+                [nsdcConfirmModal]="option.confirmMessage"
+                [confirm]="option.confirm"
+                (confirmed)="onOptionClicked(row.id, option)"
+              >
+                {{option.action}}
+              </button>
+              <a
+                *ngIf="option.type === 'icon'"
+                class="icon-links glyphicon glyphicon-{{option.icon}} right"
+                [nsdcConfirmModal]="option.confirmMessage"
+                [confirm]="option.confirm"
+                (confirmed)="onOptionClicked(row.id, option)"
+              >
+              </a>
+            </template>
+          </template>
+        </td>
+      </tr>
+    </tbody>
+  </table>

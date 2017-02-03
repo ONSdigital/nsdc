@@ -9,6 +9,9 @@ import { UserService } from './user.service';
 import { RoleService } from '../role/role.service';
 import { ConfirmModalModule } from '../confirm-modal';
 import { ValidatorModule } from '../validator/validator.module';
+import { UserTableComponent } from './user-table.component';
+import { TableComponent } from '../table';
+import { ReversePipe } from '../table/reverse.pipe';
 
 @NgModule({
   imports: [
@@ -22,7 +25,10 @@ import { ValidatorModule } from '../validator/validator.module';
     ValidatorModule
   ],
   declarations: [
-    routedComponents
+    routedComponents,
+    UserTableComponent,
+    TableComponent,
+    ReversePipe
   ],
   providers: [
     UserService,

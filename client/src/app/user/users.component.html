@@ -2,7 +2,6 @@
   <h2>Users</h2>
   <div class="manage">
     <button
-      [disabled]="!canAdd()"
       class="btn btn-primary right"
       [routerLink]="['/users/add']"
     >
@@ -13,51 +12,12 @@
     <option value="active">active</option>
     <option value="inactive">inactive</option>
   </select>
-  <table *ngIf="!loading" class="table table-hover">
-    <thead>
-      <tr>
-        <th>Username</th>
-        <th>Firstname</th>
-        <th>Lastname</th>
-        <th>Email</th>
-        <th>Status</th>                   
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let user of users">
-        <td>
-          <a [class.disabled]="!canEdit()"
-            (keydown.enter)="canEdit()"
-            href="#"
-            [routerLink]="['/users', user.id]"
-            routerLinkActive="active">
-            {{user.username}}
-          </a>
-        </td>
-        <td>{{user.firstname}}</td>
-        <td>{{user.lastname}}</td>
-        <td>{{user.email}}</td> 
-        <td>{{user.status}}</td>
-        <td class="options options-large">
-          <template [ngIf]="user.status!=='inactive'">
-            <button
-              [nsdcConfirmModal]="'Are you sure you want to deactivate this user?'"
-              (confirmed)="onDeactivate(user.id)"
-              class="btn btn-danger right"
-              [disabled]="!canEdit()">
-              Deactivate
-            </button>
-            <button
-              [disabled]="!canEdit()"
-              class="btn btn-primary btn-extra right"
-              [routerLink]="['/users', user.id]">
-              Edit
-            </button>
-          </template>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <nsdc-user-table
+    [users]="users"
+    *ngIf="!loading"
+    (deactivateClicked)="onDeactivate($event)"
+    (editClicked)="onEdit($event)"
+  >
+  </nsdc-user-table>
   <loading *ngIf="loading"></loading>
 </div>
