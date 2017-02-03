@@ -56,7 +56,7 @@ export class EditUserComponent implements OnInit {
     );
 
     this.userService.updateUser(this.user)
-    .then(
+    .subscribe(
       () => {
         this.submitPending = false;
         this.router.navigate(['/users']);

@@ -43,10 +43,6 @@ export class LoginService {
     return this.sessionId;
   }
 
-  getCurrentUserId() {
-    return this.currentUserId;
-  }
-
   logout() {
     sessionStorage.removeItem('session_id');
     sessionStorage.removeItem('user_id');

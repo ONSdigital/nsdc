@@ -10,7 +10,7 @@ export class UserResolver implements Resolve<User> {
     private UserService: UserService
   ) {}
 
-  resolve(route: ActivatedRouteSnapshot, state): Promise<User> {
+  resolve(route: ActivatedRouteSnapshot, state): Observable<User> {
     return this.UserService.getUserById(route.params['id']);
   }
 }

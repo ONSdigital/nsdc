@@ -15,14 +15,14 @@ export class UsersComponent implements OnInit {
   loading = false;
 
   constructor(
-    private http: Http,
     private userService: UserService,
     private userPermissionsService: UserPermissionsService
   ) { }
 
   ngOnInit(): void {
     this.loading = true;
-    this.userService.getUsersByStatus('active').then(users => {
+    this.userService.getUsersByStatus('active')
+    .subscribe(users => {
       this.users = users;
       this.loading = false;
     });
@@ -36,13 +36,13 @@ export class UsersComponent implements OnInit {
     this.userService.deactivateUser(userId)
     .subscribe(() => {
       this.userService.getUsersByStatus('active')
-      .then(users => this.users = users);
+      .subscribe(users => this.users = users);
     });
   }
 
   onStatusChange(status) {
     this.userService.getUsersByStatus(status)
-    .then(users => {
+    .subscribe(users => {
       this.users = users;
       this.loading = false;
     });

@@ -42,7 +42,7 @@ export class RoleManageComponent implements OnInit {
     if (roleId !== '') {
       this.loading = true;
       Promise.all([
-        this.userService.getUsersByRole(roleId).then(users => this.users = users),
+        this.userService.getUsersByRole(roleId).subscribe(users => this.users = users),
         this.permissionService.getPermissionByRole(roleId).then(permissions => this.permissions = permissions)
       ]).then(() => {
         this.loading = false;
