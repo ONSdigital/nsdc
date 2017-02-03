@@ -54,6 +54,36 @@ Now you can run the server using the following command:
 
 * `python server.py`
 
+
+## MoveIt
+
+The current process requires a file watcher to be present in order to trigger an upload to MoveIt.
+
+Prerequisites:
+
+* WinSCP
+
+To set this up locally, you'll need to do the following:
+
+* Copy watchServiceDB.py from /scripts/ to a local directory, e.g. C:\scripts
+* Acquire the two files (uploadFileToRemote & uploadToMoveIt) from the relevant people on the project, and put them into the same directory.
+
+Next you will need to generate an ssh-key in order to upload.  You can do this using PuttyGen, and once you have a key:
+
+* Open uploadFileToRemove and add it after `-hostkey=`
+* Open watchService.py and make sure the credentials to the Postgres DB are correct.
+* Open uploadToMoveIt.bat and make sure:
+** The path to WinSCP is correct
+** The path to be able to create a log exists (e.g. C:\temps)
+
+Now you will need to run the watchServiceDB.py within the command prompt.
+
+`python watchServiceDB.py C:\dev\temp\`
+
+To prove that both default and secure types are valid, you'll need to have two watchers running to both folders.
+
+If you trigger a file upload through the UI, it should now upload to MoveIt.
+
 ### Notes
 
 If you are updating the schema, you will need to update remove the migrations folder.
