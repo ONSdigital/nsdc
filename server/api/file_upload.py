@@ -54,7 +54,8 @@ class FileUpload(Resource):
             abort(400, error_message)
 
         try:
-            uploaded_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            path = app.config['SECURE_FOLDER'] if journey_version.protocol == 'secure' else app.config['UPLOAD_FOLDER']
+            uploaded_file.save(os.path.join(path, filename))
         except IOError:
             error_message = 'Could not write file to folder'
             write_file_status(filename, 'error', error_message, schedule_id)
