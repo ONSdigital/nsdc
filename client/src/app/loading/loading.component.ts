@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'loading',
+  selector: 'nsdc-loading',
   templateUrl: 'loading.component.html',
   styleUrls: ['loading.component.css']
 })

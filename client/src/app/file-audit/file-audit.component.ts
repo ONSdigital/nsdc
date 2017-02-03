@@ -5,18 +5,18 @@ import { FileAuditService } from './file-audit.service';
 import { Configuration } from '../app.constants';
 
 @Component({
-  selector: 'file-audit',
+  selector: 'nsdc-file-audit',
   templateUrl: 'file-audit.component.html',
   providers: [FileAuditService, Configuration]
 })
 
 export class FileAuditComponent implements OnInit, OnDestroy {
-  private chartData = [];
+  public chartData = [];
   public files: File[];
   public audits: FileAudit[];
-  loading = false;
-  dropdownLoading = false;
-  selectedFileId;
+  public loading = false;
+  public dropdownLoading = false;
+  public selectedFileId;
   pollSubscription;
 
   constructor(private fileAuditService: FileAuditService ) {}
@@ -43,6 +43,7 @@ export class FileAuditComponent implements OnInit, OnDestroy {
     if (this.pollSubscription) {
       this.pollSubscription.unsubscribe();
     }
+
     if (id !== '') {
       this.loading = true;
       this.pollSubscription = this.fileAuditService.pollForFileAudits(id, 2000)

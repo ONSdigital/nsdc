@@ -21,7 +21,7 @@ export class TabsComponent {
   selectTab(event, tab: Tab) {
     event.stopPropagation();
 
-    this.tabs.map(tab => tab.selected = false);
+    this.tabs.map(t => t.selected = false);
     tab.selected = true;
     this.selected.emit({ selected: tab });
   }

@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { Http } from '@angular/http';
 
 @Component({
-  selector: 'permission-list',
+  selector: 'nsdc-permission-list',
   templateUrl : './permission-list.component.html'
 })
 export class PermissionListComponent implements OnInit {

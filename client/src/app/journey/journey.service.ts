@@ -31,7 +31,7 @@ export class JourneyService {
   getJourneys() {
     this.headers.set('X-TOKEN', this.loginService.getSessionId());
     return this.http.get(this.actionUrl, { headers: this.headers })
-    .map(res => res.json())
+    .map(res => res.json());
   }
 
   updateJourney(journey: Journey) {

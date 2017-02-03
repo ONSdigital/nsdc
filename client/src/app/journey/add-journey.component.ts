@@ -6,7 +6,7 @@ import { JourneyService } from './journey.service';
 import { Supplier, SupplierService } from '../supplier';
 
 @Component({
-  selector: 'add-journey',
+  selector: 'nsdc-add-journey',
   templateUrl: 'journey.component.html'
 })
 export class AddJourneyComponent implements OnInit {

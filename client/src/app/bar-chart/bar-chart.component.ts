@@ -11,7 +11,7 @@ export class BarChartComponent implements OnInit, OnChanges {
   private chartContainer: ElementRef;
 
   @Input()
-  private data: Array<any>;
+  private data;
 
   private margin: any = { top: 20, bottom: 20, left: 30, right: 20};
   private chart: any;
@@ -78,7 +78,7 @@ export class BarChartComponent implements OnInit, OnChanges {
     const barOffset = this.margin.left * 4;
     this.chart.selectAll('.bar').transition()
       .attr('x', d => this.xScale(d[0]) + barOffset / 2)
-      .attr('y', d => this.yScale(d[1]) + barOffset/ 2)
+      .attr('y', d => this.yScale(d[1]) + barOffset / 2)
       .attr('width', d => this.xScale.bandwidth() - barOffset)
       .attr('height', d => this.height - this.yScale(d[1]))
       .style('fill', (d, i) => this.colors(i));

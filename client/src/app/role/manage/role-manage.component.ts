@@ -10,7 +10,7 @@ import { UserService } from '../../user/user.service';
 import { PermissionService } from '../../permission/permission.service';
 
 @Component({
-  selector: 'role-manage',
+  selector: 'nsdc-role-manage',
   templateUrl : './role-manage.component.html'
 })
 export class RoleManageComponent implements OnInit {

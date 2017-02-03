@@ -5,7 +5,7 @@ import { Role } from './role';
 import { RoleService } from './role.service';
 
 @Component({
-  selector: 'edit-role',
+  selector: 'nsdc-edit-role',
   templateUrl: 'role.component.html'
 })
 export class EditRoleComponent implements OnInit {

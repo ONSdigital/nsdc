@@ -11,7 +11,7 @@ export class ManageJourneyVersionGuard implements CanActivate {
   ) {}
 
   canActivate(route: ActivatedRouteSnapshot) {
-    const journeyId = route.params['id']
+    const journeyId = route.params['id'];
     return this.journeyService.getJourneyVersions(journeyId)
     .then(journeyVersions => {
       if (journeyVersions.length) {
