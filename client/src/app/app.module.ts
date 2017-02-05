@@ -2,7 +2,6 @@ import { NgModule, ApplicationRef } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 import { removeNgStyles, createNewHosts } from '@angularclass/hmr';
-import { ReactiveFormsModule } from '@angular/forms';
 import { AppComponent }   from './app.component';
 import { routing, routedComponents } from './app.routing';
 import { LoginService } from './login/login.service';
@@ -13,8 +12,7 @@ import { LoginGuard } from './login/login.guard';
 import { IsLoggedInGuard } from './login/is-logged-in.guard';
 import { Configuration } from './app.constants';
 import { NavbarComponent } from './navbar/navbar.component';
-import { ModalModule } from 'angular2-modal';
-import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
+import { SharedModule } from './shared';
 import '../styles/app.css';
 
 @NgModule({
@@ -22,9 +20,7 @@ import '../styles/app.css';
     BrowserModule,
     HttpModule,
     routing,
-    ReactiveFormsModule,
-    ModalModule.forRoot(),
-    BootstrapModalModule
+    SharedModule
   ],
   declarations: [
     AppComponent,
