@@ -1,27 +1,31 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from './user.service';
 import { User } from './user';
-import { Role } from '../role/role';
-import { RoleService } from '../role/role.service';
-import { ValidatorService } from '../shared/validator';
+import { RoleService, Role } from '../role';
 
 @Component({
   selector: 'nsdc-edit-user',
-  templateUrl : 'user.component.html'
+  template : `
+    <nsdc-user
+      [user]="user"
+      [roles]="roles"
+      [submitPending]="submitPending"
+      [submitFailed]="submitFailed"
+      [errorMessages]="errorMessages"
+      (userSubmit)="onSubmit($event)"
+    ></nsdc-user>
+  `
 })
 export class EditUserComponent implements OnInit {
-  userForm: FormGroup;
-  user: User;
-  users: User [];
-  roles: Role[];
-  submitPending = false;
-  submitFailed = false;
-  errorMessages;
+
+  public user: User;
+  public roles: Role[];
+  public submitPending = false;
+  public submitFailed = false;
+  public errorMessages;
 
   constructor(
-    private _formBuilder: FormBuilder,
     private userService: UserService,
     private roleService: RoleService,
     private router: Router,
@@ -29,31 +33,18 @@ export class EditUserComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.userForm = this._formBuilder.group({
-      firstname: [null, [Validators.required]],
-      lastname: [ null, [Validators.required]],
-      role_id: [null, [Validators.required]],
-      email: ['', [Validators.required, ValidatorService.emailValidator]],
-      username: [null, [Validators.required]],
-      password: [null, [Validators.required]],
-      status: []
-    });
-
-    this.roleService.getRoles().then(roles => this.roles = roles);
     this.route.data.subscribe(data => {
       const user = data['user'];
       this.user = user;
-      this.userForm.patchValue(user);
+      this.roleService.getRoles()
+      .then(roles => this.roles = roles);
     });
   }
 
-  onSubmit() {
+  onSubmit(user: User) {
     this.submitFailed = false;
     this.submitPending = true;
-
-    Object.keys(this.userForm.controls).forEach(key =>
-      this.user[key] = this.userForm.controls[key].value
-    );
+    this.errorMessages = null;
 
     this.userService.updateUser(this.user)
     .then(

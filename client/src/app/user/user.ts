@@ -4,7 +4,7 @@ export class User {
   lastname: string;
   username: string;
   password: string;
-  status: string;
+  status: string = 'active';
   email: string;
   role_id: number;
 }

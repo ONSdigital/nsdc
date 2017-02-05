@@ -3,6 +3,7 @@ import { UserRoutingModule, routedComponents } from './user-routing.module';
 import { SharedModule } from '../shared';
 import { UserService } from './user.service';
 import { RoleService } from '../role/role.service';
+import { UserComponent } from './user.component';
 
 @NgModule({
   imports: [
@@ -10,7 +11,8 @@ import { RoleService } from '../role/role.service';
     SharedModule
   ],
   declarations: [
-    routedComponents
+    routedComponents,
+    UserComponent
   ],
   providers: [
     UserService,

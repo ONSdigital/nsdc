@@ -9,7 +9,7 @@ export class ValidatorService {
   }
 
   static emailValidator(control) {
-    if (control.value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,63}$/)) {
+    if (control.value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,63}$/i)) {
       return null;
     } else {
       return { invalidEmailAddress: true };
