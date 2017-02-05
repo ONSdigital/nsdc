@@ -5,7 +5,8 @@ import { UserService } from './user.service';
 import { User } from './user';
 import { Role } from '../role/role';
 import { RoleService } from '../role/role.service';
-import { ValidatorService } from '../validator/validator.service';
+import { ValidatorService } from '../shared/validator';
+
 
 @Component({
   selector: 'nsdc-add-user',
