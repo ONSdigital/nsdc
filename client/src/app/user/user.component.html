@@ -1,51 +1,50 @@
 <div class="container">
-    <h2>User Data</h2>
-    <br>
-    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-        <div class="form-group">
-            <label>Firstname:</label>
-            <input type="text" #refName class="form-control" formControlName="firstname" placeholder="Your firstname">
-	          <nsdc-validator [control]="userForm.controls['firstname']"></nsdc-validator>
-        </div>
-        <div class="form-group">
-            <label>Lastname:</label>
-            <input type="text" #refName class="form-control" formControlName="lastname" placeholder="Your lastname">
-	          <nsdc-validator [control]="userForm.controls['lastname']"></nsdc-validator>
-        </div>
+  <h2>User Data</h2>
+  <br>
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label>Firstname:</label>
+      <input type="text" #refName class="form-control" formControlName="firstname" placeholder="Your firstname">
+      <nsdc-validator [control]="userForm.controls['firstname']"></nsdc-validator>
+    </div>
+    <div class="form-group">
+      <label>Lastname:</label>
+      <input type="text" #refName class="form-control" formControlName="lastname" placeholder="Your lastname">
+      <nsdc-validator [control]="userForm.controls['lastname']"></nsdc-validator>
+    </div>
+    <div class="form-group">
+      <label>Role:</label>
+      <select class="form-control" formControlName="role_id">
+        <option style="display:block" value="null">Choose an option</option>
+        <option *ngFor="let role of roles" [value]="role.id">{{ role.name }} </option>
+      </select>
+      <nsdc-validator [control]="userForm.controls['role_id']"></nsdc-validator>
+    </div>
 
-        <div class="form-group">
-            <label>Role:</label>
-            <select class="form-control" formControlName="role_id">
-                <option style="display:block" value="null">Choose an option</option>
-                <option *ngFor="let role of roles" [value]="role.id">{{ role.name }} </option>
-            </select>
-	          <nsdc-validator [control]="userForm.controls['role_id']"></nsdc-validator>
-        </div>
-
-        <div class="form-group">
-            <label>Username:</label>
-            <input type="text" #refName class="form-control" formControlName="username" placeholder="Your username">                       
-            <nsdc-validator [control]="userForm.controls['username']"></nsdc-validator>
-        </div>
-
-        <div class="form-group">
-            <label>Password:</label>
-            <input type="password" #refName class="form-control" formControlName="password" placeholder="Your password">
-	          <nsdc-validator [control]="userForm.controls['password']"></nsdc-validator>
-        </div>
-        <div class="form-group">
-            <label>Email:</label>
-            <input type="text" class="form-control" formControlName="email" placeholder="Your email">
-	          <nsdc-validator [control]="userForm.controls['email']"></nsdc-validator>
-        </div>
-        <div *ngIf="submitFailed" class="alert alert-danger">
-            Add user failed
-        </div>  
-        <button
-            type="submit"
-            class="btn btn-primary"
-            [disabled]="submitPending || userForm.pending">
-            Submit
-        </button> 
-    </form>
+    <div class="form-group">
+      <label>Username:</label>
+      <input type="text" #refName class="form-control" formControlName="username" placeholder="Your username">                       
+      <nsdc-validator [control]="userForm.controls['username']"></nsdc-validator>
+    </div>
+    <div class="form-group">
+      <label>Password:</label>
+      <input type="password" #refName class="form-control" formControlName="password" placeholder="Your password">
+      <nsdc-validator [control]="userForm.controls['password']"></nsdc-validator>
+    </div>
+    <div class="form-group">
+      <label>Email:</label>
+      <input type="text" class="form-control" formControlName="email" placeholder="Your email">
+      <nsdc-validator [control]="userForm.controls['email']"></nsdc-validator>
+    </div>
+    <div *ngIf="submitFailed" class="alert alert-danger">
+      Add user failed
+    </div>  
+    <button
+      type="submit"
+      class="btn btn-primary"
+      [disabled]="submitPending || userForm.pending"
+    >
+      Submit
+    </button> 
+  </form>
 </div>
