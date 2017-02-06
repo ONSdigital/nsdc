@@ -1,4 +1,4 @@
---index-url http://agbajb:Fr1d4Y!@art-p-01/artifactory/api/pypi/pypi-virtual/simple
+--index-url http://agbajb:Fr1d4Y!@art-p-01/artifactory/api/pypi/pypi-virtual/simple --trusted-host art-p-01
 alembic==0.8.9
 aniso8601==1.2.0
 click==6.6
