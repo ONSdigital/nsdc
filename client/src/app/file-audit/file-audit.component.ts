@@ -3,6 +3,7 @@ import { File } from './file';
 import { FileAudit } from './file-audit';
 import { FileAuditService } from './file-audit.service';
 import { Configuration } from '../app.constants';
+import { SupplierService } from '../supplier';
 
 @Component({
   selector: 'nsdc-file-audit',
@@ -16,17 +17,24 @@ export class FileAuditComponent implements OnInit, OnDestroy {
   public audits: FileAudit[];
   public loading = false;
   public dropdownLoading = false;
-  public selectedFileId;
-  pollSubscription;
+  public selectedFileId = null;
+  public suppliers;
+  private pollSubscription;
 
-  constructor(private fileAuditService: FileAuditService ) {}
+  constructor(
+    private fileAuditService: FileAuditService,
+    private supplierService: SupplierService
+  ) {}
 
   ngOnInit(): void {
     this.loading = true;
     this.dropdownLoading = true;
+    this.supplierService.getSuppliers()
+    .then(suppliers => this.suppliers = suppliers);
+
     this.fileAuditService.getFiles()
-    .then(files => this.files = files)
-    .then(() => {
+    .subscribe(files => {
+      this.files = files;
       this.loading = false;
       this.dropdownLoading = false;
     });
@@ -38,13 +46,26 @@ export class FileAuditComponent implements OnInit, OnDestroy {
     }
   }
 
+  onFiltersChanged({supplierId, to, from }) {
+    this.loading = true;
+    this.dropdownLoading = true;
+    this.fileAuditService.getFiles({supplierId, to, from })
+    .subscribe(files => {
+      this.files = files;
+      if (!this.files.some((file: File) => (file.id === this.selectedFileId))) {
+        this.selectedFileId = null;
+      }
+      this.loading = false;
+      this.dropdownLoading = false;
+    });
+  }
+
   onChange(id) {
     this.selectedFileId = id;
     if (this.pollSubscription) {
       this.pollSubscription.unsubscribe();
     }
-
-    if (id !== '') {
+    if (id && id !== '') {
       this.loading = true;
       this.pollSubscription = this.fileAuditService.pollForFileAudits(id, 2000)
       .subscribe(audits => {
@@ -53,7 +74,7 @@ export class FileAuditComponent implements OnInit, OnDestroy {
       });
 
       this.fileAuditService.getFileAuditChartData(id)
-        .then(data => this.generateData(data));
+      .then(data => this.generateData(data));
     }
   }
 

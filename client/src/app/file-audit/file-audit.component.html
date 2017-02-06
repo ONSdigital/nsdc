@@ -1,19 +1,29 @@
 <div>
   <h2>File Audit</h2>
   <br />
+  <nsdc-file-audit-filters
+    [suppliers]="suppliers"
+    (filtersChange)="onFiltersChanged($event)"
+  >
+  </nsdc-file-audit-filters>
   <div *ngIf="!dropdownLoading" class="form-group">
     <select
+      *ngIf="files.length"
       class="form-control"
-      (change)="onChange($event.target.value)"
+      [ngModel]="selectedFileId"
+      (ngModelChange)="onChange($event)"
     >
-      <option style="display:block" value="">Choose a File</option>
+      <option style="display:block" [ngValue]="null">Choose a File</option>
       <option
         *ngFor="let file of files"
-        [value]="file.id"
+        [ngValue]="file.id"
       >
-        {{ file.name }}
+        {{ file.name }}    ({{ file.timestamp | date:'medium' }})
       </option>
     </select>
+    <div *ngIf="!files.length">
+      No Files to audit
+    </div>
   </div>
   <nsdc-loading *ngIf="loading"></nsdc-loading>
 </div>

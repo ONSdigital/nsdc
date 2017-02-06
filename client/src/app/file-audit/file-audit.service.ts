@@ -19,12 +19,11 @@ export class FileAuditService {
     this.headers.set('Content-Type', 'application/json');
   }
 
-  getFiles() {
+  getFiles(filters: any = {}) {
     this.headers.set('X-TOKEN', this.loginService.getSessionId());
-    return this.http.get(this.actionUrl, { headers: this.headers })
-    .toPromise()
-    .then(response => response.json() as File[])
-    .catch(this.handleError);
+    const pathParams = `supplierId=${filters.supplierId || ''}&from=${filters.from || ''}&to=${filters.to || ''}`;
+    return this.http.get(this.actionUrl + '?' + pathParams, { headers: this.headers })
+    .map(response => response.json() as File[]);
   }
 
   getFileAuditChartData(id) {
