@@ -3,6 +3,9 @@ import { UserRoutingModule, routedComponents } from './user-routing.module';
 import { SharedModule } from '../shared';
 import { UserService } from './user.service';
 import { RoleService } from '../role/role.service';
+import { ConfirmModalModule } from '../confirm-modal';
+import { ValidatorModule } from '../validator/validator.module';
+import { HttpClientInterceptor } from '../http-client/http-client.interceptor';
 
 @NgModule({
   imports: [
@@ -14,7 +17,8 @@ import { RoleService } from '../role/role.service';
   ],
   providers: [
     UserService,
-    RoleService
+    RoleService,
+    HttpClientInterceptor
   ]
 })
 export class UserModule { }
