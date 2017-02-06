@@ -7,7 +7,7 @@ import { Self } from '../user-account';
 
 
 @Component({
-  selector: 'dashboard',
+  selector: 'nsdc-dashboard',
   templateUrl : './dashboard.component.html',
   providers: [UserAccountService]
 })

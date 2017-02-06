@@ -8,7 +8,7 @@ import { Permission } from '../../permission/permission';
 import { Observable } from 'rxjs/Observable';
 
 @Component({
-  selector: 'role-permissions',
+  selector: 'nsdc-role-permissions',
   templateUrl: 'role-permissions.component.html'
 })
 export class RolePermissionsComponent implements OnInit {

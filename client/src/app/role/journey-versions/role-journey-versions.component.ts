@@ -8,7 +8,7 @@ import { JourneyVersion } from '../../journey/versions/journey-version';
 import { Observable } from 'rxjs/Observable';
 
 @Component({
-  selector: 'role-journey-versions',
+  selector: 'nsdc-role-journey-versions',
   templateUrl : './role-journey-versions.component.html'
 })
 export class RoleJourneyVersionsComponent implements OnInit {

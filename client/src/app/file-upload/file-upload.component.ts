@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import { JourneyVersionSchedule } from '../schedule/journey-version-schedule';
 
 @Component({
-  selector: 'file-upload',
+  selector: 'nsdc-file-upload',
   templateUrl: 'file-upload.component.html'
 })
 export class FileUploadComponent implements OnInit {

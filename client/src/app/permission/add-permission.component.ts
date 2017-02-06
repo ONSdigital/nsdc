@@ -5,7 +5,7 @@ import { Permission } from './permission';
 import { PermissionService } from './permission.service';
 
 @Component({
-  selector: 'add-permission',
+  selector: 'nsdc-add-permission',
   templateUrl: 'permission.component.html'
 })
 export class AddPermissionComponent implements OnInit {

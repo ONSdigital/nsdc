@@ -7,7 +7,7 @@ import { Overlay } from 'angular2-modal';
 import { Modal } from 'angular2-modal/plugins/bootstrap';
 
 @Component({
-  selector: 'roles',
+  selector: 'nsdc-roles',
   templateUrl : 'roles.component.html'
 })
 export class RoleComponent implements OnInit {

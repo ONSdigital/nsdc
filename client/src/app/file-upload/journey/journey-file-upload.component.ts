@@ -7,7 +7,7 @@ import { LoginService } from '../../login/login.service';
 import { Configuration } from '../../app.constants';
 
 @Component({
-  selector: 'journey-file-upload',
+  selector: 'nsdc-journey-file-upload',
   templateUrl: 'journey-file-upload.component.html',
   styleUrls: ['journey-file-upload.component.css']
 })

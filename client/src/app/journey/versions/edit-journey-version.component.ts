@@ -7,7 +7,7 @@ import { JourneyVersion } from './journey-version';
 import { JourneyService } from '../journey.service';
 
 @Component({
-  selector: 'add-journey',
+  selector: 'nsdc-edit-journey-version',
   templateUrl: 'journey-version.component.html'
 })
 export class EditJourneyVersionComponent implements OnInit {

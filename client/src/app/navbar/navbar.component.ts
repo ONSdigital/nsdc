@@ -11,7 +11,7 @@ import { MenuItem } from './navbar.metadata';
 import { MenuItems } from './navbar.routes.config';
 
 @Component({
-  selector: 'navbar',
+  selector: 'nsdc-navbar',
   templateUrl: 'navbar.component.html',
   styleUrls: ['navbar.component.css'],
   providers: [RoleService]
