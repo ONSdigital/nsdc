@@ -12,6 +12,7 @@ from api.user import User
 from api.self import Self
 from api.self_permission import SelfPermissions
 from api.file import File
+from api.file_supplier import FileSupplier
 from api.file_journey_audit import FileJourneyAudit
 from api.file_journey_audit_chart import FileJourneyAuditChart
 from api.journey_version_step import JourneyVersionStep
@@ -122,6 +123,11 @@ api.add_resource(
 api.add_resource(
     File,
     base_endpoint + 'files'
+)
+
+api.add_resource(
+    FileSupplier,
+    base_endpoint + 'files/supplier/<supplier_id>'
 )
 
 api.add_resource(

@@ -1,0 +1,41 @@
+<div class="row">
+  <div class="col-md-4">
+    <div class="form-group">
+      <label>Supplier (optional):</label>
+      <select
+        class="form-control"
+        (change)="onSupplierChange($event.target.value)"
+      >
+        <option value="">Choose a Supplier</option>
+        <option
+          *ngFor="let supplier of suppliers"
+          [value]="supplier.id"
+        >
+          {{ supplier.name }}
+        </option>
+      </select>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="form-group">
+      <label>From (optional):</label>
+      <input
+        #fromDatePicker
+        type="date"
+        class="form-control"
+        (blur)="onFromDateChange(fromDatePicker.value)"
+      >
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="form-group">
+      <label>To (optional):</label>
+      <input
+        #toDatePicker
+        type="date"
+        class="form-control"
+        (blur)="onToDateChange(toDatePicker.value)"
+      >
+    </div>
+  </div>
+</div>
