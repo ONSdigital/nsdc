@@ -40,15 +40,13 @@ export class UserService {
   }
 
   updateUser(user: User) {
-    return this.http.put(this.actionUrl + '/' + user.id, JSON.stringify(user))
+    return this.http.put(this.actionUrl + '/' + user.id, user)
       .map(res => res.json() as User);
   }
 
   deactivateUser(id: number) {
-    return this.http.put(this.actionUrl + '/' + id, JSON.stringify({status: 'inactive'}))
+    return this.http.put(this.actionUrl + '/' + id, {status: 'inactive'})
     .map(res => res.json())
-    .catch(res => {
-      return Observable.throw(res.json());
-    });
+    .catch(res => Observable.throw(res.json()));
   }
 }

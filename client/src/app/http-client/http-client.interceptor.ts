@@ -15,18 +15,22 @@ export class HttpClientInterceptor {
     this.headers.set('Content-Type', 'application/json');
   }
 
-  get(url: string) {
+  setSessionId(): void {
     this.headers.set('X-TOKEN', this.loginService.getSessionId());
+  }
+
+  get(url: string) {
+    this.setSessionId();
     return this.http.get(url, { headers: this.headers });
   }
 
-  post(url: string, data: string) {
-    this.headers.set('X-TOKEN', this.loginService.getSessionId());
+  post(url: string, data: any) {
+    this.setSessionId();
     return this.http.post(url, JSON.stringify(data), { headers: this.headers } )
   }
 
-  put(url: string, data: string) {
-    this.headers.set('X-TOKEN', this.loginService.getSessionId());
+  put(url: string, data: any) {
+    this.setSessionId();
     return this.http.put(url, JSON.stringify(data), { headers: this.headers } )
   }
 }
