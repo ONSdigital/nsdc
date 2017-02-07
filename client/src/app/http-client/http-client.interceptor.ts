@@ -1,11 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
 import { LoginService } from '../login/login.service';
 import { User } from './user';
 
 @Injectable()
 export class HttpClientInterceptor {
   public headers: Headers;
+
+  private results = res => res.json();
+  private error = res => Observable.throw(res.json());
 
   constructor(
     private http: Http,
@@ -21,16 +25,27 @@ export class HttpClientInterceptor {
 
   get(url: string) {
     this.setSessionId();
-    return this.http.get(url, { headers: this.headers });
+    return this.http.get(url, { headers: this.headers })
+      .map(this.results)
+      .catch(this.error);
   }
 
   post(url: string, data: any) {
     this.setSessionId();
-    return this.http.post(url, JSON.stringify(data), { headers: this.headers } )
+    return this.http.post(url, JSON.stringify(data), { headers: this.headers })
+      .map(this.results)
+      .catch(this.error);
   }
 
   put(url: string, data: any) {
     this.setSessionId();
-    return this.http.put(url, JSON.stringify(data), { headers: this.headers } )
+    return this.http.put(url, JSON.stringify(data), { headers: this.headers })
+      .map(this.results)
+      .catch(this.error);
+  }
+
+  delete(url: string) {
+    this.setSessionId();
+    return this.http.delete(url, { headers: this.headers });
   }
 }

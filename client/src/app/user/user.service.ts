@@ -7,7 +7,6 @@ import { HttpClientInterceptor } from '../http-client/http-client.interceptor';
 
 @Injectable()
 export class UserService {
-
   private actionUrl: string;
   public headers: Headers;
 
@@ -19,34 +18,26 @@ export class UserService {
   }
 
   addUser(user: User) {
-    return this.http.post(this.actionUrl, JSON.stringify(user))
-    .map(res => res.json())
-    .catch(res => Observable.throw(res.json()));
+    return this.http.post(this.actionUrl, user);
   }
 
-  getUsersByStatus(status: string) {
-    return this.http.get(this.actionUrl + '/status/' + status)
-      .map(res => res.json() as User[]);
+  getUsersByStatus(status: string) : Observable<User[]> {
+    return this.http.get(this.actionUrl + '/status/' + status);
   }
 
-  getUserById(id: number) {
-    return this.http.get(this.actionUrl + '/' + id)
-      .map(res => res.json() as User);
+  getUserById(id: number) : Observable<User> {
+    return this.http.get(this.actionUrl + '/' + id);
   }
 
-  getUsersByRole(roleId: number) {
-    return this.http.get(this.actionUrl + '/role/' + roleId)
-      .map(res => res.json() as User[]);
+  getUsersByRole(roleId: number) : Observable<User[]> {
+    return this.http.get(this.actionUrl + '/role/' + roleId);
   }
 
-  updateUser(user: User) {
-    return this.http.put(this.actionUrl + '/' + user.id, user)
-      .map(res => res.json() as User);
+  updateUser(user: User) : Observable<User> {
+    return this.http.put(this.actionUrl + '/' + user.id, user);
   }
 
   deactivateUser(id: number) {
-    return this.http.put(this.actionUrl + '/' + id, {status: 'inactive'})
-    .map(res => res.json())
-    .catch(res => Observable.throw(res.json()));
+    return this.http.put(this.actionUrl + '/' + id, {status: 'inactive'});
   }
 }

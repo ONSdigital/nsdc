@@ -5,7 +5,6 @@ import { UserService } from './user.service';
 import { RoleService } from '../role/role.service';
 import { ConfirmModalModule } from '../confirm-modal';
 import { ValidatorModule } from '../validator/validator.module';
-import { HttpClientInterceptor } from '../http-client/http-client.interceptor';
 
 @NgModule({
   imports: [
@@ -17,8 +16,7 @@ import { HttpClientInterceptor } from '../http-client/http-client.interceptor';
   ],
   providers: [
     UserService,
-    RoleService,
-    HttpClientInterceptor
+    RoleService
   ]
 })
 export class UserModule { }

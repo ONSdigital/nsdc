@@ -30,7 +30,7 @@ export class AddJourneyComponent implements OnInit {
       supplier_id: [null, [Validators.required]]
     });
     this.journey = new Journey();
-    this.supplierService.getSuppliers().then(suppliers => this.suppliers = suppliers);
+    this.supplierService.getSuppliers().subscribe(suppliers => this.suppliers = suppliers);
   }
 
   onSubmit() {

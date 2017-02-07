@@ -30,7 +30,7 @@ export class FileAuditComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.dropdownLoading = true;
     this.supplierService.getSuppliers()
-    .then(suppliers => this.suppliers = suppliers);
+    .subscribe(suppliers => this.suppliers = suppliers);
 
     this.fileAuditService.getFiles()
     .subscribe(files => {
