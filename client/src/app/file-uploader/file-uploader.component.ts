@@ -18,7 +18,7 @@ export class FileUploaderComponent implements OnInit {
   uploadErrorMessage: string;
   hasBaseDropZoneOver: boolean = false;
   extensions: string[];
-  fileErrorMessages = [];
+  fileErrorMessages: string[] = [];
 
   @Input() private allowedExtensions: string;
   @Input() private validator: RegExp;

@@ -15,7 +15,7 @@ export class ValidatorComponent {
 
   constructor() { }
 
-  public get errorMessages() {
+  public get errorMessages(): string[] {
     const messages = [];
     for (let propertyName in this.control.errors) {
       if (this.control.errors.hasOwnProperty(propertyName)

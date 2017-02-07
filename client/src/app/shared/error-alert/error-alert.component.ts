@@ -17,6 +17,6 @@ import { Component, OnInit, Input } from '@angular/core';
 export class ErrorAlertComponent {
 
   @Input()
-  public errorMessages = [];
+  public errorMessages: string[] = [];
 
 }
