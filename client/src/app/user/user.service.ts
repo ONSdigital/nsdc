@@ -14,7 +14,7 @@ export class UserService {
     private http: HttpClientInterceptor,
     private config: Configuration
   ) {
-    this.actionUrl = config.Server + 'nsdc/v1.0/users';
+    this.actionUrl = config.ServerWithApiUrl + 'users';
   }
 
   addUser(user: User) {

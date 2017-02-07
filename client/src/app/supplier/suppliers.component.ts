@@ -34,10 +34,7 @@ export class SuppliersComponent implements OnInit {
 
   onDelete(supplierId) {
     this.supplierService.deleteSupplier(supplierId)
-    .subscribe(() => {
-      this.supplierService.getSuppliers()
-      .subscribe(suppliers => this.suppliers = suppliers);
-    });
+    .subscribe(() =>this.supplierService.getSuppliers().subscribe(suppliers => this.suppliers = suppliers));
   }
 
 }

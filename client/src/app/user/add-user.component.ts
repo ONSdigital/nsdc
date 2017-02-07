@@ -39,7 +39,7 @@ export class AddUserComponent implements OnInit {
     });
 
     this.user = new User();
-    this.roleService.getRoles().then(roles => this.roles = roles);
+    this.roleService.getRoles().subscribe(roles => this.roles = roles);
   }
 
 

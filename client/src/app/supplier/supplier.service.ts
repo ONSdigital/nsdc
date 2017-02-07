@@ -14,7 +14,7 @@ export class SupplierService {
     private http: HttpClientInterceptor,
     private config: Configuration
   ) {
-    this.actionUrl = config.Server + 'nsdc/v1.0/suppliers';
+    this.actionUrl = config.ServerWithApiUrl + 'suppliers';
   }
 
   addSupplier(supplier: Supplier) {

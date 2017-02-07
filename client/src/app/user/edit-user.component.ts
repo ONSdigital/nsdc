@@ -39,7 +39,7 @@ export class EditUserComponent implements OnInit {
       status: []
     });
 
-    this.roleService.getRoles().then(roles => this.roles = roles);
+    this.roleService.getRoles().subscribe(roles => this.roles = roles);
     this.route.data.subscribe(data => {
       const user = data['user'];
       this.user = user;

@@ -12,8 +12,6 @@ export class AddRoleComponent implements OnInit {
   roleForm: FormGroup;
   role: Role;
 
-  public submitAttempt: boolean = false;
-
   constructor(
     private _formBuilder: FormBuilder,
     private roleService: RoleService,
@@ -32,7 +30,7 @@ export class AddRoleComponent implements OnInit {
   onSubmit() {
     Object.keys(this.roleForm.controls).forEach(key => this.role[key] = this.roleForm.controls[key].value);
     this.roleService.addRole(this.role)
-    .then(
+    .subscribe(
       () => {
         this.router.navigate(['roles']);
       },

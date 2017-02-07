@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { User } from './user';
 import { UserService } from './user.service';
 import { UserPermissionsService } from '../user-permissions.service';
-import { Http } from '@angular/http';
 
 @Component({
   selector: 'nsdc-users',

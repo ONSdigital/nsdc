@@ -30,7 +30,8 @@ export class RoleManageComponent implements OnInit {
   ngOnInit() {
     this.loading = true;
     this.dropdownLoading = true;
-    this.roleService.getRoles().then(roles => {
+    this.roleService.getRoles()
+    .subscribe(roles => {
       this.loading = false;
       this.dropdownLoading = false;
       this.roles = roles;
