@@ -116,6 +116,33 @@ def last_line(filename):
         endtime = timestamp()
         return starttime, endtime, status, reason
 
+
+def record_type_check(filename):
+    """
+    Checks the remaining records of input file as per metadata condition.
+    """
+    starttime = timestamp()
+    with open(filename) as lines:
+        for line in lines:
+            line = line.strip()
+            record_type = line[12:14]
+            if 59 < int(record_type) < 66:
+                check_dir('Accepted')
+                shutil.move(filename, 'Accepted')
+                status = "Accepted"
+                reason = "Record Type data is between 60 and 65"
+                endtime = timestamp()
+                return starttime, endtime, status, reason
+            else:
+                print "Record Type data is not between 60 and 65."
+                check_dir('Rejected')
+                shutil.move(filename, 'Rejected')
+                status = "Rejected"
+                reason = "Record Type data is not between 60 and 65"
+                endtime = timestamp()
+                return starttime, endtime, status, reason
+
+
 def file_data(filename):
     """
     Checks the remaining records of input file as per metadata condition.
@@ -246,6 +273,7 @@ def main():
         firstline = first_line(filename)
         lastline = last_line(filename)
         filedata = file_data(filename)
+        rd_check = record_type_check(filename)
 
         if check_file_name:
             starttime = check_file_name[0]
@@ -273,6 +301,13 @@ def main():
             endtime = lastline[1]
             status = lastline[2]
             reason = lastline[3]
+            db_entry(starttime, endtime, filename, status, reason)
+
+        if rd_check:
+            starttime = rd_check[0]
+            endtime = rd_check[1]
+            status = rd_check[2]
+            reason = rd_check[3]
             db_entry(starttime, endtime, filename, status, reason)
 
         if filedata:
