@@ -9,8 +9,6 @@ import { NgUploaderOptions, NgUploaderService } from 'ngx-uploader';
 export class FileUploaderComponent implements OnInit {
 
   private zone: NgZone;
-  invalidFile = false;
-  invalidFileExtension = false;
   uploadError = false;
   uploadComplete = false;
   uploading = false;
@@ -20,6 +18,7 @@ export class FileUploaderComponent implements OnInit {
   uploadErrorMessage: string;
   hasBaseDropZoneOver: boolean = false;
   extensions: string[];
+  fileErrorMessages = [];
 
   @Input() private allowedExtensions: string;
   @Input() private validator: RegExp;
@@ -37,12 +36,20 @@ export class FileUploaderComponent implements OnInit {
   }
 
   startUpload() {
+    this.fileErrorMessages = [];
     // only upload the file that the user can see (Fixes bug with dnd and multiple files)
     if (this.uploader._queue.length) {
       const fileToUpload = this.uploader._queue[0];
-      this.invalidFile = !this.validateFile(fileToUpload.name);
-      this.invalidFileExtension = !this.validateFileExtension(fileToUpload.name);
-      if (fileToUpload.uploading || this.invalidFile) {
+
+      if (!this.validateFile(fileToUpload.name)) {
+        this.fileErrorMessages.push('File not accepted by validator.');
+      }
+
+      if (!this.validateFileExtension(fileToUpload.name)) {
+        this.fileErrorMessages.push('File extension is not allowed.');
+      }
+
+      if (fileToUpload.uploading || this.fileErrorMessages.length) {
         return;
       }
 

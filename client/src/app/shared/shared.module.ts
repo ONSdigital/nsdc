@@ -3,9 +3,10 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ModalModule } from 'angular2-modal';
 import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
-import { ValidatorModule } from './validator';
+import { ValidatorComponent } from './validator';
 import { LoadingModule } from './loading';
 import { ConfirmModalModule } from './confirm-modal';
+import { ErrorAlertComponent } from './error-alert';
 import { AuthHttpInterceptorService } from './auth-http-interceptor/auth-http-interceptor.service';
 
 @NgModule({
@@ -18,11 +19,16 @@ import { AuthHttpInterceptorService } from './auth-http-interceptor/auth-http-in
   exports: [
     CommonModule,
     ReactiveFormsModule,
-    ValidatorModule,
     ModalModule,
     BootstrapModalModule,
     LoadingModule,
-    ConfirmModalModule
+    ConfirmModalModule,
+    ErrorAlertComponent,
+    ValidatorComponent
+  ],
+  declarations: [
+    ErrorAlertComponent,
+    ValidatorComponent
   ],
   providers: [
     AuthHttpInterceptorService
