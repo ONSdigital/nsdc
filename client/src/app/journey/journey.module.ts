@@ -1,10 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { JourneyRoutingModule, routedComponents } from './journey-routing.module';
-import { LoadingModule } from '../loading/loading.module';
-import { ReactiveFormsModule } from '@angular/forms';
-import { ModalModule } from 'angular2-modal';
-import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
 import { JourneyService } from './journey.service';
 import { JourneyResolver } from './journey.resolver';
 import { AddJourneyVersionResolver } from './versions/add-journey-version.resolver';
@@ -17,21 +12,14 @@ import { SupplierService } from '../supplier';
 import { ScheduleService } from '../schedule';
 import { ManageJourneyGuard } from './manage/manage-journey.guard';
 import { ManageJourneyVersionGuard } from './manage/manage-journey-version.guard';
-import { ConfirmModalModule } from '../confirm-modal';
-import { ValidatorModule } from '../validator/validator.module';
+import { SharedModule } from '../shared';
 
 @NgModule({
   imports: [
     JourneyRoutingModule,
-    LoadingModule,
     DualListModule,
-    CommonModule,
-    ReactiveFormsModule,
-    ModalModule.forRoot(),
-    BootstrapModalModule,
     DatePickerModule,
-    ConfirmModalModule,
-    ValidatorModule
+    SharedModule
   ],
   declarations: [
     routedComponents,
