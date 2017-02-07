@@ -3,7 +3,7 @@ import { Headers } from '@angular/http';
 import { Role } from './role';
 import { Configuration } from '../app.constants';
 import { HttpClientInterceptor } from '../http-client/http-client.interceptor';
-import {Observable} from "rxjs";
+import { Observable } from "rxjs/Observable";
 
 @Injectable()
 export class RoleService {

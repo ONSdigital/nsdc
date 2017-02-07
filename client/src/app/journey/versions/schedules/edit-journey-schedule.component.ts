@@ -28,7 +28,7 @@ export class EditJourneyScheduleComponent implements OnInit {
     this.schedule = new Schedule();
     this.route.params.subscribe(params => {
       this.journeyService.getJourneyVersionById(Number(params['id']))
-        .then(version => this.version = version);
+        .subscribe(version => this.version = version);
       const scheduleId = Number(params['scheduleId']);
       this.scheduleService.getScheduleById(scheduleId)
       .subscribe(schedule => {

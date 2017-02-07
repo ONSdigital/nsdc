@@ -37,9 +37,9 @@ export class EditJourneyStepsComponent implements OnInit {
       const id = Number.parseInt(params['id']);
       Observable.forkJoin([
         this.journeyService.getJourneyVersionById(id)
-        .then(version => this.version = version),
+        .map(version => this.version = version),
         this.journeyService.getSteps()
-        .then(steps => this.allSteps = steps),
+        .map(steps => this.allSteps = steps),
         this.journeyService.getStepsByJourneyVersion(id)
         .map(steps => {
           this.selectedSteps = steps;

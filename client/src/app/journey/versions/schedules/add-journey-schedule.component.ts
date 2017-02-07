@@ -29,7 +29,7 @@ export class AddJourneyScheduleComponent implements OnInit {
     this.schedule = new Schedule();
     this.route.params.subscribe(params => {
       this.journeyService.getJourneyVersionById(Number(params['id']))
-        .then(version => this.version = version);
+        .subscribe(version => this.version = version);
       this.schedule.journey_version_id = Number(params['id']);
       this.loading = false;
     });

@@ -15,14 +15,12 @@ export class RoleJourneyVersionsComponent implements OnInit {
   role: Role;
   allRoleJourneyVersions: RoleJourneyVersion[] = [];
   selectedRoleJourneyVersions: RoleJourneyVersion[] = [];
-  originalVersionIds: number[];
   keepSorted: boolean = true;
   key = 'version_id';
   display = 'displayName';
   loading = false;
   submitPending = false;
   submitFailed = false;
-
 
   constructor(
     private route: ActivatedRoute,
@@ -35,22 +33,20 @@ export class RoleJourneyVersionsComponent implements OnInit {
     this.loading = true;
     this.route.data.subscribe(data => {
       const role = data['role'] as Role;
-      const allRoleJourneyVersions: RoleJourneyVersion[] = [];
 
       this.journeyService.getAllJourneyVersions()
       .mergeMap(journeyVersions => {
-        const journeyRequests = journeyVersions
-        .map(journeyVersion => {
-          return this.journeyService
-          .getJourneyById(journeyVersion.journey_id)
-          .then(journey => {
-            return new RoleJourneyVersion(
-              journeyVersion.id,
-              journeyVersion.version_number,
-              journey.name,
-              journey.name + ' (v' + journeyVersion.version_number + ')'
-            );
-          });
+        const journeyRequests =
+          journeyVersions.map(journeyVersion => {
+            return this.journeyService.getJourneyById(journeyVersion.journey_id)
+            .map(journey => {
+              return new RoleJourneyVersion(
+                journeyVersion.id,
+                journeyVersion.version_number,
+                journey.name,
+                journey.name + ' (v' + journeyVersion.version_number + ')'
+              );
+            });
         });
         return Observable.forkJoin(journeyRequests);
       })
