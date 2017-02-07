@@ -87,6 +87,11 @@ If you trigger a file upload through the UI, it should now upload to MoveIt.
 ### Notes
 
 If you are updating the schema, you will need to update remove the migrations folder.
-When handing multiple migrations, you may need to run the following command within Postgres Admin:
+When handling multiple migrations, you may need to run the following command within Postgres Admin:
 
 * DROP TABLE alembic_version;
+
+#### Password Salting
+
+For the alpha, the passwords are **NOT** encrypted in the Database.  The majority of this code is stub to prove the concept
+and looking further into the future, will eventually connect to the internal Active Directory/LDAP.
