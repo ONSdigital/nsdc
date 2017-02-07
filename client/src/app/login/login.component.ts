@@ -5,8 +5,8 @@ import { LoginService } from './login.service';
 
 @Component({
   selector: 'nsdc-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
+  templateUrl: 'login.component.html',
+  styleUrls: ['login.component.css'],
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
@@ -21,13 +21,16 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
-      username: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
-      password: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]]
+      username: ['', [Validators.required]],
+      password: ['', [Validators.required]]
+    });
+
+    this.loginForm.valueChanges.subscribe(() => {
+      this.submitFailed = false;
     });
   }
 
   login() {
-    this.submitFailed = false;
     this.submitPending = true;
     this.loginService.login(
       this.loginForm.controls['username'].value,
