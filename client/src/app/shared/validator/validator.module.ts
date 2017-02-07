@@ -7,7 +7,6 @@ import { ValidatorService } from './validator.service';
 @NgModule({
   imports: [CommonModule],
   exports: [ValidatorComponent],
-  declarations: [ValidatorComponent],
-  providers: [ValidatorService],
+  declarations: [ValidatorComponent]
 })
 export class ValidatorModule { }
