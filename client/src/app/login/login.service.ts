@@ -18,7 +18,7 @@ export class LoginService {
     headers.append('Content-Type', 'application/json');
     return this.http
       .post(
-        this.config.ServerWithApiUrl + '/login',
+        this.config.ServerWithApiUrl + 'login',
         JSON.stringify({ username, password }),
         { headers }
       )

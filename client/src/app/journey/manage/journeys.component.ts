@@ -27,11 +27,10 @@ export class JourneysComponent implements OnInit {
     this.journeyService.getJourneys()
     .mergeMap(journeys => {
       const requests = journeys.map(journey => {
-        const journeyData = Object.assign(new Journey(), journey);
         return this.supplierService.getSupplierById(journey.supplier_id)
         .map(supplier => {
-          journeyData.supplier_name = supplier.name;
-          return journeyData;
+          journey.supplier_name = supplier.name;
+          return journey;
         });
       });
       return Observable.forkJoin(requests);
