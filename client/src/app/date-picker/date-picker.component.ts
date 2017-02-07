@@ -14,7 +14,9 @@ export class DatePickerComponent {
     this.date = new Date(value);
     this.dateChange.emit(this.date.toUTCString());
   };
-  @Input() disabled = false;
+
+  @Input()
+  disabled = false;
 
   @Output()
   dateChange = new EventEmitter();

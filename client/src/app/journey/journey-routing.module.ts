@@ -60,7 +60,7 @@ const routes: Routes = [
   },
   {
     canActivate: [UserPermissionsGuard],
-    path: ':id/add-version',
+    path: ':id/versions/add',
     component: AddJourneyVersionComponent,
     data: {
       permission: 'ADD_JOURNEYS'
@@ -71,7 +71,7 @@ const routes: Routes = [
   },
   {
     canActivate: [UserPermissionsGuard],
-    path: ':id/edit-version/:vid',
+    path: ':id/versions/edit/:vid',
     component: EditJourneyVersionComponent,
     data: {
       permission: 'EDIT_JOURNEYS'

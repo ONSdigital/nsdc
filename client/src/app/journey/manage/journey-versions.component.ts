@@ -48,6 +48,6 @@ export class JourneyVersionsComponent implements OnInit {
 
   onEditClicked(event, versionId) {
     event.stopPropagation();
-    this.router.navigate(['/journeys', this.selectedJourneyId, 'edit-version', versionId]);
+    this.router.navigate(['/journeys', this.selectedJourneyId, 'versions', 'edit', versionId]);
   }
 }

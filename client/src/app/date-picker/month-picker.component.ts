@@ -6,9 +6,14 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 })
 export class MonthPickerComponent {
 
-  @Input() selectedMonth: number;
-  @Input() disabled = false;
-  @Output() selectedMonthChange = new EventEmitter();
+  @Input()
+  selectedMonth: number;
+
+  @Input()
+  disabled = false;
+
+  @Output()
+  selectedMonthChange = new EventEmitter();
 
   months = [
     'January',

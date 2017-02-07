@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { Configuration } from '../app.constants';
-import { User } from '../user/user';
 
 @Injectable()
 export class LoginService {
