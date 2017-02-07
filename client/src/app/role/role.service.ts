@@ -1,93 +1,47 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, Response } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import { Headers } from '@angular/http';
 import { Role } from './role';
 import { Configuration } from '../app.constants';
-import { LoginService } from '../login/login.service';
-
+import { AuthHttpInterceptorService } from '../shared/auth-http-interceptor/auth-http-interceptor.service';
+import { Observable } from "rxjs/Observable";
 
 @Injectable()
 export class RoleService {
-
   private actionUrl: string;
   public headers: Headers;
 
-  constructor(private http: Http, private config: Configuration, private loginService: LoginService) {
-    this.actionUrl = config.ServerWithApiUrl;
-    this.headers = new Headers();
-    this.headers.set('Content-Type', 'application/json');
+  constructor(
+    private http: AuthHttpInterceptorService,
+    private config: Configuration
+  ) {
+    this.actionUrl = config.ServerWithApiUrl + 'roles';
   }
 
   addRole(role: Role) {
-    this.headers.set('X-TOKEN', this.loginService.getSessionId());
-    const roleAddUrl = this.config.Server + 'nsdc/v1.0/roles';
-    return this.http.post(roleAddUrl, JSON.stringify(role), {headers: this.headers} )
-    .toPromise().then(() => role).catch(this.handleError);
+    return this.http.post(this.actionUrl, role);
   }
 
-  getRoles() {
-    this.headers.set('X-TOKEN', this.loginService.getSessionId());
-    let roleListUrl = this.config.Server + 'nsdc/v1.0/roles';
-    return this.http.get(roleListUrl, {headers: this.headers})
-    .toPromise()
-    .then(response => response.json() as Role[])
-    .catch(this.handleError);
+  getRoles() : Observable<Role[]> {
+    return this.http.get(this.actionUrl);
   }
 
-  getRoleById(id: number) {
-    this.headers.set('X-TOKEN', this.loginService.getSessionId());
-    let roleUrl = this.config.Server + 'nsdc/v1.0/roles/' + id;
-    return this.http.get(roleUrl, {headers: this.headers})
-    .toPromise()
-    .then(response => response.json() as Role)
-    .catch(this.handleError);
+  getRoleById(id: number) : Observable<Role> {
+    return this.http.get(this.actionUrl + '/' + id);
   }
 
   updateRole(role: Role) {
-    this.headers.set('X-TOKEN', this.loginService.getSessionId());
-    let roleEditUrl = this.config.Server + 'nsdc/v1.0/roles/' + role.id;
-    return this.http.put(roleEditUrl, JSON.stringify(role), {headers: this.headers})
-    .map(res => res.json())
-    .catch(res => {
-      return Observable.throw(res.json());
-    });
+    return this.http.put(this.actionUrl + '/' + role.id, role);
   }
 
   deleteRole(id: number) {
-    this.headers.set('X-TOKEN', this.loginService.getSessionId());
-    let deleteUrl = this.config.Server + 'nsdc/v1.0/roles/' + id;
-    return this.http.delete(deleteUrl, {headers: this.headers})
-    .map(res => res.json())
-    .catch(res => {
-      return Observable.throw(res.json());
-    });
+    return this.http.delete(this.actionUrl + '/' + id);
   }
 
   updateRolePermissions(id: number, permissionIds: number[]) {
-    this.headers.set('X-TOKEN', this.loginService.getSessionId());
-    const rolePermissionsUrl = this.config.Server + 'nsdc/v1.0/roles/' + id + '/permissions';
-    return this.http.post(rolePermissionsUrl, JSON.stringify({
-      permissions: permissionIds
-    }), {headers: this.headers})
-    .map(res => res.json())
-    .catch(res => {
-      return Observable.throw(res.json());
-    });
+    return this.http.post(this.actionUrl + '/' + id + '/permissions', { permissions: permissionIds });
   }
 
   updateRoleJourneyVersions(id: number, journeyVersionIds: number[]) {
-    this.headers.set('X-TOKEN', this.loginService.getSessionId());
-    const rolejourneyVersionsUrl = this.config.Server + 'nsdc/v1.0/roles/' + id + '/journey/versions';
-    return this.http.post(rolejourneyVersionsUrl, JSON.stringify({
-      versions: journeyVersionIds
-    }), {headers: this.headers})
-    .map(res => res.json())
-    .catch(res => {
-      return Observable.throw(res.json());
-    });
-  }
-
-  private handleError(error: any): Promise<any> {
-    return Promise.reject(error.message || error);
+    return this.http.post(this.actionUrl + '/' + id + '/journey/versions', { versions: journeyVersionIds });
   }
 }

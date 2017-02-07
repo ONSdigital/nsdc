@@ -36,15 +36,11 @@ export class RolePermissionsComponent implements OnInit {
       this.loading = true;
       Observable.forkJoin([
         this.roleService.getRoleById(id)
-        .then(role => this.role = role),
+          .map(role => this.role = role),
         this.permissionService.getPermissions()
-        .then(permissions => {
-          this.allPermissions = permissions;
-        }),
+          .map(permissions => this.allPermissions = permissions),
         this.permissionService.getPermissionByRole(id)
-        .then(permissions => {
-          this.selectedPermissions = permissions;
-        })
+          .map(permissions => this.selectedPermissions = permissions)
       ])
       .subscribe(() => this.loading = false);
     });

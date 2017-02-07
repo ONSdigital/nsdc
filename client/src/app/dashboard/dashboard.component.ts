@@ -36,8 +36,7 @@ export class DashboardComponent implements OnInit {
 
     if (!this.loggedIn) {
       this.loggedIn = true;
-      this.userAccountService.getUser()
-          .subscribe(self => this.self = self);
+      this.userAccountService.getUser().subscribe(self => this.self = self);
     }
   }
 }

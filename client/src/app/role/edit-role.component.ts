@@ -12,8 +12,6 @@ export class EditRoleComponent implements OnInit {
   roleForm: FormGroup;
   role: Role;
 
-  public submitAttempt: boolean = false;
-
   constructor(
     private _formBuilder: FormBuilder,
     private roleService: RoleService,

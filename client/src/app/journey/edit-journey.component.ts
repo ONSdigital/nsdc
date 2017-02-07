@@ -35,7 +35,7 @@ export class EditJourneyComponent implements OnInit {
       this.journey = data['journey'];
       this.journeyForm.patchValue(this.journey);
     });
-    this.supplierService.getSuppliers().then(suppliers => this.suppliers = suppliers);
+    this.supplierService.getSuppliers().subscribe(suppliers => this.suppliers = suppliers);
   }
 
   onSubmit() {

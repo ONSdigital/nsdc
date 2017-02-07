@@ -1,67 +1,44 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
-import { LoginService } from '../login/login.service';
+import { Headers } from '@angular/http';
 import { Configuration } from '../app.constants';
 import { Observable } from 'rxjs/Observable';
 import { Schedule } from './schedule';
 import { JourneyVersionSchedule } from './journey-version-schedule';
+import { AuthHttpInterceptorService } from '../shared/auth-http-interceptor/auth-http-interceptor.service';
 
 @Injectable()
 export class ScheduleService {
   private actionUrl: string;
   public headers: Headers;
 
-  constructor(private http: Http, private config: Configuration, private loginService: LoginService) {
-    this.headers = new Headers();
-    this.headers.set('Content-Type', 'application/json');
+  constructor(
+    private http: AuthHttpInterceptorService,
+    private config: Configuration
+  ) {
+    this.actionUrl = config.ServerWithApiUrl + 'schedules';
   }
 
-  getSchedulesByVersion(versionId: number) {
-    this.headers.set('X-TOKEN', this.loginService.getSessionId());
-    let schedulesUrl = this.config.Server +
-      `nsdc/v1.0/journeys/versions/${versionId}/schedules`;
-    return this.http.get(schedulesUrl, {headers: this.headers})
-    .map(res => res.json() as Schedule[]);
+  getSchedulesByVersion(versionId: number) : Observable<Schedule[]> {
+    return this.http.get(this.config.ServerWithApiUrl + `journeys/versions/${versionId}/schedules`);
   }
 
   getNextValidScheduleByVersion(versionId: number): Observable<JourneyVersionSchedule> {
-    this.headers.set('X-TOKEN', this.loginService.getSessionId());
-    let schedulesUrl = this.config.Server +
-      `nsdc/v1.0/journeys/versions/${versionId}/schedules?with-version=true`;
-    return this.http.get(schedulesUrl, {headers: this.headers})
-    .map(res => res.json() as JourneyVersionSchedule);
+    return this.http.get(this.config.ServerWithApiUrl + `journeys/versions/${versionId}/schedules?with-version=true`);
   }
 
-  getScheduleById(id) {
-    this.headers.set('X-TOKEN', this.loginService.getSessionId());
-    let scheduleUrl = this.config.Server +
-      'nsdc/v1.0/schedules/' + id;
-    return this.http.get(scheduleUrl, {headers: this.headers})
-    .map(res => res.json());
+  getScheduleById(id) : Observable<Schedule> {
+    return this.http.get(this.config.ServerWithApiUrl + 'schedules/' + id);
   }
 
   addSchedule(schedule: Schedule) {
-    this.headers.set('X-TOKEN', this.loginService.getSessionId());
-    let scheduleAddUrl = this.config.Server + 'nsdc/v1.0/schedules';
-    return this.http.post(scheduleAddUrl, JSON.stringify(schedule), { headers: this.headers } )
-    .map(res => res.json());
+    return this.http.post(this.actionUrl, schedule);
   }
 
   updateSchedule(schedule: Schedule) {
-    this.headers.set('X-TOKEN', this.loginService.getSessionId());
-    let scheduleUpdateUrl = this.config.Server + 'nsdc/v1.0/schedules/' + schedule.id;
-    return this.http.put(scheduleUpdateUrl, JSON.stringify(schedule), { headers: this.headers } )
-    .map(res => res.json());
+    return this.http.put(this.actionUrl + '/' + schedule.id, schedule);
   }
 
   deleteSchedule(id: number) {
-    this.headers.set('X-TOKEN', this.loginService.getSessionId());
-    let scheduleDeleteUrl = this.config.Server + 'nsdc/v1.0/schedules/' + id;
-    return this.http.delete(scheduleDeleteUrl, { headers: this.headers } )
-      .map(res => res.json())
-      .catch(res => {
-        return Observable.throw(res.json());
-      });
+    return this.http.delete(this.actionUrl + '/' + id);
   }
-
 }

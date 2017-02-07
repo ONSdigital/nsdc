@@ -9,7 +9,7 @@ export class AddJourneyVersionResolver implements Resolve<Journey> {
   constructor(private journeyService: JourneyService) {
   }
 
-  resolve(route: ActivatedRouteSnapshot, state): Promise<Journey> {
+  resolve(route: ActivatedRouteSnapshot, state): Observable<Journey> {
     return this.journeyService.getJourneyById(route.params['id']);
   }
 }

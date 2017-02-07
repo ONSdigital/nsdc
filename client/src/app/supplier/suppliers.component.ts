@@ -3,7 +3,6 @@ import { Overlay } from 'angular2-modal';
 import { Modal } from 'angular2-modal/plugins/bootstrap';
 import { Supplier } from './supplier';
 import { SupplierService } from './supplier.service';
-import { Router } from '@angular/router';
 import { Http } from '@angular/http';
 
 @Component({
@@ -16,7 +15,6 @@ export class SuppliersComponent implements OnInit {
   loading = false;
 
   constructor(
-    private http: Http,
     private supplierService: SupplierService,
     overlay: Overlay,
     vcRef: ViewContainerRef,
@@ -27,7 +25,8 @@ export class SuppliersComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading = true;
-    this.supplierService.getSuppliers().then(suppliers => {
+    this.supplierService.getSuppliers()
+    .subscribe(suppliers => {
       this.loading = false;
       this.suppliers = suppliers;
     });
@@ -35,10 +34,7 @@ export class SuppliersComponent implements OnInit {
 
   onDelete(supplierId) {
     this.supplierService.deleteSupplier(supplierId)
-    .subscribe(() => {
-      this.supplierService.getSuppliers()
-      .then(suppliers => this.suppliers = suppliers);
-    });
+    .subscribe(() =>this.supplierService.getSuppliers().subscribe(suppliers => this.suppliers = suppliers));
   }
 
 }

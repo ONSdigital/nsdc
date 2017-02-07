@@ -10,7 +10,6 @@ import { SupplierService } from '../supplier';
   templateUrl: 'file-audit.component.html',
   providers: [FileAuditService, Configuration]
 })
-
 export class FileAuditComponent implements OnInit, OnDestroy {
   public chartData = [];
   public files: File[];
@@ -29,9 +28,7 @@ export class FileAuditComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.loading = true;
     this.dropdownLoading = true;
-    this.supplierService.getSuppliers()
-    .then(suppliers => this.suppliers = suppliers);
-
+    this.supplierService.getSuppliers().subscribe(suppliers => this.suppliers = suppliers);
     this.fileAuditService.getFiles()
     .subscribe(files => {
       this.files = files;
@@ -73,8 +70,7 @@ export class FileAuditComponent implements OnInit, OnDestroy {
         this.loading = false;
       });
 
-      this.fileAuditService.getFileAuditChartData(id)
-      .then(data => this.generateData(data));
+      this.fileAuditService.getFileAuditChartData(id).subscribe(data => this.generateData(data));
     }
   }
 

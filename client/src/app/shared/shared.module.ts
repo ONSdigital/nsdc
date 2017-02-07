@@ -6,6 +6,7 @@ import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
 import { ValidatorModule } from './validator';
 import { LoadingModule } from './loading';
 import { ConfirmModalModule } from './confirm-modal';
+import { AuthHttpInterceptorService } from './auth-http-interceptor/auth-http-interceptor.service';
 
 @NgModule({
   imports: [
@@ -23,6 +24,8 @@ import { ConfirmModalModule } from './confirm-modal';
     LoadingModule,
     ConfirmModalModule
   ],
-  providers: [],
+  providers: [
+    AuthHttpInterceptorService
+  ],
 })
 export class SharedModule { }

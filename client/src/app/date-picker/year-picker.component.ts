@@ -5,11 +5,16 @@ import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
   templateUrl: 'year-picker.component.html'
 })
 export class YearPickerComponent implements OnInit {
-
   public years: number[];
-  @Input() selectedYear: number;
-  @Input() disabled = false;
-  @Output() selectedYearChange = new EventEmitter();
+
+  @Input()
+  selectedYear: number;
+
+  @Input()
+  disabled = false;
+
+  @Output()
+  selectedYearChange = new EventEmitter();
 
   ngOnInit() {
     const years = [];

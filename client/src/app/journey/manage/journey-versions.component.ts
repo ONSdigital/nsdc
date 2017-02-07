@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { JourneyService } from '../journey.service';
-import { Journey } from '../journey';
 import { JourneyVersion } from '../versions/journey-version';
 
 @Component({
@@ -26,14 +25,12 @@ export class JourneyVersionsComponent implements OnInit {
       const journeyId = Number(params['id']);
       this.selectedJourneyId = journeyId;
       this.journeyService.getJourneyVersions(journeyId)
-      .then(journeyVersions => {
+      .subscribe(journeyVersions => {
         this.versions = journeyVersions;
         this.loading = false;
       });
     });
-    this.route.params.subscribe(params => {
-      this.selectedVersionId = Number(params['versionId']);
-    });
+    this.route.params.subscribe(params => this.selectedVersionId = Number(params['versionId']));
   }
 
   onSelectJourneyVersion(versionId) {
@@ -43,14 +40,14 @@ export class JourneyVersionsComponent implements OnInit {
 
   onDeleteClicked(versionId) {
     this.journeyService.deleteJourneyVersion(versionId)
-      .subscribe(() => {
+      .subscribe(() =>
         this.journeyService.getJourneyVersions(this.selectedJourneyId)
-          .then(versions => this.versions = versions);
-      });
+          .subscribe(versions => this.versions = versions)
+      );
   }
 
   onEditClicked(event, versionId) {
     event.stopPropagation();
-    this.router.navigate(['/journeys', this.selectedJourneyId, 'edit-version', versionId]);
+    this.router.navigate(['/journeys', this.selectedJourneyId, 'versions', 'edit', versionId]);
   }
 }

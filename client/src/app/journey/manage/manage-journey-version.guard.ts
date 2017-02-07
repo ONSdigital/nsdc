@@ -3,7 +3,7 @@ import { Router, CanActivate, CanActivateChild, ActivatedRouteSnapshot } from '@
 import { JourneyService } from '../journey.service';
 
 @Injectable()
-export class ManageJourneyVersionGuard implements CanActivate {
+export class ManageJourneyVersionGuard implements CanActivate, CanActivateChild {
 
   constructor(
     private journeyService: JourneyService,
@@ -13,7 +13,7 @@ export class ManageJourneyVersionGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot) {
     const journeyId = route.params['id'];
     return this.journeyService.getJourneyVersions(journeyId)
-    .then(journeyVersions => {
+    .map(journeyVersions => {
       if (journeyVersions.length) {
         this.router.navigate(['journeys', journeyId, 'version', journeyVersions[0].id]);
         return false;

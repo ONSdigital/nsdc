@@ -39,7 +39,7 @@ export class EditUserComponent implements OnInit {
       status: []
     });
 
-    this.roleService.getRoles().then(roles => this.roles = roles);
+    this.roleService.getRoles().subscribe(roles => this.roles = roles);
     this.route.data.subscribe(data => {
       const user = data['user'];
       this.user = user;
@@ -56,7 +56,7 @@ export class EditUserComponent implements OnInit {
     );
 
     this.userService.updateUser(this.user)
-    .then(
+    .subscribe(
       () => {
         this.submitPending = false;
         this.router.navigate(['/users']);
