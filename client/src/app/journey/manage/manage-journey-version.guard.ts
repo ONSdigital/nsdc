@@ -3,7 +3,7 @@ import { Router, CanActivate, CanActivateChild, ActivatedRouteSnapshot } from '@
 import { JourneyService } from '../journey.service';
 
 @Injectable()
-export class ManageJourneyVersionGuard implements CanActivate {
+export class ManageJourneyVersionGuard implements CanActivate, CanActivateChild {
 
   constructor(
     private journeyService: JourneyService,

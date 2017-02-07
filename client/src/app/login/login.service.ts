@@ -27,7 +27,6 @@ export class LoginService {
       .map(res => {
         if (res.id) {
           sessionStorage.setItem('session_id', res.id);
-          sessionStorage.setItem('user_id', res.user_id);
           this.loggedIn = true;
           this.sessionId = res.id;
         }
@@ -41,7 +40,6 @@ export class LoginService {
 
   logout() {
     sessionStorage.removeItem('session_id');
-    sessionStorage.removeItem('user_id');
     this.sessionId = null;
     this.loggedIn = false;
   }
