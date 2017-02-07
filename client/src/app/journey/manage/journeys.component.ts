@@ -1,32 +1,44 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { JourneyService } from '../journey.service';
-import { Journey } from '../journey';
+import { SupplierService } from '../../supplier/supplier.service';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'nsdc-journeys',
   templateUrl: 'journeys.component.html'
 })
 export class JourneysComponent implements OnInit {
-
-  journeys: Journey[];
+  journeys = [];
   loading = false;
   selectedJourneyId: number;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private journeyService: JourneyService
+    private journeyService: JourneyService,
+    private supplierService: SupplierService
   ) { }
 
   ngOnInit() {
     this.loading = true;
     this.route.params.subscribe(params => this.selectedJourneyId = Number(params['id']));
     this.journeyService.getJourneys()
-    .subscribe(journeys => {
-      this.journeys = journeys;
-      this.loading = false;
-    });
+      .mergeMap(journeys => {
+        const requests = journeys.map(journey => {
+          const journeyData = journey;
+          return this.supplierService.getSupplierById(journey.supplier_id)
+            .map(supplier => ({
+              'id': journeyData.id,
+              'name': journeyData.name,
+              'description': journeyData.description,
+              'supplier_id': supplier.id,
+              'supplier_name': supplier.name
+            }));
+        });
+        return Observable.forkJoin(requests);
+      })
+    .subscribe(journeys =>  { this.journeys = journeys; this.loading = false; });
   }
 
   onSelectJourney(journeyId) {

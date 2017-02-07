@@ -10,7 +10,6 @@ import { JourneyVersionSchedule } from '../schedule/journey-version-schedule';
   templateUrl: 'file-upload.component.html'
 })
 export class FileUploadComponent implements OnInit {
-
   journeyVersionSchedules: JourneyVersionSchedule[];
   loading = false;
 
