@@ -1,47 +1,35 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
+import { Headers } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { File } from './file';
 import { FileAudit } from './file-audit';
 import { FileAuditChart } from './file-audit-chart';
 import { Configuration } from '../app.constants';
-import { LoginService } from '../login/login.service';
+import { HttpClientInterceptor } from '../http-client/http-client.interceptor';
 
 @Injectable()
 export class FileAuditService {
-
   private actionUrl: string;
   public headers: Headers;
 
-  constructor(private http: Http, private config: Configuration, private loginService: LoginService) {
-    this.actionUrl = config.Server + 'nsdc/v1.0/files';
-    this.headers = new Headers();
-    this.headers.set('Content-Type', 'application/json');
+  constructor(
+    private http: HttpClientInterceptor,
+    private config: Configuration
+  ) {
+    this.actionUrl = config.ServerWithApiUrl + 'files';
   }
 
-  getFiles(filters: any = {}) {
-    this.headers.set('X-TOKEN', this.loginService.getSessionId());
+  getFiles(filters: any = {}) : Observable<File[]> {
     const pathParams = `supplierId=${filters.supplierId || ''}&from=${filters.from || ''}&to=${filters.to || ''}`;
-    return this.http.get(this.actionUrl + '?' + pathParams, { headers: this.headers })
-    .map(response => response.json() as File[]);
+    return this.http.get(this.actionUrl + '?' + pathParams);
   }
 
-  getFileAuditChartData(id) {
-    this.headers.set('X-TOKEN', this.loginService.getSessionId());
-    return this.http.get(this.actionUrl + '/audit/chart/' + id, { headers: this.headers })
-      .toPromise()
-      .then(response => response.json() as FileAuditChart)
-      .catch(this.handleError);
+  getFileAuditChartData(id) : Observable<FileAuditChart> {
+    return this.http.get(this.actionUrl + '/audit/chart/' + id);
   }
 
   pollForFileAudits(id, interval): Observable<FileAudit[]> {
-    this.headers.set('X-TOKEN', this.loginService.getSessionId());
     return Observable.interval(interval).startWith(0)
-    .switchMap(() => this.http.get(this.actionUrl + '/audit/' + id, { headers: this.headers })
-    .map(response => response.json()));
-  }
-
-  private handleError(error: any): Promise<any> {
-    return Promise.reject(error.message || error);
+    .switchMap(() => this.http.get(this.actionUrl + '/audit/' + id));
   }
 }
