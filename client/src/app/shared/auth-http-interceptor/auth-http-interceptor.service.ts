@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { LoginService } from '../login/login.service';
+import { LoginService } from '../../login/login.service';
 import { User } from './user';
 
 @Injectable()
-export class HttpClientInterceptor {
+export class AuthHttpInterceptorService {
   public headers: Headers;
 
   private results = res => res.json();
@@ -46,6 +46,7 @@ export class HttpClientInterceptor {
 
   delete(url: string) {
     this.setSessionId();
-    return this.http.delete(url, { headers: this.headers });
+    return this.http.delete(url, { headers: this.headers })
+      .catch(this.error);
   }
 }

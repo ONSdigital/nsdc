@@ -13,7 +13,6 @@ import { IsLoggedInGuard } from './login/is-logged-in.guard';
 import { Configuration } from './app.constants';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SharedModule } from './shared';
-import { HttpClientInterceptor } from './http-client/http-client.interceptor';
 import '../styles/app.css';
 
 @NgModule({
@@ -35,8 +34,7 @@ import '../styles/app.css';
     LoginService,
     LoginGuard,
     IsLoggedInGuard,
-    Configuration,
-    HttpClientInterceptor
+    Configuration
   ],
   bootstrap: [AppComponent]
 })

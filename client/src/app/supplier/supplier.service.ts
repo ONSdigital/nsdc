@@ -3,7 +3,7 @@ import { Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Supplier } from './supplier';
 import { Configuration } from '../app.constants';
-import { HttpClientInterceptor } from '../http-client/http-client.interceptor';
+import { AuthHttpInterceptorService } from '../shared/auth-http-interceptor/auth-http-interceptor.service';
 
 @Injectable()
 export class SupplierService {
@@ -11,7 +11,7 @@ export class SupplierService {
   public headers: Headers;
 
   constructor(
-    private http: HttpClientInterceptor,
+    private http: AuthHttpInterceptorService,
     private config: Configuration
   ) {
     this.actionUrl = config.ServerWithApiUrl + 'suppliers';

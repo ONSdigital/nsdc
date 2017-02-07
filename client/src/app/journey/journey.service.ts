@@ -5,7 +5,7 @@ import { Journey } from './journey';
 import { JourneyVersion } from './versions/journey-version';
 import { JourneyStep } from './versions/steps/journey-step';
 import { Configuration } from '../app.constants';
-import { HttpClientInterceptor } from '../http-client/http-client.interceptor';
+import { AuthHttpInterceptorService } from '../shared/auth-http-interceptor/auth-http-interceptor.service';
 
 @Injectable()
 export class JourneyService {
@@ -14,7 +14,7 @@ export class JourneyService {
   public headers: Headers;
 
   constructor(
-    private http: HttpClientInterceptor,
+    private http: AuthHttpInterceptorService,
     private config: Configuration
   ) {
     this.actionUrl = config.ServerWithApiUrl + 'journeys';

@@ -5,6 +5,7 @@ import { Permission } from '../../permission/permission';
 import { RoleService } from '../role.service';
 import { UserService } from '../../user/user.service';
 import { PermissionService } from '../../permission/permission.service';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'nsdc-role-manage',
@@ -39,12 +40,11 @@ export class RoleManageComponent implements OnInit {
     this.selectedRoleId = roleId;
     if (roleId !== '') {
       this.loading = true;
-      Promise.all([
-        this.userService.getUsersByRole(roleId).subscribe(users => this.users = users),
-        this.permissionService.getPermissionByRole(roleId).subscribe(permissions => this.permissions = permissions)
-      ]).then(() => {
-        this.loading = false;
-      });
+      Observable.forkJoin([
+        this.userService.getUsersByRole(roleId).map(users => this.users = users),
+        this.permissionService.getPermissionByRole(roleId).map(permissions => this.permissions = permissions)
+      ])
+      .subscribe(() => this.loading = false);
     }
   }
 }

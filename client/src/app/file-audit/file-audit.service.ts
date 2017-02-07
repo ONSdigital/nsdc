@@ -5,7 +5,7 @@ import { File } from './file';
 import { FileAudit } from './file-audit';
 import { FileAuditChart } from './file-audit-chart';
 import { Configuration } from '../app.constants';
-import { HttpClientInterceptor } from '../http-client/http-client.interceptor';
+import { AuthHttpInterceptorService } from '../shared/auth-http-interceptor/auth-http-interceptor.service';
 
 @Injectable()
 export class FileAuditService {
@@ -13,7 +13,7 @@ export class FileAuditService {
   public headers: Headers;
 
   constructor(
-    private http: HttpClientInterceptor,
+    private http: AuthHttpInterceptorService,
     private config: Configuration
   ) {
     this.actionUrl = config.ServerWithApiUrl + 'files';

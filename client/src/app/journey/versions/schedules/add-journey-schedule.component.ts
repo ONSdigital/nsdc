@@ -14,7 +14,6 @@ export class AddJourneyScheduleComponent implements OnInit {
 
   public schedule: Schedule;
   public version: JourneyVersion;
-  journeyVersionId;
   loading = false;
 
   constructor(
@@ -29,7 +28,7 @@ export class AddJourneyScheduleComponent implements OnInit {
     this.schedule = new Schedule();
     this.route.params.subscribe(params => {
       this.journeyService.getJourneyVersionById(Number(params['id']))
-        .subscribe(version => this.version = version);
+      .subscribe(version => this.version = version);
       this.schedule.journey_version_id = Number(params['id']);
       this.loading = false;
     });
@@ -37,8 +36,6 @@ export class AddJourneyScheduleComponent implements OnInit {
 
   onSubmit() {
     this.scheduleService.addSchedule(this.schedule)
-    .subscribe(() => {
-      this.location.back();
-    });
+    .subscribe(() => this.location.back());
   }
 }

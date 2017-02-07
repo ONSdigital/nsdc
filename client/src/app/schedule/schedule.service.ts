@@ -4,7 +4,7 @@ import { Configuration } from '../app.constants';
 import { Observable } from 'rxjs/Observable';
 import { Schedule } from './schedule';
 import { JourneyVersionSchedule } from './journey-version-schedule';
-import { HttpClientInterceptor } from '../http-client/http-client.interceptor';
+import { AuthHttpInterceptorService } from '../shared/auth-http-interceptor/auth-http-interceptor.service';
 
 @Injectable()
 export class ScheduleService {
@@ -12,7 +12,7 @@ export class ScheduleService {
   public headers: Headers;
 
   constructor(
-    private http: HttpClientInterceptor,
+    private http: AuthHttpInterceptorService,
     private config: Configuration
   ) {
     this.actionUrl = config.ServerWithApiUrl + 'schedules';

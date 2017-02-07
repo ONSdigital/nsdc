@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Headers } from '@angular/http';
 import { Role } from './role';
 import { Configuration } from '../app.constants';
-import { HttpClientInterceptor } from '../http-client/http-client.interceptor';
+import { AuthHttpInterceptorService } from '../shared/auth-http-interceptor/auth-http-interceptor.service';
 import { Observable } from "rxjs/Observable";
 
 @Injectable()
@@ -11,7 +11,7 @@ export class RoleService {
   public headers: Headers;
 
   constructor(
-    private http: HttpClientInterceptor,
+    private http: AuthHttpInterceptorService,
     private config: Configuration
   ) {
     this.actionUrl = config.ServerWithApiUrl + 'roles';
