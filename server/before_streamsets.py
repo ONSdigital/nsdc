@@ -80,12 +80,17 @@ def first_line(filename):
         check_dir('Rejected')
         shutil.move(filename, 'Rejected')
         status = "Rejected"
-        reason = "Length of the first line is not equal to 50"
+        reason = "First Line check failed."
         endtime = timestamp()
         return starttime, endtime, status, reason
     else:
         print "Period :", firstline[9:12]
-        return firstline[9:12]
+        check_dir('Accepted')
+        shutil.move(filename, 'Accepted')
+        status = "Accepted"
+        reason = "First Line check successful."
+        endtime = timestamp()
+        return starttime, endtime, status, reason
 
 def last_line(filename):
     """
@@ -99,19 +104,23 @@ def last_line(filename):
         check_dir('Rejected')
         shutil.move(filename, 'Rejected')
         status = "Rejected"
-        reason = "Length of last line is not equal to 50"
+        reason = "Last line check failed."
         endtime = timestamp()
         return starttime, endtime, status, reason
     else:
         print "Record Count : ", lastline[-11:]
-        return lastline[-11:]
+        check_dir('Accepted')
+        shutil.move(filename, 'Accepted')
+        status = "Accepted"
+        reason = "Last Line check successful."
+        endtime = timestamp()
+        return starttime, endtime, status, reason
 
 def file_data(filename):
     """
     Checks the remaining records of input file as per metadata condition.
     """
     starttime = timestamp()
-    first_line(filename)
     with open(filename) as lines:
         next(lines)
         count = 1
@@ -180,7 +189,6 @@ def file_data(filename):
                     null_data = null_data + 1
                 else:
                     print "Date :", dates
-    last_line(filename)
     no_of_lines = int(check_output(["wc", "-l", filename]).split()[0]) + 1
     total_fields = no_of_lines * 10
     record_percent = float(null_data) / float(total_fields)
@@ -233,8 +241,10 @@ def main():
     """
     if len(sys.argv[1:]) > 0:
         filename = sys.argv[-1]
-        file_size = file_size_mb(filename)
         check_file_name = check_filename(filename)
+        file_size = file_size_mb(filename)
+        firstline = first_line(filename)
+        lastline = last_line(filename)
         filedata = file_data(filename)
 
         if check_file_name:
@@ -251,12 +261,27 @@ def main():
             reason = file_size[3]
             db_entry(starttime, endtime, filename, status, reason)
 
+        if firstline:
+            starttime = firstline[0]
+            endtime = firstline[1]
+            status = firstline[2]
+            reason = firstline[3]
+            db_entry(starttime, endtime, filename, status, reason)
+
+        if lastline:
+            starttime = lastline[0]
+            endtime = lastline[1]
+            status = lastline[2]
+            reason = lastline[3]
+            db_entry(starttime, endtime, filename, status, reason)
+
         if filedata:
             starttime = filedata[0]
             endtime = filedata[1]
             status = filedata[2]
             reason = filedata[3]
             db_entry(starttime, endtime, filename, status, reason)
+
     else:
         print """
 ==> Usage : python before_streamsets.py <filename>
