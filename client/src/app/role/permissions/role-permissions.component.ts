@@ -34,17 +34,13 @@ export class RolePermissionsComponent implements OnInit {
     this.route.params.subscribe(params => {
       const id = Number.parseInt(params['id']);
       this.loading = true;
-      Observable.merge([
+      Observable.forkJoin([
         this.roleService.getRoleById(id)
-        .subscribe(role => this.role = role),
+          .map(role => this.role = role),
         this.permissionService.getPermissions()
-        .then(permissions => {
-          this.allPermissions = permissions;
-        }),
+          .map(permissions => this.allPermissions = permissions),
         this.permissionService.getPermissionByRole(id)
-        .then(permissions => {
-          this.selectedPermissions = permissions;
-        })
+          .map(permissions => this.selectedPermissions = permissions)
       ])
       .subscribe(() => this.loading = false);
     });

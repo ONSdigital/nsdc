@@ -1,7 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Configuration } from '../../app.constants';
-import { Http } from '@angular/http';
 import { Role } from '../role';
 import { User } from '../../user/user';
 import { Permission } from '../../permission/permission';
@@ -44,7 +41,7 @@ export class RoleManageComponent implements OnInit {
       this.loading = true;
       Promise.all([
         this.userService.getUsersByRole(roleId).subscribe(users => this.users = users),
-        this.permissionService.getPermissionByRole(roleId).then(permissions => this.permissions = permissions)
+        this.permissionService.getPermissionByRole(roleId).subscribe(permissions => this.permissions = permissions)
       ]).then(() => {
         this.loading = false;
       });
