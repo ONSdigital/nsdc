@@ -1,2 +1,2 @@
-export * from './validator.module';
 export * from './validator.service';
+export * from './validator.component';

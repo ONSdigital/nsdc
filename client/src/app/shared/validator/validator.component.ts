@@ -4,7 +4,10 @@ import { ValidatorService } from './validator.service';
 
 @Component({
   selector: 'nsdc-validator',
-  templateUrl: 'validator.component.html'
+  template: `
+    <nsdc-error-alert [errorMessages]="errorMessages">
+    </nsdc-error-alert>
+  `
 })
 export class ValidatorComponent {
   @Input()
@@ -12,14 +15,15 @@ export class ValidatorComponent {
 
   constructor() { }
 
-  get errorMessage() {
+  public get errorMessages(): string[] {
+    const messages = [];
     for (let propertyName in this.control.errors) {
       if (this.control.errors.hasOwnProperty(propertyName)
         && this.control.touched) {
-        return ValidatorService.getValidatorErrorMessage(propertyName);
+        messages.push(ValidatorService.getValidatorErrorMessage(propertyName));
       }
     }
 
-    return null;
+    return messages;
   }
 }

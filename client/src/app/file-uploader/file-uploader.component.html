@@ -31,16 +31,7 @@
       </div>
     </div>
   </div>
-  <div class="alert alert-danger" role="alert" *ngIf="invalidFileExtension">
-    <span class="glyphicon glyphicon-exclamation-sign"></span>
-    <span class="sr-only">Error:</span>
-    File Extension is Not Allowed.
-  </div>
-  <div class="alert alert-danger" role="alert" *ngIf="invalidFile">
-    <span class="glyphicon glyphicon-exclamation-sign"></span>
-    <span class="sr-only">Error:</span>
-    File not accepted by validator.
-  </div>
+  <nsdc-error-alert [errorMessages]="fileErrorMessages"></nsdc-error-alert>
   <div class="row">
     <div class="col-md-12">
       <button
