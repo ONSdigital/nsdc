@@ -33,17 +33,7 @@ class User(Resource):
 
     @protected_resource('ADD_USERS')
     def post(self):
-        request = parser.parse_args()
-        user = UserData(
-            role_id=request["role_id"],
-            firstname=request["firstname"],
-            lastname=request["lastname"],
-            email=request["email"],
-            username=request["username"],
-            password=request["password"],
-            status=request["status"]
-        )
-
+        user = UserData(parser.parse_args())
         db.session.add(user)
         db.session.commit()
         return jsonify(user.serialize())

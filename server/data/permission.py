@@ -10,10 +10,9 @@ class PermissionData(db.Model, Serializer):
     short_name = db.Column('short_name', db.Unicode(255))
     timestamp = db.Column('timestamp', db.TIMESTAMP, server_default=db.func.current_timestamp(), nullable=False)
 
-    def __init__(self, name, short_name, description):
-        self.name = name
-        self.short_name = short_name
-        self.description = description
+    def __init__(self, args):
+        for arg in args:
+            setattr(self, arg, args[arg])
 
     def serialize(self):
         return {

@@ -29,15 +29,7 @@ class JourneyVersion(Resource):
 
     @protected_resource('ADD_JOURNEYS')
     def post(self):
-        request_json = parser.parse_args()
-        journey_version = JourneyVersionData(
-            request_json['journey_id'],
-            request_json['version_number'],
-            request_json['validator'],
-            request_json['extensions'],
-            request_json['protocol']
-        )
-
+        journey_version = JourneyVersionData(parser.parse_args())
         db.session.add(journey_version)
         db.session.commit()
         return jsonify(journey_version.serialize())

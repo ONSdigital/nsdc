@@ -9,8 +9,7 @@ class JourneyData(db.Model, Serializer):
     description = db.Column('description', db.String(150), nullable=False, server_default=u'')
     supplier_id = db.Column(db.Integer, db.ForeignKey('supplier.supplier_id'))
 
-    def __init__(self, name, description, supplier_id):
-        self.name = name
-        self.description = description
-        self.supplier_id = supplier_id
+    def __init__(self, args):
+        for arg in args:
+            setattr(self, arg, args[arg])
 
