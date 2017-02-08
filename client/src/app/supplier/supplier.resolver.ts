@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 import { SupplierService } from './supplier.service';
 import { Supplier } from './supplier';
-import { Observable } from "rxjs";
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class SupplierResolver implements Resolve<Supplier> {

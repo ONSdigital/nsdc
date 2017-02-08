@@ -29,15 +29,15 @@ export class PermissionService {
     return this.http.delete(this.actionUrl + '/' + id);
   }
 
-  getPermissions() : Observable<Permission[]> {
+  getPermissions(): Observable<Permission[]> {
     return this.http.get(this.actionUrl);
   }
 
-  getPermissionById(id: number) : Observable<Permission> {
+  getPermissionById(id: number): Observable<Permission> {
     return this.http.get(this.actionUrl + '/' + id);
   }
 
-  getPermissionByRole(roleId: number) : Observable<Permission[]> {
+  getPermissionByRole(roleId: number): Observable<Permission[]> {
     return this.http.get(this.actionUrl + '/role/' + roleId);
   }
 }

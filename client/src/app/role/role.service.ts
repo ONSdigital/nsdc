@@ -3,7 +3,7 @@ import { Headers } from '@angular/http';
 import { Role } from './role';
 import { Configuration } from '../app.constants';
 import { AuthHttpInterceptorService } from '../shared/auth-http-interceptor/auth-http-interceptor.service';
-import { Observable } from "rxjs/Observable";
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class RoleService {
@@ -21,11 +21,11 @@ export class RoleService {
     return this.http.post(this.actionUrl, role);
   }
 
-  getRoles() : Observable<Role[]> {
+  getRoles(): Observable<Role[]> {
     return this.http.get(this.actionUrl);
   }
 
-  getRoleById(id: number) : Observable<Role> {
+  getRoleById(id: number): Observable<Role> {
     return this.http.get(this.actionUrl + '/' + id);
   }
 

@@ -26,8 +26,8 @@
     "server:dev": "webpack-dev-server --config config/webpack.dev.js --progress --profile --watch --content-base src/",
     "server:prod": "http-server dist -c-1 --cors",
     "start:hmr": "npm run server:dev:hmr",
-    "start": "npm run server:dev",
-    "start:prod": "npm run build:prod && npm run server:prod"
+    "start": "npm run lint && npm run server:dev",
+    "start:prod": "npm run lint && npm run build:prod && npm run server:prod"
     
   },
   "dependencies": {
