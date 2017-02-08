@@ -3,6 +3,7 @@ from flask import jsonify
 from flask_restful import reqparse, Resource
 from protected_resource import protected_resource
 from data.schedule import ScheduleData
+from common.request_resource import RequestResource
 
 
 parser = reqparse.RequestParser()
@@ -32,13 +33,9 @@ class Schedule(Resource):
 
     @protected_resource('EDIT_JOURNEYS')
     def put(self, schedule_id):
-        schedule = ScheduleData.query.get(schedule_id)
-        request_json = parser.parse_args()
-        if request_json["date"] is not None:
-            schedule.date = request_json['date']
-
+        altered_data = RequestResource.put(schedule_id, ScheduleData, parser.parse_args())
         db.session.commit()
-        return jsonify(schedule.serialize())
+        return jsonify(altered_data.serialize())
 
     @protected_resource('DELETE_JOURNEYS')
     def delete(self, schedule_id):
