@@ -1,6 +1,7 @@
 from config import db
 from common.serializer import Serializer
 
+
 class UserData(db.Model, Serializer):
     __tablename__ = "user"
     id = db.Column('user_id', db.Integer, primary_key=True)
@@ -21,15 +22,3 @@ class UserData(db.Model, Serializer):
         self.username = username
         self.password = password
         self.status = status
-
-    def serialize(self):
-        return {
-            'id': self.id,
-            'role_id': self.role_id,
-            'firstname': self.firstname,
-            'lastname': self.lastname,
-            'email': self.email,
-            'username': self.username,
-            'password': self.password,
-            'status': self.status
-        }

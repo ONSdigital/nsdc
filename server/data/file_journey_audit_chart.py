@@ -14,9 +14,3 @@ class FileJourneyAuditChartData(db.Model, Serializer):
         self.processed = processed,
         self.error = error
 
-    def serialize(self):
-        return {
-            'filename': self.filename,
-            'processed': self.processed,
-            'error': self.error
-        }

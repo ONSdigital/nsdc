@@ -18,12 +18,3 @@ class FileJourneyAuditData(db.Model, Serializer):
         self.status = status,
         self.description = description
 
-    def serialize(self):
-        return {
-            'step': self.step,
-            'filename': self.filename,
-            'status': self.status,
-            'description': self.description,
-            'start_time': self.start_time,
-            'end_time': self.end_time
-        }
