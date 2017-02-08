@@ -4,7 +4,6 @@ from flask_restful import reqparse, Resource
 from protected_resource import protected_resource
 from data.supplier import SupplierData
 from common.request_resource import RequestResource
-from sqlalchemy import exc
 
 
 parser = reqparse.RequestParser()
@@ -42,9 +41,4 @@ class Supplier(Resource):
 
     @protected_resource('EDIT_JOURNEYS')
     def delete(self, supplier_id):
-        try:
-            SupplierData.query.filter_by(id=supplier_id).delete()
-            db.session.commit()
-        except exc.IntegrityError:
-            abort(409, 'Failed to delete. This supplier is being used')
-        return '', 204
+        return RequestResource.delete(supplier_id, SupplierData)

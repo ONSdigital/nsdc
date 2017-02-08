@@ -41,6 +41,4 @@ class Journey(Resource):
 
     @protected_resource('DELETE_JOURNEYS')
     def delete(self, journey_id):
-        JourneyData.query.filter_by(id=journey_id).delete()
-        db.session.commit()
-        return '', 204
+        return RequestResource.delete(journey_id, JourneyData)

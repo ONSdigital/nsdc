@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { Schedule, ScheduleService } from '../../../schedule';
+import { ToasterService } from 'angular2-toaster';
 
 @Component({
   selector: 'nsdc-journey-schedules',
@@ -12,7 +13,8 @@ export class JourneySchedulesComponent implements OnChanges {
   loading = false;
 
   constructor(
-    private scheduleService: ScheduleService
+    private scheduleService: ScheduleService,
+    private toasterService: ToasterService
   ) { }
 
   ngOnChanges(changes) {
@@ -29,13 +31,16 @@ export class JourneySchedulesComponent implements OnChanges {
     });
   }
 
-  onDeleteClicked(scheduleId) {
+  onDelete(scheduleId) {
     this.scheduleService.deleteSchedule(scheduleId)
-      .subscribe(() => {
+    .subscribe(
+      () => {
         this.scheduleService.getSchedulesByVersion(this.versionId)
           .subscribe(schedules =>
             this.schedules = schedules
           );
-      });
+      },
+      error => this.toasterService.pop('error', error.message)
+    );
   }
 }

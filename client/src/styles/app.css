@@ -1,3 +1,4 @@
+@import '~angular2-toaster/toaster.css';
 @import '~bootstrap/dist/css/bootstrap.css';
 
 html {
@@ -155,4 +156,9 @@ a.disabled {
 
 .nav-tabs li a {
   cursor: pointer !important;
+}
+
+#toast-container {
+  top: 45px;
+  z-index: 1048;
 }

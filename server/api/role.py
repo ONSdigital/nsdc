@@ -40,6 +40,4 @@ class Role(Resource):
 
     @protected_resource('DELETE_ROLES')
     def delete(self, role_id):
-        RoleData.query.filter_by(id=role_id).delete()
-        db.session.commit()
-        return '', 204
+        return RequestResource.delete(role_id, RoleData)

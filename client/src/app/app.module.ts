@@ -13,6 +13,7 @@ import { IsLoggedInGuard } from './login/is-logged-in.guard';
 import { Configuration } from './app.constants';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SharedModule } from './shared';
+import { ToasterModule } from 'angular2-toaster';
 import '../styles/app.css';
 
 @NgModule({
@@ -20,7 +21,8 @@ import '../styles/app.css';
     BrowserModule,
     HttpModule,
     routing,
-    SharedModule
+    SharedModule,
+    ToasterModule
   ],
   declarations: [
     AppComponent,
