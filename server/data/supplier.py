@@ -11,10 +11,3 @@ class SupplierData(db.Model, Serializer):
     def __init__(self, name, description):
         self.name = name
         self.description = description
-
-    def serialize(self):
-        return {
-            'id': self.id,
-            'name': self.name,
-            'description': self.description
-        }

@@ -14,10 +14,3 @@ class JourneyData(db.Model, Serializer):
         self.description = description
         self.supplier_id = supplier_id
 
-    def serialize(self):
-        return {
-            'id': self.id,
-            'name': self.name,
-            'description': self.description,
-            'supplier_id': self.supplier_id
-        }

@@ -3,6 +3,7 @@ from flask import jsonify
 from flask_restful import reqparse, Resource
 from protected_resource import protected_resource
 from data.journey_version import JourneyVersionData
+from common.request_resource import RequestResource
 
 parser = reqparse.RequestParser()
 parser.add_argument('journey_id')
@@ -43,20 +44,9 @@ class JourneyVersion(Resource):
 
     @protected_resource('EDIT_JOURNEYS')
     def put(self, journey_version_id):
-        journey_version = JourneyVersionData.query.get(journey_version_id)
-        request_json = parser.parse_args()
-
-        if request_json['version_number'] is not None:
-            journey_version.version_number = request_json['version_number']
-        if request_json['validator'] is not None:
-            journey_version.validator = request_json['validator']
-        if request_json['extensions'] is not None:
-            journey_version.extensions = request_json['extensions']
-        if request_json['protocol'] is not None:
-            journey_version.protocol = request_json['protocol']
-
+        altered_data = RequestResource.put(journey_version_id, JourneyVersionData, parser.parse_args())
         db.session.commit()
-        return jsonify(journey_version.serialize())
+        return jsonify(altered_data.serialize())
 
     @protected_resource('DELETE_JOURNEYS')
     def delete(self, journey_version_id):

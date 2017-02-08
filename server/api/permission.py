@@ -5,6 +5,7 @@ from protected_resource import protected_resource
 from data.permission import PermissionData
 from data.role import RoleData
 from data.user import UserData
+from common.request_resource import RequestResource
 
 parser = reqparse.RequestParser()
 parser.add_argument('name')
@@ -44,18 +45,9 @@ class Permission(Resource):
 
     @protected_resource('EDIT_PERMISSIONS')
     def put(self, permission_id):
-        permission = PermissionData.query.get(permission_id)
-        request_json = parser.parse_args()
-
-        if request_json['name'] is not None:
-            permission.name = request_json['name']
-        if request_json['short_name'] is not None:
-            permission.short_name = request_json['short_name']
-        if request_json['description'] is not None:
-            permission.description = request_json['description']
-
+        altered_data = RequestResource.put(permission_id, PermissionData, parser.parse_args())
         db.session.commit()
-        return jsonify(permission.serialize())
+        return jsonify(altered_data.serialize())
 
     @protected_resource('DELETE_PERMISSIONS')
     def delete(self, permission_id):

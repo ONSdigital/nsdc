@@ -1,8 +1,9 @@
 from config import db
-from flask import jsonify, request
+from flask import jsonify
 from flask_restful import reqparse, Resource
 from protected_resource import protected_resource
 from data.user import UserData
+from common.request_resource import RequestResource
 
 parser = reqparse.RequestParser()
 parser.add_argument("firstname")
@@ -49,23 +50,6 @@ class User(Resource):
 
     @protected_resource('EDIT_USERS')
     def put(self, user_id):
-        user = UserData.query.get(user_id)
-        request_json = parser.parse_args()
-        if request_json["role_id"] is not None:
-            user.role_id = request_json["role_id"]
-        if request_json["firstname"] is not None:
-            user.firstname = request_json["firstname"]
-        if request_json["lastname"] is not None:
-            user.lastname = request_json["lastname"]
-        if request_json["email"] is not None:
-            user.email = request_json["email"]
-        if request_json["username"] is not None:
-            user.username = request_json["username"]
-        if request_json["password"] is not None:
-            password = request_json["password"]
-            # TODO: hash/salt
-            user.password = password
-        if request_json["status"] is not None:
-            user.status = request_json["status"]
+        altered_data = RequestResource.put(user_id, UserData, parser.parse_args())
         db.session.commit()
-        return jsonify(user.serialize())
+        return jsonify(altered_data.serialize())

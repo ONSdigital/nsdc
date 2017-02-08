@@ -13,10 +13,3 @@ class FileData(db.Model, Serializer):
         self.name = name
         self.schedule_id = schedule_id
 
-    def serialize(self):
-        return {
-            'id': self.id,
-            'name': self.name,
-            'schedule_id': self.schedule_id,
-            'timestamp': self.timestamp
-        }

@@ -3,6 +3,7 @@ from flask import jsonify
 from flask_restful import reqparse, Resource
 from protected_resource import protected_resource
 from data.supplier import SupplierData
+from common.request_resource import RequestResource
 
 parser = reqparse.RequestParser()
 parser.add_argument('name')
@@ -33,16 +34,9 @@ class Supplier(Resource):
 
     @protected_resource('EDIT_JOURNEYS')
     def put(self, supplier_id):
-        supplier = SupplierData.query.get(supplier_id)
-        request_json = parser.parse_args()
-
-        if request_json['name'] is not None:
-            supplier.name = request_json['name']
-        if request_json['description'] is not None:
-            supplier.description = request_json['description']
-
+        altered_data = RequestResource.put(supplier_id, SupplierData, parser.parse_args())
         db.session.commit()
-        return jsonify(supplier.serialize())
+        return jsonify(altered_data.serialize())
 
     @protected_resource('EDIT_JOURNEYS')
     def delete(self, supplier_id):

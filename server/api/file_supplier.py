@@ -1,4 +1,3 @@
-from config import db
 from flask import jsonify
 from flask_restful import Resource
 from protected_resource import protected_resource

@@ -3,7 +3,7 @@ from flask import jsonify
 from protected_resource import protected_resource
 from flask_restful import reqparse, Resource
 from data.role import RoleData
-
+from common.request_resource import RequestResource
 
 parser = reqparse.RequestParser()
 parser.add_argument('name')
@@ -34,16 +34,9 @@ class Role(Resource):
 
     @protected_resource('EDIT_ROLES')
     def put(self, role_id):
-        role = RoleData.query.get(role_id)
-        request_json = parser.parse_args()
-
-        if request_json["name"] is not None:
-            role.name = request_json["name"]
-        if request_json["description"] is not None:
-            role.description = request_json["description"]
-
+        altered_data = RequestResource.put(role_id, RoleData, parser.parse_args())
         db.session.commit()
-        return jsonify(role.serialize())
+        return jsonify(altered_data.serialize())
 
     @protected_resource('DELETE_ROLES')
     def delete(self, role_id):
