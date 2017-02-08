@@ -3,6 +3,7 @@
   <tr>
     <th>Journey Name</th>
     <th>Description</th>
+    <th>Supplier</th>
     <th></th>
   </tr>
   </thead>
@@ -14,6 +15,7 @@
   >
     <td>{{ journey.name }}</td>
     <td>{{ journey.description }}</td>
+    <td>{{ journey.supplier_name }}</td>
     <td class="options options-large">
       <a
         [nsdcConfirmModal]="'Are you sure you want to delete this Journey?'"

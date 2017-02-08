@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { JourneyService } from '../../journey/journey.service';
 import { ScheduleService } from '../../schedule/schedule.service';
 import { NgUploaderOptions } from 'ngx-uploader';
 import { LoginService } from '../../login/login.service';
@@ -12,7 +11,6 @@ import { Configuration } from '../../app.constants';
   styleUrls: ['journey-file-upload.component.css']
 })
 export class JourneyFileUploadComponent implements OnInit {
-
   journeyVersionSchedule;
   validator: RegExp;
   loading = false;
@@ -22,7 +20,6 @@ export class JourneyFileUploadComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private scheduleService: ScheduleService,
-    private journeyService: JourneyService,
     public loginService: LoginService,
     private router: Router,
     private config: Configuration

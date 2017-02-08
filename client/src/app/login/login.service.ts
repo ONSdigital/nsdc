@@ -14,12 +14,11 @@ export class LoginService {
   }
 
   login(username, password) {
-    let loginUrl = this.config.Server + 'nsdc/v1.0/login';
-    let headers = new Headers();
+    const headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return this.http
       .post(
-        loginUrl,
+        this.config.ServerWithApiUrl + 'login',
         JSON.stringify({ username, password }),
         { headers }
       )

@@ -3,4 +3,5 @@ export class Journey {
   supplier_id: number;
   name: string;
   description: string;
+  supplier_name: string = '';
 }
