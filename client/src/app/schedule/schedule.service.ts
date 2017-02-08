@@ -18,7 +18,7 @@ export class ScheduleService {
     this.actionUrl = config.ServerWithApiUrl + 'schedules';
   }
 
-  getSchedulesByVersion(versionId: number) : Observable<Schedule[]> {
+  getSchedulesByVersion(versionId: number): Observable<Schedule[]> {
     return this.http.get(this.config.ServerWithApiUrl + `journeys/versions/${versionId}/schedules`);
   }
 
@@ -26,7 +26,7 @@ export class ScheduleService {
     return this.http.get(this.config.ServerWithApiUrl + `journeys/versions/${versionId}/schedules?with-version=true`);
   }
 
-  getScheduleById(id) : Observable<Schedule> {
+  getScheduleById(id): Observable<Schedule> {
     return this.http.get(this.config.ServerWithApiUrl + 'schedules/' + id);
   }
 

@@ -29,11 +29,11 @@ export class SupplierService {
     return this.http.delete(this.actionUrl + '/' + id);
   }
 
-  getSuppliers() : Observable<Supplier[]> {
+  getSuppliers(): Observable<Supplier[]> {
     return this.http.get(this.actionUrl);
   }
 
-  getSupplierById(id: number) : Observable<Supplier> {
+  getSupplierById(id: number): Observable<Supplier> {
     return this.http.get(this.actionUrl + '/' + id);
   }
 }

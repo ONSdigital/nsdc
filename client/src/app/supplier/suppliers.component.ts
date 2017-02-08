@@ -3,7 +3,6 @@ import { Overlay } from 'angular2-modal';
 import { Modal } from 'angular2-modal/plugins/bootstrap';
 import { Supplier } from './supplier';
 import { SupplierService } from './supplier.service';
-import { Http } from '@angular/http';
 
 @Component({
   selector: 'nsdc-suppliers',
@@ -34,7 +33,6 @@ export class SuppliersComponent implements OnInit {
 
   onDelete(supplierId) {
     this.supplierService.deleteSupplier(supplierId)
-    .subscribe(() =>this.supplierService.getSuppliers().subscribe(suppliers => this.suppliers = suppliers));
+    .subscribe(() => this.supplierService.getSuppliers().subscribe(suppliers => this.suppliers = suppliers));
   }
-
 }

@@ -19,12 +19,12 @@ export class FileAuditService {
     this.actionUrl = config.ServerWithApiUrl + 'files';
   }
 
-  getFiles(filters: any = {}) : Observable<File[]> {
+  getFiles(filters: any = {}): Observable<File[]> {
     const pathParams = `supplierId=${filters.supplierId || ''}&from=${filters.from || ''}&to=${filters.to || ''}`;
     return this.http.get(this.actionUrl + '?' + pathParams);
   }
 
-  getFileAuditChartData(id) : Observable<FileAuditChart> {
+  getFileAuditChartData(id): Observable<FileAuditChart> {
     return this.http.get(this.actionUrl + '/audit/chart/' + id);
   }
 

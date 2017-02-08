@@ -21,19 +21,19 @@ export class UserService {
     return this.http.post(this.actionUrl, user);
   }
 
-  getUsersByStatus(status: string) : Observable<User[]> {
+  getUsersByStatus(status: string): Observable<User[]> {
     return this.http.get(this.actionUrl + '/status/' + status);
   }
 
-  getUserById(id: number) : Observable<User> {
+  getUserById(id: number): Observable<User> {
     return this.http.get(this.actionUrl + '/' + id);
   }
 
-  getUsersByRole(roleId: number) : Observable<User[]> {
+  getUsersByRole(roleId: number): Observable<User[]> {
     return this.http.get(this.actionUrl + '/role/' + roleId);
   }
 
-  updateUser(user: User) : Observable<User> {
+  updateUser(user: User): Observable<User> {
     return this.http.put(this.actionUrl + '/' + user.id, user);
   }
 

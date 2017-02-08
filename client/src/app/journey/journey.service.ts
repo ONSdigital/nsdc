@@ -25,7 +25,7 @@ export class JourneyService {
     return this.http.post(this.actionUrl, journey);
   }
 
-  getJourneys() : Observable<Journey[]> {
+  getJourneys(): Observable<Journey[]> {
     return this.http.get(this.actionUrl);
   }
 
@@ -33,15 +33,15 @@ export class JourneyService {
     return this.http.put(this.actionUrl + '/' + journey.id, journey);
   }
 
-  getAllJourneyVersions() : Observable<JourneyVersion[]> {
+  getAllJourneyVersions(): Observable<JourneyVersion[]> {
     return this.http.get(this.versionUrl);
   }
 
-  getVersionsByRole(roleId) : Observable<JourneyVersion[]> {
+  getVersionsByRole(roleId): Observable<JourneyVersion[]> {
     return this.http.get(this.versionUrl + '/roles/' + roleId);
   }
 
-  getJourneyById(id: number) : Observable<Journey> {
+  getJourneyById(id: number): Observable<Journey> {
     return this.http.get(this.actionUrl + '/' + id);
   }
 
@@ -49,11 +49,11 @@ export class JourneyService {
     return this.http.delete(this.actionUrl + '/' + id);
   }
 
-  getSteps() : Observable<JourneyStep[]> {
+  getSteps(): Observable<JourneyStep[]> {
     return this.http.get(this.actionUrl + '/steps');
   }
 
-  getStepsByJourneyVersion(journeyVersionId: number) : Observable<JourneyStep[]> {
+  getStepsByJourneyVersion(journeyVersionId: number): Observable<JourneyStep[]> {
     return this.http.get(this.versionUrl + '/' + journeyVersionId + '/steps');
   }
 
@@ -65,11 +65,11 @@ export class JourneyService {
     return this.http.put(this.versionUrl + '/' + journeyVersion.id, journeyVersion);
   }
 
-  getJourneyVersions(journeyId) : Observable<JourneyVersion[]> {
+  getJourneyVersions(journeyId): Observable<JourneyVersion[]> {
     return this.http.get(this.actionUrl + '/' + journeyId + '/versions');
   }
 
-  getJourneyVersionById(id: number) : Observable<JourneyVersion> {
+  getJourneyVersionById(id: number): Observable<JourneyVersion> {
     return this.http.get(this.versionUrl + '/' + id);
   }
 
