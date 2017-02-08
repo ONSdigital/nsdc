@@ -4,6 +4,7 @@ class RequestResource:
         data_items = data.query.get(id)
 
         for arg in args:
-            setattr(data_items, arg, args[arg])
+            if args[arg] is not None:
+                setattr(data_items, arg, args[arg])
 
         return data_items
