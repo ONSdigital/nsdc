@@ -9,7 +9,11 @@ export class AuthHttpInterceptorService {
   public headers: Headers;
 
   private results = res => res.json();
-  private error = res => Observable.throw(res.json());
+  private error = res => {
+    const errorResponse = res.json();
+    errorResponse.message = errorResponse.message || 'Something went wrong';
+    return Observable.throw(errorResponse);
+  }
 
   constructor(
     private http: Http,
@@ -26,27 +30,27 @@ export class AuthHttpInterceptorService {
   get(url: string) {
     this.setSessionId();
     return this.http.get(url, { headers: this.headers })
-      .map(this.results)
-      .catch(this.error);
+    .map(this.results)
+    .catch(this.error);
   }
 
   post(url: string, data: any) {
     this.setSessionId();
     return this.http.post(url, JSON.stringify(data), { headers: this.headers })
-      .map(this.results)
-      .catch(this.error);
+    .map(this.results)
+    .catch(this.error);
   }
 
   put(url: string, data: any) {
     this.setSessionId();
     return this.http.put(url, JSON.stringify(data), { headers: this.headers })
-      .map(this.results)
-      .catch(this.error);
+    .map(this.results)
+    .catch(this.error);
   }
 
   delete(url: string) {
     this.setSessionId();
     return this.http.delete(url, { headers: this.headers })
-      .catch(this.error);
+    .catch(this.error);
   }
 }
