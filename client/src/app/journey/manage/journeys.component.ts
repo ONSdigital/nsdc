@@ -4,6 +4,7 @@ import { JourneyService } from '../journey.service';
 import { SupplierService } from '../../supplier/supplier.service';
 import { Observable } from 'rxjs/Observable';
 import { Journey } from '../journey';
+import { ToasterService } from 'angular2-toaster';
 
 @Component({
   selector: 'nsdc-journeys',
@@ -17,6 +18,7 @@ export class JourneysComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
+    private toasterService: ToasterService,
     private journeyService: JourneyService,
     private supplierService: SupplierService
   ) { }
@@ -43,15 +45,18 @@ export class JourneysComponent implements OnInit {
     this.router.navigate(['journeys', journeyId]);
   }
 
-  onDeleteClicked(journeyId) {
+  onDelete(journeyId) {
     this.journeyService.deleteJourney(journeyId)
-      .subscribe(() => {
+    .subscribe(
+      () => {
         this.journeyService.getJourneys()
-          .subscribe(journeys => this.journeys = journeys);
-      });
+        .subscribe(journeys => this.journeys = journeys);
+      },
+      error => this.toasterService.pop('error', error.message)
+    );
   }
 
-  onEditClicked(event, journeyId) {
+  onEdit(event, journeyId) {
     event.stopPropagation();
     this.router.navigate(['/journeys/edit', journeyId]);
   }

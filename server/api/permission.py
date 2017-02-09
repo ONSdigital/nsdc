@@ -44,6 +44,4 @@ class Permission(Resource):
 
     @protected_resource('DELETE_PERMISSIONS')
     def delete(self, permission_id):
-        PermissionData.query.filter_by(id=permission_id).delete()
-        db.session.commit()
-        return '', 204
+        return RequestResource.delete(permission_id, PermissionData)

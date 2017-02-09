@@ -20,12 +20,12 @@
       <a
         [nsdcConfirmModal]="'Are you sure you want to delete this Journey?'"
         class="icon-links glyphicon glyphicon-remove right"
-        (confirmed)="onDeleteClicked(journey.id)"
+        (confirmed)="onDelete(journey.id)"
       >
       </a>
       <a
         class="icon-links glyphicon glyphicon-edit right"
-        (click)="onEditClicked($event, journey.id)"
+        (click)="onEdit($event, journey.id)"
       >
       </a>
     </td>

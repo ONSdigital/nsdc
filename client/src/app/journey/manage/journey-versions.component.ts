@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { JourneyService } from '../journey.service';
 import { JourneyVersion } from '../versions/journey-version';
+import { ToasterService } from 'angular2-toaster';
 
 @Component({
   selector: 'nsdc-journey-versions',
@@ -16,6 +17,7 @@ export class JourneyVersionsComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
+    private toasterService: ToasterService,
     private journeyService: JourneyService
   ) { }
 
@@ -38,15 +40,15 @@ export class JourneyVersionsComponent implements OnInit {
     this.router.navigate(['journeys', this.selectedJourneyId, 'version', versionId]);
   }
 
-  onDeleteClicked(versionId) {
+  onDelete(versionId) {
     this.journeyService.deleteJourneyVersion(versionId)
-      .subscribe(() =>
-        this.journeyService.getJourneyVersions(this.selectedJourneyId)
-          .subscribe(versions => this.versions = versions)
-      );
+    .subscribe(
+      () => this.journeyService.getJourneyVersions(this.selectedJourneyId).subscribe(versions => this.versions = versions),
+      error => this.toasterService.pop('error', error.message)
+    );
   }
 
-  onEditClicked(event, versionId) {
+  onEdit(event, versionId) {
     event.stopPropagation();
     this.router.navigate(['/journeys', this.selectedJourneyId, 'versions', 'edit', versionId]);
   }

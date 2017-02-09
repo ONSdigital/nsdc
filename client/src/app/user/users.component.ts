@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { User } from './user';
 import { UserService } from './user.service';
 import { UserPermissionsService } from '../user-permissions.service';
+import { ToasterService } from 'angular2-toaster';
 
 @Component({
   selector: 'nsdc-users',
@@ -15,6 +16,7 @@ export class UsersComponent implements OnInit {
 
   constructor(
     private userService: UserService,
+    private toasterService: ToasterService,
     private userPermissionsService: UserPermissionsService
   ) { }
 
@@ -33,10 +35,13 @@ export class UsersComponent implements OnInit {
 
   onDeactivate(userId) {
     this.userService.deactivateUser(userId)
-    .subscribe(() => {
-      this.userService.getUsersByStatus('active')
-      .subscribe(users => this.users = users);
-    });
+    .subscribe(
+      () => {
+        this.userService.getUsersByStatus('active')
+        .subscribe(users => this.users = users);
+      },
+      error => this.toasterService.pop('error', error.message)
+    );
   }
 
   onStatusChange(status) {

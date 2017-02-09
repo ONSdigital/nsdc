@@ -1,8 +1,7 @@
-import { Component, OnInit, ViewContainerRef  } from '@angular/core';
+import { Component, OnInit  } from '@angular/core';
 import { Role } from './role';
 import { RoleService } from './role.service';
-import { Overlay } from 'angular2-modal';
-import { Modal } from 'angular2-modal/plugins/bootstrap';
+import { ToasterService } from 'angular2-toaster';
 
 @Component({
   selector: 'nsdc-roles',
@@ -14,12 +13,8 @@ export class RoleComponent implements OnInit {
 
   constructor(
     private roleService: RoleService,
-    public modal: Modal,
-    overlay: Overlay,
-    vcRef: ViewContainerRef
-  ) {
-    overlay.defaultViewContainer = vcRef;
-  }
+    private toasterService: ToasterService
+  ) { }
 
   ngOnInit(): void {
     this.loading = true;
@@ -29,8 +24,11 @@ export class RoleComponent implements OnInit {
     });
   }
 
-  onDeleteClicked(roleId) {
+  onDelete(roleId) {
     this.roleService.deleteRole(roleId)
-      .subscribe(() => this.roleService.getRoles().subscribe(roles => this.roles = roles));
+    .subscribe(
+      () => this.roleService.getRoles().subscribe(roles => this.roles = roles),
+      error => this.toasterService.pop('error', error.message)
+    );
   }
 }

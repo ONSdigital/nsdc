@@ -1,9 +1,10 @@
 from config import db
-from flask import jsonify
+from flask import jsonify, abort
 from flask_restful import reqparse, Resource
 from protected_resource import protected_resource
 from data.supplier import SupplierData
 from common.request_resource import RequestResource
+
 
 parser = reqparse.RequestParser()
 parser.add_argument('name')
@@ -34,6 +35,4 @@ class Supplier(Resource):
 
     @protected_resource('EDIT_JOURNEYS')
     def delete(self, supplier_id):
-        SupplierData.query.filter_by(id=supplier_id).delete()
-        db.session.commit()
-        return '', 204
+        return RequestResource.delete(supplier_id, SupplierData)

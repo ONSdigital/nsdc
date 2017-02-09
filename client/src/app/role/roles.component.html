@@ -18,9 +18,10 @@
         <td><a href="#" [routerLink]="['/roles', role.id]" routerLinkActive="active">{{role.name}}</a></td>
         <td>{{role.description}}</td>
         <td class="options options-large">
-          <button class="btn btn-danger right"
-                  [nsdcConfirmModal]="'Are you sure you want to delete this user?'"
-                  (confirmed)="onDeleteClicked(role.id)">
+          <button
+            class="btn btn-danger right"
+            [nsdcConfirmModal]="'Are you sure you want to delete this user?'"
+            (confirmed)="onDelete(role.id)">
             Delete
           </button>
           <button
@@ -29,13 +30,13 @@
             Edit
           </button>
           <button
-                class="btn btn-info btn-extra right "
-                [routerLink]="['/roles/' + role.id + '/permissions']">
+            class="btn btn-info btn-extra right "
+            [routerLink]="['/roles/' + role.id + '/permissions']">
             Permissions
           </button>
           <button
-                  class="btn btn-warning btn-extra right "
-                  [routerLink]="['/roles/' + role.id + '/journey-versions']">
+            class="btn btn-warning btn-extra right "
+            [routerLink]="['/roles/' + role.id + '/journey-versions']">
             Journey Versions
           </button>
         </td>
