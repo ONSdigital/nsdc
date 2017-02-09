@@ -43,4 +43,7 @@
     </button>
   </div>
 </div>
-<router-outlet></router-outlet>
+<div [hidden]="loading">
+  <router-outlet></router-outlet>
+</div>
+<nsdc-loading *ngIf="loading"></nsdc-loading>
