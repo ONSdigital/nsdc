@@ -102,7 +102,14 @@ VALUES ('Upload to Server', 'Upload the file to the server', 'UPLOAD_TO_SERVER')
 ('Upload to Move It', 'Upload the file to the move it server', 'UPLOAD_TO_MOVEIT'),
 ('Upload to Sandbox VM', 'Upload the file to the Sandbox VM', 'UPLOAD_TO_SANDBOX'),
 ('Antivirus Check', 'Perform the Antivirus check on the uploaded file', 'ANTIVIRUS_CHECK'),
-('File Level Check', 'Perform the File Level check on the uploaded file', 'FILE_LEVEL_CHECK');
+('File Level Check', 'Perform the File Level check on the uploaded file', 'FILE_LEVEL_CHECK'),
+('Filename Validation', 'Validates the file name', 'FILENAME_VALIDATION'),
+('Filesize Validation', 'Validates the file size', 'FILESIZE_VALIDATION'),
+('Header Validation', 'Validates the first record line', 'HEADER_VALIDATION'),
+('Footer Validation', 'Validates the last record line', 'FOOTER_VALIDATION'),
+('File data Validation', 'Validates the rest of the data of the file ', 'FILEDATA_VALIDATION'),
+('Record Type Validation', 'Perform the File Level check on the uploaded file', 'RCD_TYPE_VALIDATION');
+
 
 INSERT INTO journey_version_step (journey_version_id, journey_step_id) (
 	SELECT journey_version.journey_version_id, journey_step.journey_step_id FROM journey_version CROSS JOIN journey_step
