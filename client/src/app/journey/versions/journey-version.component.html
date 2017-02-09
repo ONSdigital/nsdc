@@ -29,6 +29,6 @@
       </select>
       <nsdc-validator [control]="journeyVersionForm.controls['protocol']"></nsdc-validator>
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary" [disabled]="!journeyVersionForm.valid">Submit</button>
   </form>
 </div>
