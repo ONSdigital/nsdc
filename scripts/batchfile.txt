@@ -1,0 +1,5 @@
+cd /DTM/NSDC
+lcd /home/cloudera/landing
+get *
+rm *
+bye
