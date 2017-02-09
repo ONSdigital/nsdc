@@ -12,6 +12,6 @@
       <input type="text" #refName class="form-control" formControlName="description" placeholder="Description">
       <nsdc-validator [control]="supplierForm.controls['description']"></nsdc-validator>
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary" [disabled]="!supplierForm.valid">Submit</button>
   </form>
 </div>

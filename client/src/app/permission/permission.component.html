@@ -17,6 +17,6 @@
             <input type="text" #refName class="form-control" formControlName="description" placeholder="Description">
             <nsdc-validator [control]="permissionForm.controls['description']"></nsdc-validator>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>    
+        <button type="submit" class="btn btn-primary" [disabled]="!permissionForm.valid">Submit</button>
     </form>
 </div>

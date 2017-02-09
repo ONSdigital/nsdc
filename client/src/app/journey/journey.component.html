@@ -20,6 +20,6 @@
       <input type="text" #refName class="form-control" formControlName="description" placeholder="Description">
       <nsdc-validator [control]="journeyForm.controls['description']"></nsdc-validator>
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary" [disabled]="!journeyForm.valid">Submit</button>
   </form>
 </div>

@@ -42,7 +42,7 @@
     <button
       type="submit"
       class="btn btn-primary"
-      [disabled]="submitPending || userForm.pending"
+      [disabled]="(submitPending || userForm.pending) || !userForm.valid"
     >
       Submit
     </button> 
