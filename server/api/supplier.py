@@ -13,7 +13,6 @@ parser.add_argument('description')
 class Supplier(Resource):
     @protected_resource('VIEW_JOURNEYS')
     def get(self, supplier_id=None):
-
         if supplier_id is not None:
             step = SupplierData.query.get(supplier_id)
             return jsonify(step.serialize())
@@ -22,12 +21,7 @@ class Supplier(Resource):
 
     @protected_resource('EDIT_JOURNEYS')
     def post(self):
-        request_json = parser.parse_args()
-        supplier = SupplierData(
-            request_json['name'],
-            request_json['description']
-        )
-
+        supplier = SupplierData(parser.parse_args())
         db.session.add(supplier)
         db.session.commit()
         return jsonify(supplier.serialize())

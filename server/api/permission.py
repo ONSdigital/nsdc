@@ -17,7 +17,6 @@ class Permission(Resource):
 
     @protected_resource('VIEW_PERMISSIONS')
     def get(self, role_id=None, user_id=None, permission_id=None):
-
         if permission_id is not None:
             permission = PermissionData.query.get(permission_id)
             return jsonify(permission.serialize())
@@ -32,13 +31,7 @@ class Permission(Resource):
 
     @protected_resource('ADD_PERMISSIONS')
     def post(self):
-        request_json = parser.parse_args()
-        permission = PermissionData(
-            request_json['name'],
-            request_json['short_name'],
-            request_json['description']
-        )
-
+        permission = PermissionData(parser.parse_args())
         db.session.add(permission)
         db.session.commit()
         return jsonify(permission.serialize())

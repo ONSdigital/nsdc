@@ -10,7 +10,6 @@ from data.journey import JourneyData
 class File(Resource):
     @protected_resource('DATA_AUDIT')
     def get(self):
-
         files = FileData.query.distinct(FileData.name)
 
         supplier_id = request.args.get('supplierId')

@@ -7,7 +7,6 @@ from data.schedule import ScheduleData
 
 
 class JourneyVersionSchedule(Resource):
-
     def get(self, journey_version_id):
         if request.args and request.args['with-version'] == 'true':
             return self.get_with_version(journey_version_id)

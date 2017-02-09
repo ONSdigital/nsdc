@@ -22,13 +22,7 @@ class Journey(Resource):
 
     @protected_resource('ADD_JOURNEYS')
     def post(self):
-        request_json = parser.parse_args()
-        journey = JourneyData(
-            request_json['name'],
-            request_json['description'],
-            request_json['supplier_id']
-        )
-
+        journey = JourneyData(parser.parse_args())
         db.session.add(journey)
         db.session.commit()
         return jsonify(journey.serialize())

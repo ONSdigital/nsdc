@@ -14,11 +14,6 @@ class UserData(db.Model, Serializer):
     status = db.Column('status', db.String(10), nullable=False, server_default='active')
     role_id = db.Column(db.Integer, db.ForeignKey('role.role_id'))
 
-    def __init__(self, role_id, firstname, lastname, email, username, password, status):
-        self.role_id = role_id
-        self.firstname = firstname
-        self.lastname = lastname
-        self.email = email
-        self.username = username
-        self.password = password
-        self.status = status
+    def __init__(self, args):
+        for arg in args:
+            setattr(self, arg, args[arg])

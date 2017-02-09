@@ -20,13 +20,7 @@ class Schedule(Resource):
 
     @protected_resource('EDIT_JOURNEYS')
     def post(self):
-        request = parser.parse_args()
-        schedule = ScheduleData(
-            date=request['date'],
-            status=request['status'],
-            journey_version_id=request['journey_version_id']
-        )
-
+        schedule = ScheduleData(parser.parse_args())
         db.session.add(schedule)
         db.session.commit()
         return jsonify(schedule.serialize())

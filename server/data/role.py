@@ -13,9 +13,9 @@ class RoleData(db.Model, Serializer):
     permissions = db.relationship('PermissionData', secondary=role_permission, lazy='dynamic', backref=db.backref('roles', lazy='dynamic'))
     journey_versions = db.relationship('JourneyVersionData', secondary=journey_version_role, lazy='dynamic', backref=db.backref('roles', lazy='dynamic'))
 
-    def __init__(self, name, description):
-        self.name = name
-        self.description = description
+    def __init__(self, args):
+        for arg in args:
+            setattr(self, arg, args[arg])
 
     def serialize(self):
         return {

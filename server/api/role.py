@@ -22,12 +22,7 @@ class Role(Resource):
 
     @protected_resource('ADD_ROLES')
     def post(self):
-        request = parser.parse_args()
-        role = RoleData(
-            name=request["name"],
-            description=request["description"]
-        )
-
+        role = RoleData(parser.parse_args())
         db.session.add(role)
         db.session.commit()
         return jsonify(RoleData.serialize(role))

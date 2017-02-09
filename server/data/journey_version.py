@@ -10,16 +10,13 @@ class JourneyVersionData(db.Model, Serializer):
     journey_id = db.Column(db.Integer, db.ForeignKey('journey.journey_id'))
     validator = db.Column('validator', db.String(50), nullable=False, server_default=u'')
     extensions = db.Column('extensions', db.String(150), nullable=False, server_default=u'')
-    protocol = db.Column('protocol', db.String(10), nullable=False, server_default=u'')
+    protocol = db.Column('protocol', db.String(10), nullable=False, server_default='default')
     journey_steps = db.relationship('JourneyStepData', secondary=journey_version_step, lazy='dynamic',
                             backref=db.backref('journey_versions', lazy='dynamic'))
 
-    def __init__(self, journey_id, version_number, validator, extensions, protocol):
-        self.journey_id = journey_id
-        self.version_number = version_number
-        self.validator = validator
-        self.extensions = extensions
-        self.protocol = protocol
+    def __init__(self, args):
+        for arg in args:
+            setattr(self, arg, args[arg])
 
     def serialize(self):
         return {
