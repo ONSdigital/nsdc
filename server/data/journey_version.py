@@ -1,9 +1,10 @@
 from config import db
 from common.serializer import Serializer
 from data.journey_version_step import journey_version_step
+from common.common_data import CommonData
 
 
-class JourneyVersionData(db.Model, Serializer):
+class JourneyVersionData(CommonData, db.Model, Serializer):
     __tablename__ = 'journey_version'
     id = db.Column('journey_version_id', db.Integer, primary_key=True)
     version_number = db.Column('version_number', db.Integer, nullable=False)
@@ -13,10 +14,6 @@ class JourneyVersionData(db.Model, Serializer):
     protocol = db.Column('protocol', db.String(10), nullable=False, server_default='default')
     journey_steps = db.relationship('JourneyStepData', secondary=journey_version_step, lazy='dynamic',
                             backref=db.backref('journey_versions', lazy='dynamic'))
-
-    def __init__(self, args):
-        for arg in args:
-            setattr(self, arg, args[arg])
 
     def serialize(self):
         return {
