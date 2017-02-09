@@ -1,8 +1,9 @@
 from config import db
 from common.serializer import Serializer
+from common.common_data import CommonData
 
 
-class UserData(db.Model, Serializer):
+class UserData(CommonData, db.Model, Serializer):
     __tablename__ = "user"
     id = db.Column('user_id', db.Integer, primary_key=True)
     firstname = db.Column('firstname', db.String(50), nullable=False, server_default=u'')
@@ -14,6 +15,3 @@ class UserData(db.Model, Serializer):
     status = db.Column('status', db.String(10), nullable=False, server_default='active')
     role_id = db.Column(db.Integer, db.ForeignKey('role.role_id'))
 
-    def __init__(self, args):
-        for arg in args:
-            setattr(self, arg, args[arg])
