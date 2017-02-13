@@ -69,31 +69,23 @@ INSERT into role_permission (role_id, permission_id) (
 );
 
 INSERT INTO user (firstname, lastname, email, username, password, status, role_id)
-VALUES 	('Test', 'Test', 'test_dd@test.com', 'test_dd', 'test', 'active', (SELECT role.role_id FROM role WHERE role.name = 'Data Director')),
-  ('Test', 'Test', 'test_do@test.com', 'test_do', 'test', 'active', (SELECT role.role_id FROM role WHERE role.name = 'Data Owner/Supplier')),
-  ('Test', 'Test', 'test_dm@test.com', 'test_dm', 'test', 'active', (SELECT role.role_id FROM role WHERE role.name = 'Data Manager')),
-	('Test', 'Test', 'test_du@test.com', 'test_du', 'test', 'active', (SELECT role.role_id FROM role WHERE role.name = 'Data User')),
-	('Test', 'Test', 'test_au@test.com', 'test_au', 'test', 'active', (SELECT role.role_id FROM role WHERE role.name = 'Auditor')),
-	('Test', 'Test', 'test_oc@test.com', 'test_oc', 'test', 'active', (SELECT role.role_id FROM role WHERE role.name = 'Output Checker')),
-  ('Test', 'Test', 'test_dp@test.com', 'test_dp', 'test', 'active', (SELECT role.role_id FROM role WHERE role.name = 'Data Preparation')),
- 	('Test', 'Test', 'test_di@test.com', 'test_di', 'test', 'active', (SELECT role.role_id FROM role WHERE role.name = 'Data Importer')),
-	('Test', 'Test', 'test_acm@test.com', 'test_acm', 'test', 'active', (SELECT role.role_id FROM role WHERE role.name = 'Access Control Manager'));
+VALUES 	('Jon', 'Smith', 'j.smith@test.com', 'test_acm', 'test', 'active', (SELECT role.role_id FROM role WHERE role.name = 'Access Control Manager'));
 
 INSERT INTO supplier (name, description)
-VALUES ('HMRC', 'HMRC description');
+VALUES ('HMRC', 'HMRC');
 
 INSERT INTO journey (name, description, supplier_id)
-VALUES ('Thin VAT', 'Thin VAT File Journey', (SELECT supplier.supplier_id FROM supplier WHERE supplier.name = 'HMRC')),
-('Fat VAT', 'Fat VAT File Journey', (SELECT supplier.supplier_id FROM supplier WHERE supplier.name = 'HMRC'));
+VALUES ('VAT', 'VAT File Journey', (SELECT supplier.supplier_id FROM supplier WHERE supplier.name = 'HMRC')),
+('FT VAT', 'FT VAT File Journey', (SELECT supplier.supplier_id FROM supplier WHERE supplier.name = 'HMRC'));
 
 INSERT INTO journey_version (journey_id, version_number, validator, extensions, protocol)
-VALUES ((SELECT journey.journey_id FROM journey WHERE journey.name = 'Thin VAT'), 1, 'vat_*', 'csv,txt', 'default'),
-	((SELECT journey.journey_id FROM journey WHERE journey.name = 'Fat VAT'), 1, 'fat_vat_*', 'zip,rar', 'default');
+VALUES ((SELECT journey.journey_id FROM journey WHERE journey.name = 'VAT'), 1, 'vat_*', 'csv,txt', 'default'),
+	((SELECT journey.journey_id FROM journey WHERE journey.name = 'FT VAT'), 1, 'ft_vat_*', 'zip,rar', 'default');
 
 INSERT INTO journey_version_role (journey_version_id, role_id) (
 	SELECT journey_version.journey_version_id, role.role_id FROM role CROSS JOIN journey_version
-	WHERE journey_version.validator in ('vat_*', 'fat_vat_*') AND role.name
-	in ('Access Control Manager', 'Data Director', 'Auditor', 'Data Importer')
+	WHERE journey_version.validator in ('vat_*', 'ft_vat_*') AND role.name
+	in ('Access Control Manager', 'Data Director', 'Auditor')
 );
 
 
@@ -102,7 +94,6 @@ VALUES ('Upload to Server', 'Upload the file to the server', 'UPLOAD_TO_SERVER')
 ('Upload to Move It', 'Upload the file to the move it server', 'UPLOAD_TO_MOVEIT'),
 ('Upload to Sandbox VM', 'Upload the file to the Sandbox VM', 'UPLOAD_TO_SANDBOX'),
 ('Antivirus Check', 'Perform the Antivirus check on the uploaded file', 'ANTIVIRUS_CHECK'),
-('File Level Check', 'Perform the File Level check on the uploaded file', 'FILE_LEVEL_CHECK'),
 ('Filename Validation', 'Validates the file name', 'FILENAME_VALIDATION'),
 ('Filesize Validation', 'Validates the file size', 'FILESIZE_VALIDATION'),
 ('Header Validation', 'Validates the first record line', 'HEADER_VALIDATION'),
@@ -113,11 +104,8 @@ VALUES ('Upload to Server', 'Upload the file to the server', 'UPLOAD_TO_SERVER')
 
 INSERT INTO journey_version_step (journey_version_id, journey_step_id) (
 	SELECT journey_version.journey_version_id, journey_step.journey_step_id FROM journey_version CROSS JOIN journey_step
-	WHERE journey_version.validator in ('vat_*', 'fat_vat_*')
+	WHERE journey_version.validator in ('vat_*', 'ft_vat_*')
 );
 
 INSERT INTO schedule (date, journey_version_id)
-VALUES ('2017-01-01', (SELECT journey_version.journey_version_id from journey_version WHERE journey_version.validator = 'vat_*' )),
-	('2017-02-01', (SELECT journey_version.journey_version_id from journey_version WHERE journey_version.validator = 'fat_vat_*' )),
-	('2017-02-01', (SELECT journey_version.journey_version_id from journey_version WHERE journey_version.validator = 'vat_*' )),
-	('2017-03-01', (SELECT journey_version.journey_version_id from journey_version WHERE journey_version.validator = 'vat_*' ));
+VALUES ('2017-01-01', (SELECT journey_version.journey_version_id from journey_version WHERE journey_version.validator = 'vat_*' ));
