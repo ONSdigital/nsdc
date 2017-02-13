@@ -76,7 +76,7 @@ VALUES ('HMRC', 'HMRC');
 
 INSERT INTO journey (name, description, supplier_id)
 VALUES ('VAT', 'VAT File Journey', (SELECT supplier.supplier_id FROM supplier WHERE supplier.name = 'HMRC')),
-('FT VAT', 'Fat VAT File Journey', (SELECT supplier.supplier_id FROM supplier WHERE supplier.name = 'HMRC'));
+('FT VAT', 'FT VAT File Journey', (SELECT supplier.supplier_id FROM supplier WHERE supplier.name = 'HMRC'));
 
 INSERT INTO journey_version (journey_id, version_number, validator, extensions, protocol)
 VALUES ((SELECT journey.journey_id FROM journey WHERE journey.name = 'VAT'), 1, 'vat_*', 'csv,txt', 'default'),
