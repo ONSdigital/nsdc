@@ -13,7 +13,7 @@ export class BarChartComponent implements OnInit, OnChanges {
   @Input()
   private data;
 
-  private margin: any = { top: 20, bottom: 20, left: 30, right: 20};
+  private margin: any = { top: 20, bottom: 20, left: 70, right: 20};
   private chart: any;
   private width: number;
   private height: number;
@@ -77,9 +77,9 @@ export class BarChartComponent implements OnInit, OnChanges {
 
     const barOffset = this.margin.left * 4;
     this.chart.selectAll('.bar').transition()
-      .attr('x', d => this.xScale(d[0]) + barOffset / 2)
+      .attr('x', d => this.xScale(d[0]) + barOffset / 4)
       .attr('y', d => this.yScale(d[1]))
-      .attr('width', d => this.xScale.bandwidth() - barOffset)
+      .attr('width', d => this.xScale.bandwidth() - (barOffset / 2))
       .attr('height', d => this.height - this.yScale(d[1]))
       .style('fill', (d, i) => this.colors(i));
 
@@ -87,9 +87,9 @@ export class BarChartComponent implements OnInit, OnChanges {
       .enter()
       .append('rect')
       .attr('class', 'bar')
-      .attr('x', d => this.xScale(d[0]) + barOffset / 2)
-      .attr('y', d => this.yScale(0) + barOffset / 2)
-      .attr('width', this.xScale.bandwidth() - barOffset)
+      .attr('x', d => this.xScale(d[0]) + barOffset / 4)
+      .attr('y', d => this.yScale(0))
+      .attr('width', this.xScale.bandwidth() - (barOffset / 2))
       .attr('height', 0)
       .style('fill', (d, i) => this.colors(i))
       .transition()

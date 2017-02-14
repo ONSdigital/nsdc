@@ -162,3 +162,7 @@ a.disabled {
   top: 45px;
   z-index: 1048;
 }
+
+.nsdc-bar-chart text {
+  font-size: 13px;
+}
