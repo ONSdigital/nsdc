@@ -1,0 +1,11 @@
+# Connect as a different user
+option batch abort
+option confirm off
+# log=C:\temps\uploadToLocal.log
+open %1% -hostkey="ssh-rsa 2048 7f:2f:9e:9d:d5:d6:58:c6:bc:f4:4a:7a:5d:55:8b:1b"
+# Change the remote directory
+cd /DTM/NSDC
+# Upload the file to current working directory on the remote server
+put -nopermissions -nopreservetime %2%
+# Exit WinSCP
+exit
