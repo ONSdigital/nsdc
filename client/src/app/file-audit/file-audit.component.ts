@@ -19,6 +19,7 @@ export class FileAuditComponent implements OnInit, OnDestroy {
   public selectedFileId = null;
   public suppliers;
   private pollSubscription;
+  private chartPollSubscription;
 
   constructor(
     private fileAuditService: FileAuditService,
@@ -41,6 +42,9 @@ export class FileAuditComponent implements OnInit, OnDestroy {
     if (this.pollSubscription) {
       this.pollSubscription.unsubscribe();
     }
+    if (this.chartPollSubscription) {
+      this.chartPollSubscription.unsubscribe();
+    }
   }
 
   onFiltersChanged({supplierId, to, from }) {
@@ -62,6 +66,9 @@ export class FileAuditComponent implements OnInit, OnDestroy {
     if (this.pollSubscription) {
       this.pollSubscription.unsubscribe();
     }
+    if (this.chartPollSubscription) {
+      this.chartPollSubscription.unsubscribe();
+    }
     if (id && id !== '') {
       this.loading = true;
       this.pollSubscription = this.fileAuditService.pollForFileAudits(id, 2000)
@@ -69,8 +76,8 @@ export class FileAuditComponent implements OnInit, OnDestroy {
         this.audits = audits;
         this.loading = false;
       });
-
-      this.fileAuditService.getFileAuditChartData(id).subscribe(data => this.generateData(data));
+      this.chartPollSubscription = this.fileAuditService.pollForFileAuditChartData(id, 3000)
+      .subscribe(data => this.generateData(data));
     }
   }
 
