@@ -68,7 +68,7 @@ INSERT into role_permission (role_id, permission_id) (
 		)
 );
 
-INSERT INTO user (firstname, lastname, email, username, password, status, role_id)
+INSERT INTO "user" (firstname, lastname, email, username, password, status, role_id)
 VALUES 	('Jon', 'Smith', 'j.smith@test.com', 'test_acm', 'test', 'active', (SELECT role.role_id FROM role WHERE role.name = 'Access Control Manager'));
 
 INSERT INTO supplier (name, description)
