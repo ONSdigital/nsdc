@@ -28,6 +28,11 @@ export class FileAuditService {
     return this.http.get(this.actionUrl + '/audit/chart/' + id);
   }
 
+  pollForFileAuditChartData(id, interval): Observable<FileAuditChart> {
+    return Observable.interval(interval).startWith(0)
+    .switchMap(() => this.getFileAuditChartData(id));
+  }
+
   pollForFileAudits(id, interval): Observable<FileAudit[]> {
     return Observable.interval(interval).startWith(0)
     .switchMap(() => this.http.get(this.actionUrl + '/audit/' + id));
